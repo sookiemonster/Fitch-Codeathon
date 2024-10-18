@@ -62,7 +62,7 @@ function StockDetailer({state, dispatch}:DetailerProps):JSX.Element {
             <StockLabel label="Unwashed" count={displayedDiet?.unwashed_count} />
             <StockLabel label="Uncollected" count={displayedDiet?.uncollected_count} />
             <DietSelector state={state} dispatch={dispatch} />
-            <button onClick={() => setViewMore(true)}></button>
+            <button onClick={() => setViewMore(true)}>View More Information</button>
             
             { (viewMore) ? <ItemizedStockViewer/> : "" }
         </div>

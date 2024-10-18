@@ -9,11 +9,17 @@ import './App.css';
 import Header from "./Header";
 import StockDetailer from "./StockDetailer";
 import { initialState, stateReducer } from "./StateHandler";
+import StationCapacities from "./StationCapacities";
 
 // Use optionals for not-logged in & waiting for load
 
+import { debugIntitialState } from "./StateHandler";
+const DEBUG = true;
+
 function App() {
-  const [state, dispatch] = useReducer(stateReducer, initialState);
+  let initial = initialState;
+  if (DEBUG) {initial = debugIntitialState; }
+  const [state, dispatch] = useReducer(stateReducer, initial);
   const [pageTitle, setPageTitle] = useState("home");
 
   return (
@@ -21,6 +27,7 @@ function App() {
       
       <Header title={pageTitle} user={state.user} />
       <StockDetailer state={state} dispatch={dispatch} />
+      <StationCapacities state={state} dispatch={dispatch} />
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import React from "react";
+import { User } from "../DBHandler/interfaces";
 
 interface HeaderProps {
     title:string,
