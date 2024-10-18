@@ -1,46 +1,26 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useState } from "react";
 import logo from './logo.svg';
 import './App.css';
 
-interface State {
-  
-}
+// Interfaces
+// import { Diet } from "./DietSelector";
+// import { Station } from "./StationCapacities";
+// import { Alert } from "./StockAlerter";
+import Header from "./Header";
+import StockDetailer from "./StockDetailer";
+import { initialState, stateReducer } from "./StateHandler";
 
-type StateAction = 
-  { type: "action_name" ; value:TYPE }
-
-
-
-const initialState:State = {}
-
-function stateReducer(state:State, action: StateAction):State {    
-  switch (action.type) {
-      case "": 
-        return null;
-      default:
-          throw new Error("Unknown Action");
-  }
-}
+// Use optionals for not-logged in & waiting for load
 
 function App() {
   const [state, dispatch] = useReducer(stateReducer, initialState);
+  const [pageTitle, setPageTitle] = useState("home");
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      
+      <Header title={pageTitle} user={state.user} />
+      <StockDetailer state={state} dispatch={dispatch} />
     </div>
   );
 }

@@ -34,3 +34,10 @@ interface Station {
     alert_threshold:number,
     token_count:number
 }
+
+interface User {
+    user_id:string
+    name:string
+}
+
+export type {User, Location};
