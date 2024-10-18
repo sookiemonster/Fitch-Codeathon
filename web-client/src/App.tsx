@@ -15,6 +15,7 @@ import StationCapacities from "./StationCapacities";
 
 import { debugIntitialState } from "./StateHandler";
 import StockAlerter from "./StockAlerter";
+import VolumeSeries from "./VolumeSeries";
 const DEBUG = true;
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
         <StockDetailer state={state} dispatch={dispatch} />
         <StationCapacities state={state} dispatch={dispatch} />
         <StockAlerter state={state} dispatch={dispatch} />
+        <VolumeSeries state={state} dispatch={dispatch} />
       </div>
     </div>
   );

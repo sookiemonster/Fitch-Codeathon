@@ -1,3 +1,5 @@
+@use "_variables" as *;
+
 #capacities {
     display: flex;
     flex-direction: column;
@@ -40,15 +42,37 @@
 }
 
 #alert-setter {
-    width: 40%;
+    // width: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin-top: 5px;
+    gap: 4px;
     align-self: flex-end;
     
     border: none;
     background-color: var(--bg-color);
-    padding: 10px;
+    padding: 10px 15px;
     border-radius: 10px;
 
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     font-weight: 600;
+    cursor: pointer;
+
+    svg {
+        width: 20px;
+    }
+}
+
+#alert-modal {
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    height: 50%;
+    background-color: var(--card-color);
+    padding: 50px;
+    border-radius: 20px;
+    // border: 1px solid black;
 }

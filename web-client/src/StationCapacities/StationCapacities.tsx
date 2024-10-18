@@ -1,6 +1,9 @@
 import React, { useState } from "react"
 import { State } from "../StateHandler";
 import LinearProgress from '@mui/material/LinearProgress';
+import Modal from '@mui/material/Modal';
+import { Box, Button } from "@mui/material";
+import SettingsIcon from '@mui/icons-material/Settings';
 
 interface Station {
     id:string,
@@ -17,36 +20,37 @@ interface StationsProps {
 interface ModalProps {
     state:State, 
     dispatch:any, 
-    setVisibilityFlag:any
+    close:any
 }
 
-function AlertModal({state, dispatch, setVisibilityFlag}:ModalProps):JSX.Element {
+function AlertModal({state, dispatch, close}:ModalProps):JSX.Element {
     const saveChanges = () => {
         // dispatch();
-        setVisibilityFlag(false);
+        // setVisibilityFlag(false);
+        close();
     }
 
-    const discardChanges = () => { setVisibilityFlag(false); }
+    const discardChanges = () => { close(); }
 
     return (
-        <div id="customize-alert-modal">
-            <h2>Configure Station Alert Thresholds</h2>
+        <div id="alert-modal">
+            <h2 id="modal-title">Configure Station Alert Thresholds</h2>
             <form>
                 {/* Dispatch call to update DB. */}
                 
                 {/* <input type="number" /> */}
-                <button onClick={() => discardChanges() }>Discard</button>
-                <button onClick={() => saveChanges()}>Save</button>
+                <Box>
+
+                </Box>
+
+                <Button onClick={discardChanges} variant="outlined" disableElevation>Discard</Button>
+                <Button onClick={saveChanges} variant="contained" disableElevation>Save</Button>
             </form>
         </div>
     )
 }
 
 function StationDetails({id, current_capacity, token_count}:Station):JSX.Element {
-    let translate = () => {
-        return "calc("
-    }
-
     const MAX_CAPACITY = 100;
     return (
         <div className="station-container">
@@ -62,6 +66,9 @@ function StationDetails({id, current_capacity, token_count}:Station):JSX.Element
 
 function StationCapacities({state, dispatch}:StationsProps):JSX.Element {
     const [showModal, setShowModal] = useState(false);
+    const open = () => {setShowModal(true);}
+    const close = () => {setShowModal(false);}
+
     return (
         <div id="capacities">
             <h2>Drop Station Dish Capacity</h2>
@@ -70,12 +77,18 @@ function StationCapacities({state, dispatch}:StationsProps):JSX.Element {
                     <div className="stations-list">
                         { state.stations.map(elem => <StationDetails key={elem.id} {...elem} />)  } 
                     </div>
-                    <button id="alert-setter" onClick={() => setShowModal(true)}>Set Capacity Alerts</button>
+                    <button id="alert-setter" onClick={open}><SettingsIcon/>Set Capacity Alerts</button>
                 </>
                 : "Loading..." }
-            
-            { (showModal) ? <AlertModal state={state} dispatch={dispatch} setVisibilityFlag={setShowModal}/> : ""}
-                
+            <Modal
+                open={showModal}
+                onClose={close}
+                aria-labelledby="modal-title"
+                aria-describedby="alert-modal">
+                <>
+                <AlertModal state={state} dispatch={dispatch} close={close} />
+                </>
+            </Modal>                
         </div>
     )
 }

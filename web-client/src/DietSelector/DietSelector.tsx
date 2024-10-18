@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { State } from "../StateHandler";
 
 enum Diet {
@@ -14,11 +14,12 @@ interface SelectorProps {
 }
 
 function DietSelector({state, dispatch}:SelectorProps):JSX.Element {
+
     return (
         <div id="diet-selector">
-        <button className="selected" id="vegan-selector" onClick={() => dispatch({type: "selectDiet", value: Diet.VEGAN })}>VEGAN</button>
-        <button id="halal-selector" onClick={() => dispatch({type: "selectDiet", value: Diet.HALAL })}>HALAL</button>
-        <button id="nonveg-selector" onClick={() => dispatch({type: "selectDiet", value: Diet.NONE })}>NON-VEG</button>
+        <button className={(state.selected_diet === Diet.VEGAN) ? "selected" : ""} id="vegan-selector" onClick={() => dispatch({type: "selectDiet", value: Diet.VEGAN })}>VEGAN</button>
+        <button className={(state.selected_diet === Diet.HALAL) ? "selected" : ""} id="halal-selector" onClick={() => dispatch({type: "selectDiet", value: Diet.HALAL })}>HALAL</button>
+        <button className={(state.selected_diet === Diet.NONE) ? "selected" : ""} id="nonveg-selector" onClick={() => dispatch({type: "selectDiet", value: Diet.NONE })}>NON-VEG</button>
         </div>
     )
 }

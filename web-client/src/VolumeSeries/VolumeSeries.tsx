@@ -1,7 +1,17 @@
 import React from "react";
+import { State } from "../StateHandler";
 
-function VolumeSeries():JSX.Element {
-    return <></>
+interface SeriesProps {
+    state:State, 
+    dispatch:any
+}
+
+function VolumeSeries({state, dispatch}:SeriesProps):JSX.Element {
+    return (
+        <div id="series-card">
+
+        </div>
+    )
 }
 
 export default VolumeSeries;
