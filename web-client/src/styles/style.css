@@ -1,0 +1,233 @@
+:root {
+  font-size: 12pt;
+  --bg-color: #ececec;
+  --dark-gray: #242424;
+  --card-color: #FFFFFF;
+  --active: #000000;
+  --green: #11c700;
+  --yellow: #f8af10;
+  --red: #f03304;
+}
+
+#stock-summary-section {
+  grid-area: stock;
+  display: grid;
+  grid-template-areas: "summary selector" "info selector";
+  grid-template-columns: 1fr 125px;
+  gap: 15px;
+  padding: 25px 25px 0 0 !important;
+}
+#stock-summary-section #view-more {
+  grid-area: info;
+  font-size: 1rem;
+  font-weight: bold;
+  background-color: var(--active);
+  color: var(--card-color);
+  outline: none;
+  border: none;
+  padding: 7px;
+}
+#stock-summary-section .green {
+  color: var(--green);
+}
+#stock-summary-section .yellow {
+  color: var(--yellow);
+}
+#stock-summary-section .red {
+  color: var(--red);
+}
+
+#summary-container {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.stock-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 200px;
+}
+.stock-label label {
+  font-size: 1.5rem;
+}
+.stock-label .count {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+#diet-selector {
+  display: flex;
+  flex-direction: column;
+  width: 125px;
+  padding-bottom: 20px;
+  gap: 10px;
+  grid-area: selector;
+}
+#diet-selector button {
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  border: 0.75px solid var(--active);
+  background-color: var(--card-color);
+  border-radius: 5px;
+  padding: 7px 20px 3px;
+  color: var(--active);
+  transition: 0.3s;
+  cursor: pointer;
+}
+#diet-selector button:hover {
+  background-color: var(--bg-color);
+}
+#diet-selector .selected {
+  background-color: var(--active);
+  color: var(--card-color);
+}
+#diet-selector .selected:hover {
+  background-color: var(--dark-gray);
+}
+
+#capacities {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.stations-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+}
+
+.station-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.05rem;
+}
+.station-container .identifier {
+  font-weight: 500;
+}
+.station-container .capacity-bar {
+  width: 30%;
+  border-radius: 10px;
+  background-color: var(--bg-color);
+}
+.station-container .capacity-bar span {
+  background-color: var(--active);
+}
+.station-container .capacity-label {
+  font-weight: bold;
+  padding-right: 10px;
+  border-right: 1px solid var(--bg-color);
+  width: 5ch;
+}
+
+#alert-setter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5px;
+  gap: 4px;
+  align-self: flex-end;
+  border: none;
+  background-color: var(--bg-color);
+  padding: 10px 15px;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+#alert-setter svg {
+  width: 20px;
+}
+
+#alert-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  height: 50%;
+  background-color: var(--card-color);
+  padding: 50px;
+  border-radius: 20px;
+}
+
+#series-card {
+  grid-area: series;
+  width: 100%;
+  height: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h2 {
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  padding: 0;
+  margin: 0;
+}
+
+#layout-container {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: minmax(800px, 1fr) 1fr;
+  grid-template-rows: 8rem;
+  background-color: var(--bg-color);
+  gap: 20px;
+  padding: 0;
+}
+
+#layout-container > div {
+  border-radius: 8px;
+}
+
+@media (width <= 1200px) {
+  #layout-container {
+    grid-template-columns: 1fr;
+  }
+}
+h1 {
+  font-size: 2rem;
+}
+
+#header {
+  display: flex;
+  grid-column: -1/1;
+  align-items: center;
+  border-radius: 15px;
+  background-color: var(--card-color);
+  padding: 15px 30px;
+  height: 8rem;
+}
+#header button {
+  margin-left: auto;
+}
+
+#metrics {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  grid-template-areas: "stock stock" "station alerts" "series series";
+  grid-template-rows: 165px auto 1fr;
+  gap: 20px;
+}
+
+#metrics > div {
+  width: 100%;
+  height: 100%;
+  padding: 25px;
+  border-radius: 15px;
+  background-color: var(--card-color);
+}
+
+/*# sourceMappingURL=style.css.map */
