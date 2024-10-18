@@ -4,13 +4,13 @@
   "description": "backend",
   "main": "index.js",
   "scripts": {
-    "server" : "nodemon api/server.js"
-
+    "server": "nodemon api/server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.21.1"
+    "express": "^4.21.1",
+    "firebase": "^10.14.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.7"
