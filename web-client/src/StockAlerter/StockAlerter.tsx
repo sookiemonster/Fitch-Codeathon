@@ -38,7 +38,7 @@ function AlertView({state, dispatch, ...alert}:StockAlerterProps & Alert):JSX.El
             </span>
             { (alert.completed_time) ? 
                 <span className="completion-details">
-                    Completed By : {alert.completer?.name} at { alert.completed_time?.toString() }
+                    Completed By : {alert.completer?.name} at { alert.completed_time?.toLocaleString('en-US') }
                 </span>
                 : 'Incomplete'
             }

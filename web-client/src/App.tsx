@@ -21,7 +21,7 @@ function App() {
   let initial = initialState;
   if (DEBUG) {initial = debugIntitialState; }
   const [state, dispatch] = useReducer(stateReducer, initial);
-  const [pageTitle, setPageTitle] = useState("home");
+  const [pageTitle, setPageTitle] = useState("Washing Overview");
 
   return (
     <div className="App">
