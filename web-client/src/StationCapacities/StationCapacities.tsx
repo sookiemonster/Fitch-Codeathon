@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { State } from "../StateHandler";
-import { JsxElement } from "typescript";
+import LinearProgress from '@mui/material/LinearProgress';
 
 interface Station {
     id:string,
@@ -43,12 +43,18 @@ function AlertModal({state, dispatch, setVisibilityFlag}:ModalProps):JSX.Element
 }
 
 function StationDetails({id, current_capacity, token_count}:Station):JSX.Element {
+    let translate = () => {
+        return "calc("
+    }
+
     const MAX_CAPACITY = 100;
     return (
         <div className="station-container">
-            <span className="identifer">{id}</span>
-            <div data-capacity-decimal={current_capacity} className="capacity-bar"></div>
-            <span className="capacity-label">{ (current_capacity >= MAX_CAPACITY) ? "Full" : current_capacity }</span>
+            <span className="identifier">{id}</span>
+            <LinearProgress className="capacity-bar" variant="determinate" value={current_capacity} />
+            {/* <div data-capacity-decimal={current_capacity} className="capacity-bar">
+            </div> */}
+            <span className="capacity-label">{ (current_capacity >= MAX_CAPACITY) ? "Full" : current_capacity + "%" }</span>
             <span className="token-stock"><b>{token_count}</b> Tokens Left</span>
         </div>
     )

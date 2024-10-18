@@ -1,0 +1,206 @@
+:root {
+  font-size: 12pt;
+  --bg-color: #ececec;
+  --dark-gray: #242424;
+  --card-color: #FFFFFF;
+  --active: #000000;
+  --green: #11c700;
+  --yellow: #f8af10;
+  --red: #f03304;
+}
+
+#stock-summary-section {
+  grid-area: stock;
+  display: grid;
+  grid-template-areas: "summary selector" "info selector";
+  grid-template-columns: 1fr 125px;
+  gap: 15px;
+  padding: 25px 25px 0 0 !important;
+}
+#stock-summary-section #view-more {
+  grid-area: info;
+  font-size: 1rem;
+  font-weight: bold;
+  background-color: var(--active);
+  color: var(--card-color);
+  outline: none;
+  border: none;
+  padding: 7px;
+}
+#stock-summary-section .green {
+  color: var(--green);
+}
+#stock-summary-section .yellow {
+  color: var(--yellow);
+}
+#stock-summary-section .red {
+  color: var(--red);
+}
+
+#summary-container {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.stock-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.stock-label label {
+  font-size: 1.5rem;
+}
+.stock-label .count {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+#diet-selector {
+  display: flex;
+  flex-direction: column;
+  width: 125px;
+  padding-bottom: 20px;
+  gap: 10px;
+  grid-area: selector;
+}
+#diet-selector button {
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  border: 0.75px solid var(--active);
+  background-color: var(--card-color);
+  border-radius: 5px;
+  padding: 7px 20px 3px;
+  color: var(--active);
+  transition: 0.3s;
+  cursor: pointer;
+}
+#diet-selector button:hover {
+  background-color: var(--bg-color);
+}
+#diet-selector .selected {
+  background-color: var(--active);
+  color: var(--card-color);
+}
+#diet-selector .selected:hover {
+  background-color: var(--dark-gray);
+}
+
+#capacities {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.stations-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+}
+
+.station-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.05rem;
+}
+.station-container .identifier {
+  font-weight: 500;
+}
+.station-container .capacity-bar {
+  width: 100px;
+  border-radius: 10px;
+  background-color: var(--bg-color);
+}
+.station-container .capacity-bar span {
+  background-color: var(--active);
+}
+.station-container .capacity-label {
+  font-weight: bold;
+  padding-right: 10px;
+  border-right: 1px solid var(--bg-color);
+  width: 5ch;
+}
+
+#alert-setter {
+  width: 40%;
+  margin-top: 5px;
+  align-self: flex-end;
+  border: none;
+  background-color: var(--bg-color);
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h2 {
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+#layout-container {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  background-color: var(--bg-color);
+  width: 100%;
+  height: 100%;
+  gap: 30px;
+  padding: calc(50px + 2vw);
+}
+
+#layout-container > div {
+  border-radius: 8px;
+}
+
+@media (width <= 1000px) {
+  #layout-container {
+    grid-template-columns: 1fr;
+  }
+}
+h1 {
+  font-size: 2rem;
+}
+
+#header {
+  display: flex;
+  grid-column: -1/1;
+  align-items: center;
+  border-radius: 15px;
+  background-color: var(--card-color);
+  padding: 15px 30px;
+}
+#header button {
+  margin-left: auto;
+}
+
+#metrics {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  grid-template-areas: "stock stock" "station alerts" "series series";
+  gap: 30px;
+}
+
+#metrics > div {
+  padding: 25px;
+  border-radius: 15px;
+  background-color: var(--card-color);
+  width: 100%;
+  height: 100%;
+}
+
+/*# sourceMappingURL=style.css.map */

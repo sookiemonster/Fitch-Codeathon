@@ -1,6 +1,6 @@
 import React, { useReducer, useState } from "react";
 import logo from './logo.svg';
-import './App.css';
+import './styles/style.css';
 
 // Interfaces
 // import { Diet } from "./DietSelector";
@@ -24,12 +24,14 @@ function App() {
   const [pageTitle, setPageTitle] = useState("Washing Overview");
 
   return (
-    <div className="App">
+    <div id="layout-container" className="App">
       
       <Header title={pageTitle} user={state.user} />
-      <StockDetailer state={state} dispatch={dispatch} />
-      <StationCapacities state={state} dispatch={dispatch} />
-      <StockAlerter state={state} dispatch={dispatch} />
+      <div id="metrics">
+        <StockDetailer state={state} dispatch={dispatch} />
+        <StationCapacities state={state} dispatch={dispatch} />
+        <StockAlerter state={state} dispatch={dispatch} />
+      </div>
     </div>
   );
 }

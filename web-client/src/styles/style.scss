@@ -1,0 +1,85 @@
+@use "_summary" as *;
+@use "_variables" as * ;
+@use "_stations" as * ;
+
+* {
+    box-sizing: border-box;
+}
+
+h2 {
+    margin: 0;
+    padding: 0;
+}
+
+@mixin fill {
+    width: 100%;
+    height: 100%;
+}
+
+html, body {
+    @include fill();
+    padding:0;
+    margin: 0;
+}
+
+#layout-container {
+    @include fill();
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    background-color: var(--bg-color);
+
+    width: 100%;
+    height: 100%;
+
+    gap: $gap;
+    
+    padding: calc(50px + 2vw);
+}
+
+#layout-container > div {
+    border-radius: 8px;
+}
+
+@media (width <= 1000px) {
+    #layout-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+h1 {
+    font-size: 2rem;
+}
+
+#header {
+    display: flex;
+    grid-column: -1/1;
+
+    align-items: center;
+    border-radius: 15px;
+    background-color: var(--card-color);
+    padding: 15px 30px;
+
+    button {
+        margin-left: auto;
+    }
+}
+
+#metrics {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    grid-template-areas: "stock stock"
+                         "station alerts"
+                         "series series";
+    
+    gap: $gap;
+
+}
+
+#metrics > div {
+    padding: 25px;
+    border-radius: 15px;
+    background-color: var(--card-color);
+    width: 100%; 
+    height: 100%;
+}

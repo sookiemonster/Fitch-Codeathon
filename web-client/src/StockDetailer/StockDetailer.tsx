@@ -23,16 +23,17 @@ interface DetailerProps {
 interface LabelProps {
     label:string
     count?:number
+    color:string
 }
 
 function ItemizedStockViewer():JSX.Element {
     return <></>
 }
 
-function StockLabel({label, count}:LabelProps): JSX.Element {
+function StockLabel({label, count, color}:LabelProps): JSX.Element {
     return (
-        <div className="stock-label">
-            <span>{label}</span>
+        <div className={"stock-label " + color}>
+            <label>{label}</label>
             <span className="count">{ (count) ? count : "loading"}</span>
         </div>
     )
@@ -57,12 +58,14 @@ function StockDetailer({state, dispatch}:DetailerProps):JSX.Element {
     }
 
     return (
-        <div id="stock-detailer">
-            <StockLabel label="Washed" count={displayedDiet?.washed_count} />
-            <StockLabel label="Unwashed" count={displayedDiet?.unwashed_count} />
-            <StockLabel label="Uncollected" count={displayedDiet?.uncollected_count} />
+        <div id="stock-summary-section">
+            <div id="summary-container">
+            <StockLabel color="green" label="Washed" count={displayedDiet?.washed_count} />
+            <StockLabel color="yellow" label="Unwashed" count={displayedDiet?.unwashed_count} />
+            <StockLabel color="red" label="Uncollected" count={displayedDiet?.uncollected_count} />
+            </div>
             <DietSelector state={state} dispatch={dispatch} />
-            <button onClick={() => setViewMore(true)}>View More Information</button>
+            <button id="view-more" onClick={() => setViewMore(true)}>View More Information</button>
             
             { (viewMore) ? <ItemizedStockViewer/> : "" }
         </div>

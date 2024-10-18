@@ -1,0 +1,54 @@
+#capacities {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.stations-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+}
+
+.station-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    font-size: 1.05rem;
+    .identifier {
+        font-weight: 500;
+    }
+
+    .capacity-bar {
+        width: 100px;
+        border-radius: 10px;
+        background-color: var(--bg-color);
+
+        span {
+            background-color: var(--active);
+        }
+    }
+
+    .capacity-label {
+        font-weight: bold;
+        padding-right: 10px;
+        border-right: 1px solid var(--bg-color);
+        width: 5ch;
+    }
+}
+
+#alert-setter {
+    width: 40%;
+    margin-top: 5px;
+    align-self: flex-end;
+    
+    border: none;
+    background-color: var(--bg-color);
+    padding: 10px;
+    border-radius: 10px;
+
+    font-size: 0.9rem;
+    font-weight: 600;
+}

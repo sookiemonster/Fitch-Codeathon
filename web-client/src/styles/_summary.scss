@@ -1,0 +1,86 @@
+@use "_variables";
+
+#stock-summary-section {
+    grid-area: stock;
+    display: grid;
+    grid-template-areas: "summary selector"
+                        "info selector";
+
+    grid-template-columns: 1fr 125px;
+    gap: 15px;
+    padding: 25px 25px 0 0 !important;
+
+    #view-more {
+        grid-area: info;
+        font-size: 1rem;
+        font-weight: bold;
+
+        background-color: var(--active);
+        color: var(--card-color);
+        outline: none;
+        border: none;
+        padding: 7px;
+    }
+
+    .green {color: var(--green);}
+    .yellow {color: var(--yellow);}
+    .red {color: var(--red);}
+}
+
+#summary-container {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.stock-label {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+
+    label {
+        font-size: 1.5rem;
+    }
+    .count {
+        font-size: 2rem;
+        font-weight: bold;
+    }
+}
+#diet-selector {
+    display: flex;
+    flex-direction: column;
+    width: 125px;
+    padding-bottom: 20px;
+    gap: 10px;
+
+    grid-area: selector;
+
+    button {
+        font-size: 1rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        border: 0.75px solid var(--active);
+        // stroke: 0.5px solid var(--active);
+        background-color: var(--card-color);
+        border-radius: 5px;
+        
+        padding: 7px 20px 3px;
+        
+        color: var(--active);
+        transition: 0.3s;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: var(--bg-color);   
+    }
+
+    .selected {
+        background-color: var(--active);
+        color: var(--card-color);
+    }
+
+    .selected:hover {
+        background-color: var(--dark-gray);
+    }
+}
+

@@ -30,7 +30,7 @@ function AlertView({state, dispatch, ...alert}:StockAlerterProps & Alert):JSX.El
     }
 
     return (
-        <div className="alert-container">
+        <div className="container">
             <input onClick={() => update() } type="checkbox" defaultChecked={(alert.completer) != null} />
             <span className="title">{alert.item_type} - <i>{alert.location.real_name}</i></span>
             <span className="request-details">
