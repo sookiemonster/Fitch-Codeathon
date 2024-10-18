@@ -1,23 +1,26 @@
 import { CameraView } from "expo-camera";
 import { Stack, useRouter } from "expo-router";
 import {
+  Alert,
   AppState,
-  Linking,
   Platform,
   SafeAreaView,
   StatusBar,
   StyleSheet,
   TouchableOpacity,
+  Text,
   View,
 } from "react-native";
 import { Overlay } from "./Overlay";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ThemedText } from "@/components/ThemedText";
 
 export default function Home() {
   const qrLock = useRef(false);
   const appState = useRef(AppState.currentState);
   const router = useRouter();
+  const [itemId, setItemId] = useState("");
+  const alertShown = useRef(false);
 
   useEffect(() => {
     const subscription = AppState.addEventListener("change", (nextAppState) => {
@@ -34,6 +37,19 @@ export default function Home() {
     };
   }, []);
 
+  const processItemData = (data: string) => {
+    if (data.includes("/item/")) {
+      setItemId(data);
+      alertShown.current = false;
+    } else {
+      if (!alertShown.current) {
+        Alert.alert("Invalid QR Code", "This QR code does not correspond to an EcoWare item");
+        alertShown.current = true;
+      }
+      qrLock.current = false;
+    }
+  };
+
   return (
     <SafeAreaView style={StyleSheet.absoluteFillObject}>
       <Stack.Screen options={{ title: "Overview", headerShown: false }} />
@@ -45,13 +61,16 @@ export default function Home() {
           if (data && !qrLock.current) {
             qrLock.current = true;
             setTimeout(async () => {
-              await Linking.openURL(data);
+              processItemData(data);
             }, 500);
           }
         }}
       />
       <Overlay />
       <View style={styles.buttonContainer}>
+        <Text>
+          {itemId ? `Scanned Item ID: ${itemId}` : "No Item Scanned Yet"}
+        </Text>
         <TouchableOpacity onPress={() => router.back()}>
           <ThemedText type="buttonText">Go Back</ThemedText>
         </TouchableOpacity>
