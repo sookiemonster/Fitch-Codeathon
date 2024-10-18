@@ -7,7 +7,8 @@
     "prisma:generate": "prisma generate",
     "prisma:seed": "ts-node prisma/seed.ts",
     "prisma:update": "ts-node prisma/updateInventories.ts",
-    "server": "npm run prisma:generate && npm run prisma:seed && npm run prisma:update && nodemon api/server.js",
+    "prisma": "npm run prisma:generate && npm run prisma:seed && npm run prisma:update",
+    "server": "nodemon api/server.js",
     "studio": "npx prisma studio"
   },
   "author": "",

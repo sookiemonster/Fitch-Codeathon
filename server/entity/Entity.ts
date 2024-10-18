@@ -75,5 +75,5 @@ type Station = {
     y : number
     capacity : number
     tokens : number
-    inventory : Item[]
+    inventory : number[]
 }
