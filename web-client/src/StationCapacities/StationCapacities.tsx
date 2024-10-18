@@ -1,5 +1,6 @@
-import React from "react"
+import React, { useState } from "react"
 import { State } from "../StateHandler";
+import { JsxElement } from "typescript";
 
 interface Station {
     id:string,
@@ -11,6 +12,32 @@ interface Station {
 interface StationsProps {
     state:State,
     dispatch:any
+}
+
+interface ModalProps {
+    state:State, 
+    dispatch:any, 
+    setVisibilityFlag:any
+}
+
+function AlertModal({state, dispatch, setVisibilityFlag}:ModalProps):JSX.Element {
+    const saveChanges = () => {
+        // dispatch();
+        setVisibilityFlag(false);
+    }
+
+    const discardChanges = () => { setVisibilityFlag(false); }
+
+    return (
+        <div id="customize-alert-modal">
+            <h2>Configure Station Alert Thresholds</h2>
+            <form>
+                Dispatch call to update DB.
+                <button onClick={() => discardChanges() }>Discard</button>
+                <button onClick={() => saveChanges()}>Save</button>
+            </form>
+        </div>
+    )
 }
 
 function StationDetails({id, current_capacity, token_count}:Station):JSX.Element {
@@ -26,13 +53,24 @@ function StationDetails({id, current_capacity, token_count}:Station):JSX.Element
 }
 
 function StationCapacities({state, dispatch}:StationsProps):JSX.Element {
+    const [showModal, setShowModal] = useState(false);
     return (
         <div id="capacities">
             <h2>Drop Station Dish Capacity</h2>
-            { (state.stations) ? state.stations.map(elem => <StationDetails key={elem.id} {...elem} />) : "" }
+            { (state.stations) ? 
+                <>
+                    <div className="stations-list">
+                        { state.stations.map(elem => <StationDetails key={elem.id} {...elem} />)  } 
+                    </div>
+                    <button id="alert-setter" onClick={() => setShowModal(true)}>Set Capacity Alerts</button>
+                </>
+                : "Loading..." }
+            
+            { (showModal) ? <AlertModal state={state} dispatch={dispatch} setVisibilityFlag={setShowModal}/> : ""}
+                
         </div>
     )
 }
 
 export default StationCapacities;
-export type {Station};
+export type {Station}; 
