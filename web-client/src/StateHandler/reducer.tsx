@@ -14,9 +14,17 @@ interface State {
     selected_diet:Diet
 }
 
+interface AlertChange {
+    alert_id:string,
+    newCompletionStatus:Boolean,
+    completer?:User,
+    completed_time?:Date
+}
+
 type StateAction = 
     { type: "logout" ; value:any}
     | { type: "selectDiet" ; value:Diet }
+    | { type: "updateAlert" ; value:AlertChange }
 
 const initialState:State = { selected_diet:Diet.ALL }
 const debugIntitialState:State = {
@@ -68,7 +76,22 @@ const debugIntitialState:State = {
             alert_threshold: 75.0,
             token_count: 202
         }
-    ]
+    ],
+    alerts: [
+        {
+            id: "awdj3247",
+            item_type: "Cold Cups",
+            location: {
+                id: 2389,
+                real_name:"vendor"
+            },
+            alert_time: new Date(Date.now())
+        }
+    ],
+    user: {
+        name: "Daniel",
+        user_id: "someweuiu24"
+    }
 }
 
 function stateReducer(state:State, action: StateAction):State {    
@@ -80,13 +103,31 @@ function stateReducer(state:State, action: StateAction):State {
         case "selectDiet":
             // Toggle if we attempt to click the same diet
             if (state.selected_diet == action.value) {
-                const updatedState =  {...state, selected_diet: Diet.ALL }
-                return updatedState;
+                return {...state, selected_diet: Diet.ALL };
             }
             
             // Or select alternate diet
-            const updatedState = {...state, selected_diet: action.value};
-            return updatedState;
+            return {...state, selected_diet: action.value};
+        case "updateAlert":
+            if (!state.alerts) { return state; }
+            console.log(action.value);
+            
+            const updatedAlerts:Alert[] = state.alerts.map(alert => {
+                // Not the correct alert
+                if (alert.id != action.value.alert_id) { return alert; }
+                
+                // If we just completed it, mark the completion time to now & the current user
+                if (action.value.newCompletionStatus) {
+                    return {...alert, 
+                        completer: action.value.completer, 
+                        completed_time: new Date(Date.now())}
+                }
+
+                // Otherwise mark it incomplete
+                return {...alert, completer: undefined, completed_time: undefined }
+            })
+            
+            return {...state, alerts: updatedAlerts};
         default:
             throw new Error("Unknown Action");
     }

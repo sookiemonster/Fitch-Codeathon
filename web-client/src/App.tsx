@@ -14,6 +14,7 @@ import StationCapacities from "./StationCapacities";
 // Use optionals for not-logged in & waiting for load
 
 import { debugIntitialState } from "./StateHandler";
+import StockAlerter from "./StockAlerter";
 const DEBUG = true;
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
       <Header title={pageTitle} user={state.user} />
       <StockDetailer state={state} dispatch={dispatch} />
       <StationCapacities state={state} dispatch={dispatch} />
+      <StockAlerter state={state} dispatch={dispatch} />
     </div>
   );
 }

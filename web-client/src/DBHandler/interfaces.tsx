@@ -4,7 +4,7 @@ enum Status {
     NEEDS_PROCESSING
 }
 
-interface Location {
+interface Place {
     id:number,
     real_name:string
 }
@@ -40,4 +40,4 @@ interface User {
     name:string
 }
 
-export type {User, Location};
+export type {User, Place};

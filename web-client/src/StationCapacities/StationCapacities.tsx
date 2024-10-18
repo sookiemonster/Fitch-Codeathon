@@ -32,7 +32,9 @@ function AlertModal({state, dispatch, setVisibilityFlag}:ModalProps):JSX.Element
         <div id="customize-alert-modal">
             <h2>Configure Station Alert Thresholds</h2>
             <form>
-                Dispatch call to update DB.
+                {/* Dispatch call to update DB. */}
+                
+                {/* <input type="number" /> */}
                 <button onClick={() => discardChanges() }>Discard</button>
                 <button onClick={() => saveChanges()}>Save</button>
             </form>
