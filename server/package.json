@@ -4,15 +4,28 @@
   "description": "backend",
   "main": "index.js",
   "scripts": {
-    "server": "nodemon api/server.js"
+    "prisma:generate": "prisma generate",
+    "prisma:seed": "ts-node prisma/seed.ts",
+    "prisma:update": "ts-node prisma/updateInventories.ts",
+    "server": "npm run prisma:generate && npm run prisma:seed && npm run prisma:update && nodemon api/server.js",
+    "studio": "npx prisma studio"
   },
   "author": "",
   "license": "ISC",
+  "prisma": {
+    "seed": "ts-node --compiler-options prisma/seed.ts"
+  },
   "dependencies": {
+    "@prisma/client": "^5.21.1",
     "express": "^4.21.1",
-    "firebase": "^10.14.1"
+    "firebase": "^10.14.1",
+    "server": "file:"
   },
   "devDependencies": {
-    "nodemon": "^3.1.7"
+    "@types/node": "^22.7.6",
+    "nodemon": "^3.1.7",
+    "prisma": "^5.21.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3"
   }
 }
