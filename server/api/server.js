@@ -7,6 +7,7 @@ const stationsRoutes = require("./routes/stations.js");
 const itemsRoutes = require("./routes/items.js");
 const discountsRoutes = require("./routes/discounts.js");
 const authRoutes = require("./routes/auth.js");
+const metricsRoutes = require("./routes/metrics.js");
 
 const app = express();
 const PORT = 5000;
@@ -26,5 +27,6 @@ app.use("/api/v1/stations", stationsRoutes);
 app.use("/api/v1/items", itemsRoutes);
 app.use("/api/v1/discounts", discountsRoutes);
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/metrics", metricsRoutes);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
