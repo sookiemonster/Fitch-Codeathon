@@ -10,6 +10,7 @@ const { getVendorInventory } = require('../../functions/vendors/get/getVendorInv
 const { getVendorInventoryByType } = require('../../functions/vendors/get/getInventoryByTypes.js');
 const { getVendorInventoryByName } = require('../../functions/vendors/get/getInventoryByName.js');
 const { getVendorInventoryByStatus } = require('../../functions/vendors/get/getInventoryByStatus.js');
+const { getVendorInventoryDetailed } = require('../../functions/vendors/get/getVendorInventoryDetailed.js');
 
 const { getAllVendorsIds } = require('../../functions/vendors/get/getAllVendorsIds.js');
 
@@ -136,6 +137,26 @@ router.get('/:id/inventory', async (req, res) => {
                 return res.status(404).send({ message : 'Vendor not found' });
             }
         }
+
+        res.status(200).send(inventory);
+
+    } catch (error) {
+        res.status(500).send({ message : 'Internal server error' });
+    }
+});
+
+router.get('/:id/inventory/detailed', async (req, res) => {
+
+    const { id } = req.params;
+    
+    if (!id || isNaN(id)) {
+        return res.status(400).send({ message: 'Invalid or missing ID' });
+    }
+    try {
+        const inventory = await getVendorInventoryDetailed(parseInt(id));
+        if (!inventory) {
+            return res.status(404).send({ message : 'Vendor not found' });
+        } 
 
         res.status(200).send(inventory);
 

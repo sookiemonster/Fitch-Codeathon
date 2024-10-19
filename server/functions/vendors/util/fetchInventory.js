@@ -14,7 +14,7 @@ async function fetchInventory(vendorId) {
         }
 
         const size = items.length;
-        return {size, ...items};
+        return {items};
 
     } catch (error) {
         console.error("Error fetching inventory:", error);
@@ -127,4 +127,71 @@ async function fetchVendorInventoryByOnlyStatus(id, status) {
     }
 }
 
-module.exports = { fetchInventory, fetchVendorInventoryByType, fetchVendorInventoryByName, fetchVendorInventoryByStatus, fetchVendorInventoryByOnlyStatus };
+async function fetchDetailedInventory(id) {
+
+    const fetchedInventory = await fetchInventory(id);
+
+    if (!fetchedInventory) {
+        return null;
+    }
+
+    //console.log(fetchedInventory);
+
+    let cups = 0, plates = 0, halal = 0, veg = 0, reg = 0, cleanPlates = 0, dirtyPlates = 0, cleanCups = 0, dirtyCups = 0, halalDirty = 0, halalClean = 0, vegDirty = 0, vegClean = 0, regDirty = 0, regClean = 0;
+
+    if (fetchedInventory.items && Array.isArray(fetchedInventory.items)) {
+        fetchedInventory.items.forEach(item => {
+    
+            //console.log("Item", item);
+    
+            if (item.name === "Cup") {
+                if (item.status === "Fresh") {
+                    cleanCups += 1;
+                } else {
+                    dirtyCups += 1;
+                }
+                cups += 1;
+            }
+    
+            if (item.name === "Plate") {
+                if (item.type === "Halal") {
+                    if (item.status === "Fresh") {
+                        halalClean += 1;
+                    } else {
+                        halalDirty += 1;
+                    }
+                    halal += 1;
+                } else if (item.type === "Vegetarian") {
+                    if (item.status === "Fresh") {
+                        vegClean += 1;
+                    } else {
+                        vegDirty += 1;
+                    }
+                    veg += 1;
+                } else {
+                    if (item.status === "Fresh") {
+                        regClean += 1;
+                    } else {
+                        regDirty += 1;
+                    }
+                    reg += 1;
+                }
+    
+                if (item.status === "Fresh") {
+                    cleanPlates += 1;
+                } else {
+                    dirtyPlates += 1;
+                }
+    
+                plates += 1;
+            }
+    
+        });
+    } else {
+        console.error("No valid items found in fetchedInventory");
+    }
+
+    return {cups, plates, halal, veg, reg, cleanPlates, dirtyPlates, cleanCups, dirtyCups, halalDirty, halalClean, vegDirty, vegClean, regDirty, regClean};
+}
+
+module.exports = { fetchInventory, fetchVendorInventoryByType, fetchVendorInventoryByName, fetchVendorInventoryByStatus, fetchVendorInventoryByOnlyStatus, fetchDetailedInventory };
