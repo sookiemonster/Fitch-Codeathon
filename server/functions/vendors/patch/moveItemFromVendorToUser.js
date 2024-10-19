@@ -1,7 +1,6 @@
 const {prisma} = require("../../../lib/prisma");
 
 const {getUserInfo} = require("../../users/get/getUserInfo");
-const {getVendorInfo} = require("../../vendors/get/getVendorInfo");
 
 async function moveItemFromVendorToUser(vendorId, itemId, userId) {
     try {
@@ -10,7 +9,12 @@ async function moveItemFromVendorToUser(vendorId, itemId, userId) {
         });
 
 
-        const vendor = await getVendorInfo(vendorId);
+        const vendor = await prisma.vendor.findUnique({
+            where: { id: vendorId },
+            select: { inventory: true },
+        });
+
+        console.log(vendor);
 
         const user = await getUserInfo(userId);
 
@@ -33,7 +37,7 @@ async function moveItemFromVendorToUser(vendorId, itemId, userId) {
         await prisma.vendor.update({
             where: { id: vendorId },
             data: { inventory: { set: vendor.inventory.filter((i) => i !== itemId) } },
-          });
+        });
 
         await prisma.item.update({
             where: { id: itemId },
@@ -47,6 +51,7 @@ async function moveItemFromVendorToUser(vendorId, itemId, userId) {
 
 
     } catch (error) {
+        console.log(error);
         throw error;
     }
 }
