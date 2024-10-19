@@ -117,13 +117,9 @@ export default function Home() {
       />
       <Overlay />
       <View style={styles.infoContainer}>
-        {/* <Text>
-          {!itemId && "No Item Scanned Yet"}
+        <Text style={styles.infoText}>
+          Scan for {scanningItem ? "Item" : "User"}
         </Text>
-        <Text>
-          {itemId && !userId && "No User Scanned Yet"}
-        </Text> */}
-        <Text style={styles.infoText}>Currently scanning: {scanningItem ? "Item" : "User"}</Text>
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={() => router.back()}>
@@ -136,15 +132,16 @@ export default function Home() {
 
 const styles = StyleSheet.create({
   infoContainer: {
-    position: "absolute",
     top: 50,
-    left: 0,
-    right: 0,
-    alignItems: "center",
-    backgroundColor: "yellow",
+    backgroundColor: "beige",
+    width: "70%",
+    alignSelf: "center",
+    borderRadius: 10,
   },
   infoText: {
-    fontSize: 20,
+    alignSelf: "center",
+    fontSize: 28,
+    lineHeight: 60,
   },
   buttonContainer: {
     position: "absolute",
@@ -156,144 +153,7 @@ const styles = StyleSheet.create({
   button: {
     paddingVertical: 10,
     paddingHorizontal: 20,
-    borderRadius: 5,
-    backgroundColor: "#007AFF",
+    borderRadius: 10,
+    backgroundColor: "#1D804B",
   },
 });
-// import { CameraView } from "expo-camera";
-// import { Stack, useRouter } from "expo-router";
-// import {
-//   Alert,
-//   AppState,
-//   Platform,
-//   SafeAreaView,
-//   StatusBar,
-//   StyleSheet,
-//   TouchableOpacity,
-//   Text,
-//   View,
-// } from "react-native";
-// import { Overlay } from "./Overlay";
-// import { useEffect, useRef, useState } from "react";
-// import { ThemedText } from "@/components/ThemedText";
-
-// export default function Home() {
-//   const qrLock = useRef(false);
-//   const appState = useRef(AppState.currentState);
-//   const router = useRouter();
-//   const [itemId, setItemId] = useState("");
-//   const itemAlertShown = useRef(false);
-//   const itemScanned = useRef(false);
-//   const [userId, setUserId] = useState("");
-//   const userAlertShown = useRef(false);
-
-//   useEffect(() => {
-//     const subscription = AppState.addEventListener("change", (nextAppState) => {
-//       if (
-//         appState.current.match(/inactive|background/) &&
-//         nextAppState === "active"
-//       ) {
-//         qrLock.current = false;
-//       }
-//       appState.current = nextAppState;
-//     });
-//     return () => {
-//       subscription.remove();
-//     };
-//   }, []);
-
-//   const processItemData = (data: string) => {
-//     if (data.includes("/item/")) {
-//       const extractedItemId = data.split("/item/")[1];
-//       console.log("Extracted itemID:", extractedItemId);
-//       Alert.alert(
-//         "Confirm Item",
-//         `Is this the correct item: ${extractedItemId}?`,
-//         [
-//           {
-//             text: "No",
-//             onPress: () => {
-//               qrLock.current = false;
-//               itemAlertShown.current = false;
-//             },
-//             style: "cancel",
-//           },
-//           {
-//             text: "Yes",
-//             onPress: () => {
-//               setItemId(extractedItemId);
-//               itemAlertShown.current = false;
-//               itemScanned.current = true
-//             },
-//           },
-//         ],
-//         { cancelable: false }
-//       );
-//     } else {
-//       if (!itemAlertShown.current) {
-//         Alert.alert("Invalid QR Code", "This QR code does not correspond to an EcoWare item");
-//         itemAlertShown.current = true;
-//       }
-//       qrLock.current = false;
-//     }
-//   };
-//   const processUserData = (data: string) => {
-//     if (data.includes("/user/")) {
-//       const extractedUserId = data.split("/user/")[1];
-//       console.log("Extracted UID:", extractedUserId);
-//       setUserId(extractedUserId);
-//     } else {
-//       if (!userAlertShown.current) {
-//         Alert.alert(
-//           "Invalid QR Code",
-//           "This QR code does not correspond to an EcoWare user"
-//         );
-//         itemAlertShown.current = true;
-//       }
-//       qrLock.current = false;
-//     }
-//   };
-
-//   return (
-//     <SafeAreaView style={StyleSheet.absoluteFillObject}>
-//       <Stack.Screen options={{ title: "Overview", headerShown: false }} />
-//       {Platform.OS === "android" ? <StatusBar hidden /> : null}
-//       <CameraView
-//         style={StyleSheet.absoluteFillObject}
-//         facing="back"
-//         onBarcodeScanned={({ data }) => {
-//           if (data && !qrLock.current) {
-//             qrLock.current = true;
-//             setTimeout(async () => {
-//               itemScanned ? processItemData(data) : processUserData(data);
-//             }, 500);
-//           }
-//         }}
-//       />
-//       <Overlay />
-//       <View style={styles.buttonContainer}>
-//         <Text>
-//           {itemId ? `Scanned Item ID: ${itemId}` : "No Item Scanned Yet"}
-//         </Text>
-//         <TouchableOpacity onPress={() => router.back()}>
-//           <ThemedText type="buttonText">Go Back</ThemedText>
-//         </TouchableOpacity>
-//       </View>
-//     </SafeAreaView>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   buttonContainer: {
-//     position: "absolute",
-//     bottom: 50,
-//     left: 0,
-//     right: 0,
-//     alignItems: "center",
-//   },
-//   button: {
-//     paddingVertical: 10,
-//     paddingHorizontal: 20,
-//     borderRadius: 5,
-//   },
-// });

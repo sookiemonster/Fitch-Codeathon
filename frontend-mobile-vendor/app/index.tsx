@@ -21,46 +21,44 @@ export default function Home() {
       <Stack.Screen options={{ title: "Home", headerShown: false }} />
       {/* TODO: vendor name should be rendered through authentication */}
       <ThemedText type="title">Fauzia's EcoWare</ThemedText>
-      <ThemedText type="subtitle">Plates</ThemedText>
       {/* TODO: inventory counts should be fetched through API */}
       <SafeAreaView style={styles.subcontainer}>
-        <ThemedText type="paragraph">Total</ThemedText>
-        <ThemedText type="paragraph">100</ThemedText>
-        <View style={styles.divider} />
-        <ThemedText type="paragraph">Halal</ThemedText>
-        <ThemedText type="paragraph">20</ThemedText>
-        <View style={styles.divider} />
-        <ThemedText type="paragraph">Vegetarian</ThemedText>
-        <ThemedText type="paragraph">10</ThemedText>
-        <View style={styles.divider} />
-        <ThemedText type="paragraph">Others</ThemedText>
-        <ThemedText type="paragraph">70</ThemedText>
-      </SafeAreaView>
-      <ThemedText type="subtitle">Cups</ThemedText>
-      <SafeAreaView style={styles.subcontainer}>
-        <ThemedText type="paragraph">97</ThemedText>
+        <ThemedText type="subtitle">Plates</ThemedText>
+        <SafeAreaView style={styles.inventoryBox}>
+          <ThemedText type="paragraph">Total</ThemedText>
+          <ThemedText type="paragraph">100</ThemedText>
+          <View style={styles.divider} />
+          <ThemedText type="paragraph">Halal</ThemedText>
+          <ThemedText type="paragraph">20</ThemedText>
+          <View style={styles.divider} />
+          <ThemedText type="paragraph">Vegetarian</ThemedText>
+          <ThemedText type="paragraph">10</ThemedText>
+          <View style={styles.divider} />
+          <ThemedText type="paragraph">Others</ThemedText>
+          <ThemedText type="paragraph">70</ThemedText>
+        </SafeAreaView>
+        <ThemedText type="subtitle">Cups</ThemedText>
+        <SafeAreaView style={styles.inventoryBox}>
+          <ThemedText type="paragraph">97</ThemedText>
+        </SafeAreaView>
       </SafeAreaView>
       <View>
         <Pressable onPress={requestPermission}>
-          <Text
-            style={[
-              styles.buttonStyle,
-              { opacity: isPermissionGranted ? 0 : 1 },
-            ]}
+          <ThemedText
+            type="buttonText"
+            style={{ opacity: !isPermissionGranted ? 0 : 1 }}
           >
-            Request Permissions
-          </Text>
+            Request Camera Permissions
+          </ThemedText>
         </Pressable>
         <Link href={"/scanner"} asChild>
-          <Pressable disabled={!isPermissionGranted}>
-            <Text
-              style={[
-                styles.buttonStyle,
-                { opacity: !isPermissionGranted ? 0.5 : 1 },
-              ]}
+          <Pressable style={styles.button} disabled={!isPermissionGranted}>
+            <ThemedText
+              type="buttonText"
+              style={{ opacity: !isPermissionGranted ? 0.5 : 1 }}
             >
               Scan Code
-            </Text>
+            </ThemedText>
           </Pressable>
         </Link>
       </View>
@@ -73,13 +71,19 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
     justifyContent: "space-around",
-    paddingVertical: 80,
-    paddingLeft: 20,
   },
   subcontainer: {
-    padding: 20,
+    flex: 1,
+    margin: 10,
+    backgroundColor: "#C7C7C7",
+    borderRadius: 20,
+    paddingVertical: 20,
+  },
+  inventoryBox: {
+    alignSelf: "center",
+    paddingVertical: 20,
     backgroundColor: "beige",
-    maxWidth: width - 40,
+    width: "90%",
     borderRadius: 15,
   },
   divider: {
@@ -89,10 +93,12 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginVertical: 20,
   },
-  buttonStyle: {
-    color: "#0E7AFE",
-    fontSize: 20,
-    fontFamily: "DaysOne",
-    textAlign: "center",
+  button: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    backgroundColor: "#1D804B",
+    width: 200,
+    alignSelf: "center",
   },
 });

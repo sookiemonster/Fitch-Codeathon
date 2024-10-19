@@ -24,39 +24,45 @@ export function ThemedText({
   ...rest
 }: ThemedTextProps) {
   const color = useThemeColor({ light: lightColor, dark: darkColor }, "text");
-  let [] = useFonts({
+  let [fontLoaded] = useFonts({
     DaysOne: DaysOne_400Regular,
   });
-  return (
-    <Text
-      style={[
-        { color },
-        type === "default" ? styles.default : undefined,
-        type === "title" ? styles.title : undefined,
-        type === "defaultSemiBold" ? styles.defaultSemiBold : undefined,
-        type === "subtitle" ? styles.subtitle : undefined,
-        type === "link" ? styles.link : undefined,
-        type === "paragraph" ? styles.paragraph : undefined,
-        type === "buttonText" ? styles.buttonText : undefined,
-        style,
-      ]}
-      {...rest}
-    />
-  );
+  if (fontLoaded) {
+    return (
+      <Text
+        style={[
+          { color },
+          type === "default" ? styles.default : undefined,
+          type === "title" ? styles.title : undefined,
+          type === "defaultSemiBold" ? styles.defaultSemiBold : undefined,
+          type === "subtitle" ? styles.subtitle : undefined,
+          type === "link" ? styles.link : undefined,
+          type === "paragraph" ? styles.paragraph : undefined,
+          type === "buttonText" ? styles.buttonText : undefined,
+          style,
+        ]}
+        {...rest}
+      />
+    );
+  }
 }
 
 const styles = StyleSheet.create({
   title: {
+    fontFamily: "DaysOne",
     color: "black",
     fontSize: 30,
-    fontFamily: "DaysOne",
+    lineHeight: 35,
     textAlign: "left",
+    left: 20,
   },
   subtitle: {
+    fontFamily: "DaysOne",
     color: "black",
     fontSize: 24,
-    fontFamily: "DaysOne",
     textAlign: "left",
+    marginTop: 0,
+    left: 20,
   },
   paragraph: {
     color: "black",
@@ -76,10 +82,12 @@ const styles = StyleSheet.create({
   link: {
     lineHeight: 30,
     fontSize: 16,
-    color: "#0a7ea4",
+    color: "#178249",
   },
   buttonText: {
+    fontFamily: "DaysOne",
     fontSize: 22,
-    color: "blue",
+    color: "white",
+    alignSelf: "center",
   },
 });
