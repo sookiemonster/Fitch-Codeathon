@@ -4,11 +4,11 @@ const router = express.Router();
 const registerUser = require("../../functions/authorization/user/signUp");
 const loginUser = require("../../functions/authorization/user/signIn");
 
-const vendorRegister = require("../../functions/authorization/vendor/signUp");
-const vendorLogin = require("../../functions/authorization/vendor/signIn");
+const vendorRegister = require("../../functions/authorization/wahser/signUp");
+const vendorLogin = require("../../functions/authorization/wahser/signIn");
 
-const washerRegister = require("../../functions/authorization/wahser/signUp");
-const washerLogin = require("../../functions/authorization/wahser/signIn");
+const washerRegister = require("../../functions/authorization/vendor/signUp");
+const washerLogin = require("../../functions/authorization/vendor/signIn");
 
 // POST /api/v1/auth for users
 
@@ -24,8 +24,8 @@ router.post("/vendors/login", vendorLogin);
 
 // POST /api/v1/auth/ for washer
 
-router.post("/wahsers/register", washerRegister);
+router.post("/washers/register", washerRegister);
 
-router.post("/wahsers/login", washerLogin);
+router.post("/washers/login", washerLogin);
 
 module.exports = router;
