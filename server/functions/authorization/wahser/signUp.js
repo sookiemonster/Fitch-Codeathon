@@ -1,26 +1,26 @@
 const { prisma } = require("../../../lib/prisma.js");
 const bcrypt = require("bcrypt");
 
-const vendorRegister = async (req, res) => {
+const washerRegister = async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
     return res.status(400).json({ message: "Email and password are required" });
   }
 
-  const vendor = await prisma.vendor.findUnique({
+  const vendor = await prisma.washer.findUnique({
     where: {
       email,
     },
   });
 
   if (vendor) {
-    return res.status(409).json({ message: "Vendor with this email already exists" });
+    return res.status(409).json({ message: "Washer with this email already exists" });
   }
 
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newVendor = await prisma.vendor.create({
+    const newWasher = await prisma.washer.create({
       data: {
         email,
         password: hashedPassword,
@@ -28,11 +28,11 @@ const vendorRegister = async (req, res) => {
     });
     res
       .status(201)
-      .json({ message: "User created successfully: ", vendor: {password, ...newVendor} });
+      .json({ message: "User created successfully: ", washer: {password, ...newWasher} });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error " });
   }
 };
 
-module.exports = vendorRegister;
+module.exports = washerRegister;
