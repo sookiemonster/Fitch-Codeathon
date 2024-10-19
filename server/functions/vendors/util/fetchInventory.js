@@ -106,4 +106,25 @@ async function fetchVendorInventoryByStatus(vendorId, name, type, status) {
 
 }
 
-module.exports = { fetchInventory, fetchVendorInventoryByType, fetchVendorInventoryByName, fetchVendorInventoryByStatus };
+async function fetchVendorInventoryByOnlyStatus(id, status) {
+
+    try {
+        const items = await prisma.item.findMany({
+            where: {
+                owner: id, 
+                status: status
+            }
+        });
+
+        if (items.length === 0) {
+            return null;
+        }
+
+        return items;
+
+    } catch (error) {;
+        throw error; 
+    }
+}
+
+module.exports = { fetchInventory, fetchVendorInventoryByType, fetchVendorInventoryByName, fetchVendorInventoryByStatus, fetchVendorInventoryByOnlyStatus };
