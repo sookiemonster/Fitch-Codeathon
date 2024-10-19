@@ -14,6 +14,8 @@
         grid-area: info;
         font-size: 1rem;
         font-weight: bold;
+        
+        border-radius: 0 0 0 15px;
 
         background-color: var(--active);
         color: var(--card-color);
@@ -43,7 +45,7 @@
         font-size: 1.5rem;
     }
     .count {
-        font-size: 2rem;
+        font-size: 3rem;
         font-weight: bold;
     }
 }

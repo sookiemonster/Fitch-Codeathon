@@ -1,15 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 $gap: 20px;
 $padding: 0;
-// $padding: 0 calc(50px + 1vw) ;
+$padding: calc(10px + 1vh) calc(10px + 1vw);
+$font: "Inter", sans-serif;
 
 :root {
-    font-size: 12pt;
+    font-size: 10pt;
     --bg-color: #ececec;
     --dark-gray: #242424;
     --card-color: #FFFFFF;
     --active: #000000;
-    --green: #11c700;
-    --yellow: #f8af10;
-    --red: #f03304;
+    --green: #238823;
+    --yellow: #FFBF00;
+    --red: #D2222D;
 }
 

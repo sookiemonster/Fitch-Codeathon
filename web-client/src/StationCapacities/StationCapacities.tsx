@@ -4,12 +4,15 @@ import LinearProgress from '@mui/material/LinearProgress';
 import Modal from '@mui/material/Modal';
 import { Box, Button } from "@mui/material";
 import SettingsIcon from '@mui/icons-material/Settings';
+import { Place } from "../DBHandler/interfaces";
 
-interface Station {
-    id:string,
+interface Station extends Place {
     current_capacity:number,
     alert_threshold:number,
-    token_count:number
+    token_count:number,
+
+    lat:number,
+    lng:number
 }
 
 interface StationsProps {

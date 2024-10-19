@@ -1,21 +1,17 @@
-import React, { useReducer, useState } from "react";
+import React, { useMemo, useReducer, useState } from "react";
 import logo from './logo.svg';
 import './styles/style.css';
 
-// Interfaces
-// import { Diet } from "./DietSelector";
-// import { Station } from "./StationCapacities";
-// import { Alert } from "./StockAlerter";
 import Header from "./Header";
 import StockDetailer from "./StockDetailer";
-import { initialState, stateReducer } from "./StateHandler";
-import StationCapacities from "./StationCapacities";
-
-// Use optionals for not-logged in & waiting for load
-
-import { debugIntitialState } from "./StateHandler";
 import StockAlerter from "./StockAlerter";
 import VolumeSeries from "./VolumeSeries";
+import Map from "./Map";
+import StationCapacities from "./StationCapacities";
+
+import { initialState, stateReducer } from "./StateHandler";
+import { debugIntitialState } from "./StateHandler";
+
 const DEBUG = true;
 
 function App() {
@@ -34,6 +30,7 @@ function App() {
         <StockAlerter state={state} dispatch={dispatch} />
         <VolumeSeries state={state} dispatch={dispatch} />
       </div>
+      <Map state={state} dispatch={dispatch} />
     </div>
   );
 }

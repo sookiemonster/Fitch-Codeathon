@@ -1,12 +1,13 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 :root {
-  font-size: 12pt;
+  font-size: 10pt;
   --bg-color: #ececec;
   --dark-gray: #242424;
   --card-color: #FFFFFF;
   --active: #000000;
-  --green: #11c700;
-  --yellow: #f8af10;
-  --red: #f03304;
+  --green: #238823;
+  --yellow: #FFBF00;
+  --red: #D2222D;
 }
 
 #stock-summary-section {
@@ -21,6 +22,7 @@
   grid-area: info;
   font-size: 1rem;
   font-weight: bold;
+  border-radius: 0 0 0 15px;
   background-color: var(--active);
   color: var(--card-color);
   outline: none;
@@ -52,7 +54,7 @@
   font-size: 1.5rem;
 }
 .stock-label .count {
-  font-size: 2rem;
+  font-size: 3rem;
   font-weight: bold;
 }
 
@@ -156,13 +158,118 @@
 }
 
 #series-card {
+  position: relative;
   grid-area: series;
   width: 100%;
   height: 100%;
+  padding-bottom: 0 !important;
+  overflow: hidden;
+}
+#series-card #selectors {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 10px;
+}
+#series-card #selectors div {
+  border-radius: 10px 10px 0 0;
+  z-index: 99;
+  margin: 0;
+}
+
+#stock-alerts-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.alert-container {
+  align-items: flex-start !important;
+}
+.alert-container .description {
+  display: flex;
+  flex-direction: column;
+}
+.alert-container .description .title {
+  font-weight: bold;
+  font-size: 1rem;
+}
+.alert-container .description .request-details, .alert-container .description .completion-details {
+  font-size: 0.9rem;
+  opacity: 0.7;
+  margin-top: -3px;
+}
+
+#map-panel {
+  width: 100%;
+  height: 100%;
+  border-radius: 25px;
+  overflow: hidden;
+}
+
+.leaflet-container {
+  height: 100%;
+}
+
+.station-card {
+  width: 250px;
+  height: 400px;
+  padding: 20px 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 3rem 170px;
+  gap: 5px 10px;
+}
+.station-card header {
+  grid-column: -1/1;
+  display: flex;
+  flex-direction: column;
+}
+.station-card header * {
+  margin: 0;
+  padding: 0;
+}
+.station-card .stat-container {
+  display: grid;
+  grid-template-rows: 1rem 80px;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 15px;
+  border-radius: 10px;
+  gap: 5px;
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-color);
+  text-align: center;
+}
+.station-card .stat-container label {
+  font-size: 1rem;
+}
+.station-card .pie-container {
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.station-card .capacity {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+.station-card .bar-container {
+  overflow-y: scroll;
+  height: 300px;
+}
+.station-card .inventory-breakdown {
+  grid-column: -1/1;
 }
 
 * {
   box-sizing: border-box;
+  font-family: "Inter", sans-serif;
 }
 
 h2 {
@@ -183,7 +290,7 @@ html, body {
   grid-template-rows: 8rem;
   background-color: var(--bg-color);
   gap: 20px;
-  padding: 0;
+  padding: calc(10px + 1vh) calc(10px + 1vw);
 }
 
 #layout-container > div {

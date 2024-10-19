@@ -1,0 +1,82 @@
+@use "_variables";
+@mixin center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+}
+
+#map-panel {
+    width: 100%;
+    height: 100%;
+    border-radius: 25px;
+    overflow: hidden;
+}
+
+.leaflet-container {
+    height: 100%;
+}
+
+.station-card {
+    width: 250px;
+    height: 400px;
+    padding: 20px 10px;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 3rem 170px;
+    gap: 5px 10px;
+
+    header {
+        grid-column: -1/1;
+        display: flex;
+        flex-direction: column;
+
+        * {
+            margin: 0; padding: 0;
+        }
+    }
+
+    .stat-container {
+        display: grid;
+        grid-template-rows: 1rem 80px;
+        
+        align-items: center;
+        justify-content: center;
+        padding: 20px 15px;
+        border-radius: 10px;
+        gap: 5px;
+
+        width: 100%;
+        height: 100%;
+        background-color: var(--bg-color);
+
+        text-align: center;
+
+        label {
+            font-size: 1rem;
+        }
+    }
+
+    .pie-container {
+        position: relative;
+        width: 80px;
+        height: 80px;
+    }
+
+    .capacity {
+        @include center();
+        font-weight: bold;
+        font-size: 1.5rem;
+    }
+
+    .bar-container {
+        overflow-y: scroll;
+        
+        height: 300px;
+    }
+
+    .inventory-breakdown {
+        grid-column: -1/1;
+    }
+}
