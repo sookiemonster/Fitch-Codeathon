@@ -2,9 +2,11 @@
 @use "_variables" as * ;
 @use "_stations" as * ;
 @use "_chart" as * ;
+@use "_alerts" as * ;
 
 * {
     box-sizing: border-box;
+    font-family: $font;
 }
 
 h2 {

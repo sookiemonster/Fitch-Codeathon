@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { State } from "../StateHandler";
 import { User, Place } from "../DBHandler/interfaces";
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 interface Alert {
     id:string,
     item_type:string,
@@ -30,19 +33,24 @@ function AlertView({state, dispatch, ...alert}:StockAlerterProps & Alert):JSX.El
     }
 
     return (
-        <div className="container">
-            <input onClick={() => update() } type="checkbox" defaultChecked={(alert.completer) != null} />
-            <span className="title">{alert.item_type} - <i>{alert.location.real_name}</i></span>
-            <span className="request-details">
-                Request Time: { alert.alert_time.toLocaleString('en-US') }
-            </span>
-            { (alert.completed_time) ? 
-                <span className="completion-details">
-                    Completed By : {alert.completer?.name} at { alert.completed_time?.toLocaleString('en-US') }
+        <FormControlLabel className="alert-container" 
+            control={<Checkbox onClick={update} defaultChecked={(alert.completer) != null} color="success" />}
+            label= {
+                <div className="description">
+                <span className="title">{alert.item_type} - <i>{alert.location.real_name}</i></span>
+                <span className="request-details">
+                    Request Time: { alert.alert_time.toLocaleString('en-US', { dateStyle: 'short', timeStyle: 'short' }) }
                 </span>
-                : 'Incomplete'
-            }
-        </div>
+                { (alert.completed_time) ? 
+                    <span className="completion-details">
+                        Completed by {alert.completer?.name} at { alert.completed_time?.toLocaleString('en-US', { dateStyle: 'short', timeStyle: 'short' }) }
+                    </span>
+                    
+                    : 
+                    <span className="completion-details">Incomplete </span>
+                }
+                </div>
+            } />
     )
 }
 
@@ -51,7 +59,9 @@ function StockAlerter({state, dispatch}: StockAlerterProps):JSX.Element {
         <div id="stock-alerts-container">
             <h2>Vendor Stock Alerts</h2>
              {(state?.alerts) ? 
-             state.alerts.map(alert => <AlertView key={alert.id} state={state} dispatch={dispatch} {...alert}/>)
+             <FormGroup>
+             { state.alerts.map(alert => <AlertView key={alert.id} state={state} dispatch={dispatch} {...alert}/>) }
+             </FormGroup>
              : "Loading..."}
         </div>
     )

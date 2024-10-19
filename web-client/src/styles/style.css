@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 :root {
   font-size: 10pt;
   --bg-color: #ececec;
@@ -53,7 +54,7 @@
   font-size: 1.5rem;
 }
 .stock-label .count {
-  font-size: 2.5rem;
+  font-size: 3rem;
   font-weight: bold;
 }
 
@@ -177,8 +178,32 @@
   margin: 0;
 }
 
+#stock-alerts-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.alert-container {
+  align-items: flex-start !important;
+}
+.alert-container .description {
+  display: flex;
+  flex-direction: column;
+}
+.alert-container .description .title {
+  font-weight: bold;
+  font-size: 1rem;
+}
+.alert-container .description .request-details, .alert-container .description .completion-details {
+  font-size: 0.9rem;
+  opacity: 0.7;
+  margin-top: -3px;
+}
+
 * {
   box-sizing: border-box;
+  font-family: "Inter", sans-serif;
 }
 
 h2 {
