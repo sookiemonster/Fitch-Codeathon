@@ -1,4 +1,5 @@
 import { prisma } from "../lib/prisma";
+const bcrypt = require("bcrypt");
 
 async function main() {
 
@@ -11,20 +12,20 @@ async function main() {
   // SEED USERS
   await prisma.user.createMany({
     data: [
-      { id: 31, name: null, email: "u1@t.com", password: "test", points: 0, discounts: [], history: [] },
-      { id: 32, name: null, email: "u2@t.com", password: "test2", points: 0, discounts: [], history: [] },
-      { id: 33, name: null, email: "u3@t.com", password: "test3", points: 0, discounts: [], history: [] }
+      { id: 31, name: null, email: "u1@t.com", password: await bcrypt.hash("test1", 10), points: 0, discounts: [], history: [] },
+      { id: 32, name: null, email: "u2@t.com", password: await bcrypt.hash("test2", 10), points: 0, discounts: [], history: [] },
+      { id: 33, name: null, email: "u3@t.com", password: await bcrypt.hash("test3", 10), points: 0, discounts: [], history: [] }
     ]
   })
 
   // SEED VENDORS
   await prisma.vendor.createMany({
     data: [
-      { id: 21, name: null, x: 49.01, y: 67.01, inventory: [] },
-      { id: 22, name: null, x: 47.01, y: 67.01, inventory: [] },
-      { id: 23, name: null, x: 51.01, y: 63.01, inventory: [] },
-      { id: 24, name: null, x: 47.01, y: 69.01, inventory: [] },
-      { id: 25, name: null, x: 51.01, y: 69.01, inventory: [] }
+      { id: 21, email: "v1@t.com", password: await bcrypt.hash("test1", 10), name: null, x: 49.01, y: 67.01, inventory: [] },
+      { id: 22, email: "v2@t.com", password: await bcrypt.hash("test2", 10), name: null, x: 47.01, y: 67.01, inventory: [] },
+      { id: 23, email: "v3@t.com", password: await bcrypt.hash("test3", 10), name: null, x: 51.01, y: 63.01, inventory: [] },
+      { id: 24, email: "v4@t.com", password: await bcrypt.hash("test4", 10), name: null, x: 47.01, y: 69.01, inventory: [] },
+      { id: 25, email: "v5@t.com", password: await bcrypt.hash("test5", 10), name: null, x: 51.01, y: 69.01, inventory: [] }
     ]
   })
 
@@ -40,6 +41,8 @@ async function main() {
   // SEED WASHERS
   await prisma.washer.create({
     data: {
+      email: "w1@t.com", 
+      password: await bcrypt.hash("test1", 10),
       x: 50.01,
       y: 47.23,
       inventory: []

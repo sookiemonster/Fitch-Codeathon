@@ -7,8 +7,8 @@ const loginUser = require("../../functions/authorization/user/signIn");
 const vendorRegister = require("../../functions/authorization/vendor/signUp");
 const vendorLogin = require("../../functions/authorization/vendor/signIn");
 
-const washerRegister = require("../../functions/authorization/wahser/signUp");
-const washerLogin = require("../../functions/authorization/wahser/signIn");
+const washerRegister = require("../../functions/authorization/washer/signUp");
+const washerLogin = require("../../functions/authorization/washer/signIn");
 
 // POST /api/v1/auth for users
 
