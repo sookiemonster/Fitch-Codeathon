@@ -180,6 +180,7 @@ router.patch('/:id/inventory/:item/add', async (req, res) => {
     }
     try {
         await addItemToVendorInventory(parseInt(id), parseInt(item), capitalizeFirstLetter(status));
+        res.status(200).send({ message : 'Item was successfully added to inventory!' });
     } catch (error) {
         if (error.message === "Item not found") {
             return res.status(404).send({ message : 'Item not found' });
