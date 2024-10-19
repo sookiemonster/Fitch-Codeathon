@@ -2,6 +2,7 @@
   "name": "server",
   "version": "1.0.0",
   "description": "backend",
+  "module": "commonjs",
   "main": "index.js",
   "scripts": {
     "prisma:generate": "prisma generate",
