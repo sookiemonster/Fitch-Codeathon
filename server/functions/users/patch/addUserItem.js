@@ -46,6 +46,8 @@ async function addUserItem(userId, itemId) {
       ownerInventoryField = "inventory";
     }
 
+    console.log(ownerType);
+
     if (!ownerType) {
       throw new Error("Owner not found");
     }
@@ -86,8 +88,8 @@ async function addUserItem(userId, itemId) {
 
     return { message: "Item successfully added to user inventory and status updated to Dirty" };
   } catch (error) {
-    console.error(error);
-    return { error: error.message };
+    //console.error(error);
+    throw error;
   }
 }
 
