@@ -3,6 +3,7 @@ import { Station } from "../StationCapacities";
 import { PieChart } from '@mui/x-charts/PieChart';
 import { Stack, Typography, Divider} from "@mui/material";
 import { Item } from "../DBHandler/interfaces";
+import { API_URL } from "../config";
 
 const MAX_TOKENS = 10000;
 
@@ -20,6 +21,19 @@ const getTokenStockCategory = (token_count:number) => {
     else if (stock_percentage < 50) { return "Near Half"; }
     else if (stock_percentage < 75) { return "Near Full"; }
     else if (stock_percentage == 100) { return "Full"; }
+}
+
+function countByName(items: Item[]): InventoryCounts {
+    return items.reduce((acc, item) => {
+        // If the name already exists in the accumulator, increment the count
+        if (acc[item.name]) {
+            acc[item.name] += 1;
+        } else {
+            // Otherwise, initialize it with a count of 1
+            acc[item.name] = 1;
+        }
+        return acc;
+    }, {} as InventoryCounts);
 }
 
 interface capacityProps {
@@ -92,18 +106,20 @@ function ItemizedView({id}:itemizedProps):JSX.Element {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`${id}/items`);
+                const response = await fetch(`${API_URL}/stations/${id}/inventory`);
 
                 if (!response.ok) {
                     throw new Error(`Error: ${response.statusText}`);
                 }
 
                 const data = await response.json();
-                setStationInventory(data);
+                // console.log("data", data);
+                setStationInventory(countByName(data));
             } catch (err:any) {
                 setError(err.message);
             } finally {
                 setLoading(false);
+                console.log(stationInventory);
             }
         };
 
@@ -120,7 +136,7 @@ function ItemizedView({id}:itemizedProps):JSX.Element {
 
     return (
         <div className="inventory-breakdown">
-            <h1>Items List</h1>
+            <Typography variant="caption">Station Inventory</Typography>
             {Object.entries(stationInventory).map(([name, count]) => (
                 <p key="name">{name} - {count} </p>
             ))}
