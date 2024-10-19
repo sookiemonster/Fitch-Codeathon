@@ -1,7 +1,8 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { Station } from "../StationCapacities";
 import { PieChart } from '@mui/x-charts/PieChart';
 import { Stack, Typography, Divider} from "@mui/material";
+import { Item } from "../DBHandler/interfaces";
 
 const MAX_TOKENS = 10000;
 
@@ -29,6 +30,13 @@ interface tokenProps {
     token_count:number;
 }
 
+interface itemizedProps {
+    id:number;
+}
+
+interface InventoryCounts {
+    [item_name: string]: number;
+}
 
 function CapacityView({current_capacity}:capacityProps):JSX.Element {
     return (
@@ -74,6 +82,52 @@ function TokenView({token_count}:tokenProps):JSX.Element {
     );
 }
 
+function ItemizedView({id}:itemizedProps):JSX.Element {
+    // State to hold the fetched data
+    const [stationInventory, setStationInventory] = useState<InventoryCounts>({});
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    // Fetch data from the API when the component mounts
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch(`${id}/items`);
+
+                if (!response.ok) {
+                    throw new Error(`Error: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+                setStationInventory(data);
+            } catch (err:any) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, []); 
+
+    if (loading) {
+        return <div className="inventory-breakdown">Loading...</div>;
+    }
+
+    if (error) {
+        return <div className="inventory-breakdown">Error. Could not load station inventory</div>;
+    }
+
+    return (
+        <div className="inventory-breakdown">
+            <h1>Items List</h1>
+            {Object.entries(stationInventory).map(([name, count]) => (
+                <p key="name">{name} - {count} </p>
+            ))}
+        </div>
+    );
+}
+
 function StationCard({id, real_name, current_capacity, alert_threshold, token_count, lat, lng}:Station):JSX.Element {
     return (
         <div className="station-card">
@@ -84,6 +138,7 @@ function StationCard({id, real_name, current_capacity, alert_threshold, token_co
 
             <CapacityView current_capacity={current_capacity} />
             <TokenView token_count={token_count} />
+            <ItemizedView id={id} />
         </div>
     )
 }

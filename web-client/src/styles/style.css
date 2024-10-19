@@ -219,7 +219,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 3rem 170px;
-  gap: 5px;
+  gap: 5px 10px;
 }
 .station-card header {
   grid-column: -1/1;
@@ -235,7 +235,7 @@
   grid-template-rows: 1rem 80px;
   align-items: center;
   justify-content: center;
-  padding: 15px;
+  padding: 20px 15px;
   border-radius: 10px;
   gap: 5px;
   width: 100%;
@@ -258,6 +258,13 @@
   transform: translate3d(-50%, -50%, 0);
   font-weight: bold;
   font-size: 1.5rem;
+}
+.station-card .bar-container {
+  overflow-y: scroll;
+  height: 300px;
+}
+.station-card .inventory-breakdown {
+  grid-column: -1/1;
 }
 
 * {

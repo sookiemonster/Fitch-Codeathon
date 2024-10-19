@@ -10,10 +10,10 @@ interface Place {
 }
 
 interface Item {
-    type:string,
-    last_checkout_date:Date,
-    status:Status,
-    location:Location
+    id:number
+    name:string,
+    type:string, 
+    status:string,
 }
 
 interface InventoryCounters {
@@ -33,4 +33,4 @@ interface User {
     name:string
 }
 
-export type {User, Place};
+export type {User, Place, Item};
