@@ -7,6 +7,8 @@ const { getUserItems } = require('../../functions/users/get/getUserItems.js');
 const { getUserDiscounts } = require('../../functions/users/get/getUserDiscounts.js');
 const { getUserPoints } = require('../../functions/users/get/getUserPoints.js');
 
+const { getUsersSize } = require('../../functions/users/get/getUsersSize.js');
+
 const { addUserItem } = require('../../functions/users/patch/addUserItem.js');
 const { addToUserHistory } = require('../../functions/users/patch/addToUserHistory.js');
 const { removeUserDiscount } = require('../../functions/users/patch/removeUserDiscount.js');
@@ -14,6 +16,19 @@ const { addUserPoints } = require('../../functions/users/patch/addUserPoints.js'
 const { removeUserPoints } = require('../../functions/users/patch/removeUserPoints.js');
 
 // GET /api/v1/users
+
+router.get('/size', async (req, res) => {
+
+    try {
+        const users = await getUsersSize();
+        if (!users) {
+            return res.status(404).send({ message : 'No users found' });
+        }
+        res.status(200).send(users);
+    } catch (error) {
+        res.status(500).send({ message : 'Internal server error' });
+    }
+});
 
 router.get('/:id', async (req, res) => {
 
