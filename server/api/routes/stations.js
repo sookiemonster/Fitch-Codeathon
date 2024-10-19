@@ -142,7 +142,7 @@ router.get("/:id/volume", async (req, res) => {
         if (!volume) {
             return res.status(404).send({ message : 'Station not found' });
         }
-        return res.send(volume);
+        res.status(200).send({volume});
     } catch (error) {
         console.log(error);
         res.status(500).send({ message : 'Internal server error' });

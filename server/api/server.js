@@ -1,5 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const cors = require('cors');
+
 const usersRoutes = require("./routes/users.js");
 const vendorsRoutes = require("./routes/vendors.js");
 const washerRoutes = require("./routes/washer.js");
@@ -11,6 +13,11 @@ const metricsRoutes = require("./routes/metrics.js");
 
 const app = express();
 const PORT = 5000;
+
+app.use(cors({
+  origin: 'http://localhost:3000', 
+  credentials: true, 
+}));
 
 app.use(bodyParser.json());
 
