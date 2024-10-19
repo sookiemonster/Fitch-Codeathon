@@ -20,47 +20,6 @@ const loginUser = async (req, res) => {
     if (!isPasswordValid) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
-    //Determine role based on ID
-    //Note: Have to edit database IDs to have the prefix correspond to their role
-    // const idPrefix = user.id.charAt(0);
-    // let role = "user"; //Default role assuming washers and vendor will have pre-created/set accounts and do not need to go through signup (email&pw)
-
-    // if (idPrefix === "W") {
-    //   role = "washer";
-    // } else if (idPrefix === "V") {
-    //   role = "vendor";
-    // }
-
-    // ----------------------FOR NOW -----------------------
-
-    let ownerType = null;
-
-    const userOwner = await prisma.user.findFirst({
-      where: { id: user.id },
-    });
-    const vendorOwner = await prisma.vendor.findFirst({
-      where: { id: user.id },
-    });
-    const washerOwner = await prisma.washer.findFirst({
-      where: { id: user.id },
-    });
-    const stationOwner = await prisma.station.findFirst({
-      where: { id: user.id },
-    });
-
-    if (userOwner) {
-      ownerType = "user";
-    } else if (vendorOwner) {
-      ownerType = "vendor";
-    } else if (washerOwner) {
-      ownerType = "washer";
-    } else if (stationOwner) {
-      ownerType = "station";
-    }
-
-    const role = ownerType;
-
-    // ---------------------------------------------------------
 
     const userWithoutPassword = {
       ...user,
@@ -70,7 +29,7 @@ const loginUser = async (req, res) => {
     //Payload to bring to frontend through token
     const payload = {
       id: user.id,
-      role: role,
+      role: "user",
     };
     //Creation of token
     const token = jwt.sign(payload, "uGeL7Mey5tp1KVg", {
@@ -79,7 +38,7 @@ const loginUser = async (req, res) => {
 
     res
       .status(200)
-      .json({ message: `Login successful, welcome ${role}!`, userWithoutPassword, token });
+      .json({ message: `Login successful, welcome ${user.email}!`, userWithoutPassword, token });
   } catch (error) {
     console.error("Error during login:", error);
     res.status(500).json({ message: "Internal server error" });
