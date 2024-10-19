@@ -56,6 +56,12 @@ async function addStationInventory(stationId, itemId) {
         where: { id: userOwner.id },
         data: { items: { set: userOwner.items.filter((i) => i !== itemId) } },
       });
+
+      // IF ITS USER, ADD THE ITEM INTO USERS HISTORY LIST
+      await prisma.user.update({
+        where: { id: userOwner.id },
+        data: { history: { push: itemId } },
+      });
     } else if (ownerType === "vendor") {
       await prisma.vendor.update({
         where: { id: vendorOwner.id },
