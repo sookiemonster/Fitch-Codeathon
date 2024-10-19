@@ -8,7 +8,8 @@ const itemsRoutes = require('./routes/items.js');
 const discountsRoutes = require('./routes/discounts.js');
 const authRoutes = require('./routes/auth.js');
 
-const app = express(bodyParser.json());
+const app = express();
+app.use(bodyParser.json());
 const PORT = 5000;
 
 app.use('/api/v1/users', usersRoutes);
