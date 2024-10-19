@@ -3,7 +3,7 @@ import { View, Button, TextInput } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useState } from "react";
 
-export default function RegistrationScreen() {
+export default function LoginScreen() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
@@ -15,7 +15,7 @@ export default function RegistrationScreen() {
   };
 
   return (
-    <View>
+    <View style={{ width: "80%", padding: 10}}>
       <TextInput
         placeholder="Username"
         value={username}
@@ -27,7 +27,7 @@ export default function RegistrationScreen() {
         value={password}
         onChangeText={setPassword}
       />
-      <Button title="Register" onPress={handleLogin} />
+      <Button title="Login" onPress={handleLogin} />
     </View>
   );
 }
