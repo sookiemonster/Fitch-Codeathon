@@ -1,4 +1,4 @@
-import { prisma } from "../lib/prisma";
+const { prisma } = require("../lib/prisma.js");
 async function updateOwnerInventories() {
     // Fetch all serviceware items
     const serviceware = await prisma.item.findMany()
