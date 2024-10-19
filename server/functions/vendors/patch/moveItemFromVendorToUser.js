@@ -1,5 +1,7 @@
 const {prisma} = require("../../../lib/prisma");
 
+const {getUserInfo} = require("../../users/get/getUserInfo");
+const {getVendorInfo} = require("../../vendors/get/getVendorInfo");
 
 async function moveItemFromVendorToUser(vendorId, itemId, userId) {
     try {
@@ -7,13 +9,10 @@ async function moveItemFromVendorToUser(vendorId, itemId, userId) {
             where: { id: itemId },
         });
 
-        const vendor = await prisma.vendor.findUnique({
-            where: { id: vendorId },
-        });
 
-        const user = await prisma.user.findUnique({
-            where: { id: userId },
-        });
+        const vendor = await getVendorInfo(vendorId);
+
+        const user = await getUserInfo(userId);
 
         if (!user) {
             throw new Error("User not found");

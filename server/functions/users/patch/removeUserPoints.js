@@ -1,13 +1,9 @@
 const { prisma } = require("../../../lib/prisma");
+const { getUserPoints } = require("../get/getUserPoints");
 
 async function removeUserPoints(id, points) {
 
-    const user = await prisma.user.findUnique({
-        where: { id: id },
-        select: {
-            points: true
-        }
-    });
+    const user = await getUserPoints(id);
 
     if ( user.points < points ) {
         throw new Error("Not enough points");

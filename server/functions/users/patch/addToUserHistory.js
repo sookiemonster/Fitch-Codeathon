@@ -1,14 +1,9 @@
 const { prisma } = require("../../../lib/prisma");
+const { getUserInfo } = require("../get/getUserInfo");
 
 async function addToUserHistory(id, itemId) {
 
-    const user = await prisma.user.findUnique({
-        where: { id: id },
-        select: {
-            items : true,
-            history: true
-        }
-    });
+    const user = await getUserInfo(id);
 
     const item = await prisma.item.findUnique({
         where: { id: itemId },

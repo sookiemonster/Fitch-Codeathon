@@ -1,13 +1,9 @@
 const { prisma } = require("../../../lib/prisma");
+const { getUserDiscounts } = require("../get/getUserDiscounts");
 
 async function addUserDiscount(id, discountId) {
 
-    const user = await prisma.user.findUnique({
-        where: { id: id },
-        select: {
-            discounts: true
-        }
-    });
+    const user = await getUserDiscounts(id);
 
     const discount = await prisma.discount.findUnique({
         where: { id: discountId },

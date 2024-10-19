@@ -1,13 +1,8 @@
 const { prisma } = require("../../../lib/prisma");
-
+const { getUserPoints } = require("../get/getUserPoints");
 async function addUserPoints(id, points) {
 
-    const user = await prisma.user.findUnique({
-        where: { id: id },
-        select: {
-            points: true
-        }
-    });
+    const user = await getUserPoints(id);
 
     if (!user) {
         throw new Error("User not found");

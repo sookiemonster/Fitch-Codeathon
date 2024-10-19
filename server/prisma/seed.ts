@@ -2,11 +2,11 @@ import { prisma } from "../lib/prisma";
 
 async function main() {
 
-    await prisma.user.deleteMany()    // Deletes all users
-    await prisma.vendor.deleteMany()  // Deletes all vendors
-    await prisma.station.deleteMany() // Deletes all stations
-    await prisma.item.deleteMany()    // Deletes all items
-    await prisma.washer.deleteMany()  // Deletes all washers
+  await prisma.user.deleteMany()    // Deletes all users
+  await prisma.vendor.deleteMany()  // Deletes all vendors
+  await prisma.station.deleteMany() // Deletes all stations
+  await prisma.item.deleteMany()    // Deletes all items
+  await prisma.washer.deleteMany()  // Deletes all washers
 
   // SEED USERS
   await prisma.user.createMany({
