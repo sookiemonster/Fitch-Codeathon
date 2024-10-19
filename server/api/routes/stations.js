@@ -74,7 +74,7 @@ router.get('/:id/inventory', async (req, res) => {
     try {
         const inventory = await getStationInventory(parseInt(id));
         if (inventory === 0) {
-            return res.status(404).send({ message : 'Station inventory is empty' });
+            return res.send([]);
         }
         if (!inventory) {
             return res.status(404).send({ message : 'Station not found' });
