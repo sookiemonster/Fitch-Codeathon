@@ -1,6 +1,6 @@
 const { prisma } = require("../../../lib/prisma");
 
-async function addUserItem(userId, itemId) {
+async function addItemToVendorInventory(vendorId, itemId, status) {
   try {
     
     const item = await prisma.item.findUnique({
@@ -32,6 +32,8 @@ async function addUserItem(userId, itemId) {
       where: { inventory: { has: itemId } },
     });
 
+    console.log(userOwner, vendorOwner, washerOwner, stationOwner);
+
     if (userOwner) {
       ownerType = "user";
       ownerInventoryField = "items";
@@ -46,7 +48,7 @@ async function addUserItem(userId, itemId) {
       ownerInventoryField = "inventory";
     }
 
-    console.log(ownerType);
+
 
     if (!ownerType) {
       throw new Error("Owner not found");
@@ -75,22 +77,23 @@ async function addUserItem(userId, itemId) {
       });
     }
 
-    // ADD IT TO THE USER AND CHANGE THE STATUS
-    await prisma.user.update({
-      where: { id: userId },
-      data: { items: { push: itemId } },
+    // ADD IT TO THE VENDOR AND CHANGE THE STATUS
+    await prisma.vendor.update({
+      where: { id: vendorId },
+      data: { inventory: { push: itemId } },
     });
 
     await prisma.item.update({
       where: { id: itemId },
-      data: { status: "Dirty", owner: userId },
+      data: { status: status ? status : "Fresh", owner: vendorId },
     });
 
-    return { message: "Item successfully added to user inventory and status updated to Dirty" };
+    return { message: "Item successfully added to vendor inventory and status updated to Dirty" };
   } catch (error) {
-    //console.error(error);
+    console.error(error);
     throw error;
+    
   }
 }
 
-module.exports = { addUserItem };
+module.exports = { addItemToVendorInventory };
