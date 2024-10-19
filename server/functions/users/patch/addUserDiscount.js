@@ -3,14 +3,25 @@ const { getUserDiscounts } = require("../get/getUserDiscounts");
 
 async function addUserDiscount(id, discountId) {
 
-    const user = await getUserDiscounts(id);
+    const user = await prisma.user.findUnique({
+        where: { id: id },
+        select: {
+            id: true,
+            points: true
+        }
+    });
 
     const discount = await prisma.discount.findUnique({
         where: { id: discountId },
         select: {
-            id: true
+            id: true,
+            cost: true
         }
     });
+
+    if (user.points < discount.cost) {
+        throw new Error("Not enough points");
+    }
 
     if (!user) {
         throw new Error("User not found");
@@ -22,9 +33,11 @@ async function addUserDiscount(id, discountId) {
 
     await prisma.user.update({
         where: { id: id },
-        data: { discounts: { push: discountId } },
+        data: { 
+            discounts: { push: discountId },
+            points: user.points - discount.cost
+        },
     });
-
 }
 
 module.exports = { addUserDiscount };

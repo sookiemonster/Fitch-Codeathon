@@ -32,7 +32,7 @@ async function addItemToVendorInventory(vendorId, itemId, status) {
       where: { inventory: { has: itemId } },
     });
 
-    console.log(userOwner, vendorOwner, washerOwner, stationOwner);
+    //console.log(userOwner, vendorOwner, washerOwner, stationOwner);
 
     if (userOwner) {
       ownerType = "user";

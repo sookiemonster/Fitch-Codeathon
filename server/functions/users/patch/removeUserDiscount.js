@@ -22,7 +22,7 @@ async function removeUserDiscount(id, discountId) {
 
     await prisma.user.update({
         where: { id: id },
-        data: { discounts: { set: userOwner.discounts.filter((i) => i !== discountId) } },
+        data: { discounts: { set: user.discounts.filter((i) => i !== discountId) } },
     });
 
 }

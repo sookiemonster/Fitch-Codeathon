@@ -230,6 +230,10 @@ router.patch("/:id/discounts/:discount/add", async (req, res) => {
       return res.status(404).send({ message: "Discount not found" });
     }
 
+    if (error.message === "Not enough points") {
+      return res.status(400).send({ message: "Not enough points" });
+    }
+
     if (error.message === "User not found") {
       return res.status(404).send({ message: "User not found" });
     }
