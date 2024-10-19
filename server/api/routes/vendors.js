@@ -11,11 +11,23 @@ const { getVendorInventoryByType } = require('../../functions/vendors/get/getInv
 const { getVendorInventoryByName } = require('../../functions/vendors/get/getInventoryByName.js');
 const { getVendorInventoryByStatus } = require('../../functions/vendors/get/getInventoryByStatus.js');
 
+const { getAllVendorsIds } = require('../../functions/vendors/get/getAllVendorsIds.js');
+
 const { addItemToVendorInventory } = require('../../functions/vendors/patch/addItemToVendorInventory.js');
 const { moveItemFromVendorToUser } = require('../../functions/vendors/patch/moveItemFromVendorToUser.js');
 const { getVendorInventoryByOnlyStatus } = require('../../functions/vendors/get/getVendorInventoryByOnlyStatus.js');
 
 // GET /api/v1/vendors
+
+router.get('/', async (req, res) => {
+    try {
+        const vendors = await getAllVendorsIds();
+        return res.status(200).send(vendors);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({ message : 'Internal server error' });
+    }
+});
 
 router.get('/:id', async (req, res) => {
     
