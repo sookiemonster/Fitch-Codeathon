@@ -6,11 +6,23 @@ const { getStationLocation } = require('../../functions/stations/get/getStationL
 const { getStationInventory } = require('../../functions/stations/get/getStationInventory.js');
 const { getStationCapacity } = require('../../functions/stations/get/getStationCapacity.js');
 const { getStationVolume } = require('../../functions/stations/get/getStationVolume.js');
+const { getAllStationsIds } = require('../../functions/stations/get/getAllStationsIds.js');
 
 const { addStationInventory } = require('../../functions/stations/patch/addStationInventory.js');
 const { moveItemToWasher } = require('../../functions/stations/patch/moveItemToWasher.js');
 
 // GET /api/v1/stations
+
+router.get('/', async (req, res) => {
+    try {
+        const stations = await getAllStationsIds();
+        return res.status(200).send(stations);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({ message : 'Internal server error' });
+    }
+    
+});
 
 router.get('/:id', async (req, res) => {
     

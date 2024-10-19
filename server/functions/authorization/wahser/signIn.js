@@ -2,7 +2,7 @@ const { prisma } = require("../../../lib/prisma.js");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const loginUser = async (req, res) => {
+const vendorLogin = async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -10,10 +10,10 @@ const loginUser = async (req, res) => {
   }
 
   try {
-    const user = await prisma.user.findUnique({
+    const vendor = await prisma.vendor.findUnique({
       where: { email },
     });
-    if (!user) {
+    if (!vendor) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
     const isPasswordValid = await bcrypt.compare(password, user.password);
@@ -21,28 +21,28 @@ const loginUser = async (req, res) => {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    const userWithoutPassword = {
-      ...user,
+    const vendorWithoutPassword = {
+      ...vendor,
       password: undefined,
     };
 
     //Payload to bring to frontend through token
     const payload = {
-      id: user.id,
-      role: "user",
+      id: vendor.id,
+      role: "vendor",
     };
     //Creation of token
     const token = jwt.sign(payload, "uGeL7Mey5tp1KVg", {
-      expiresIn: "7d",
+      expiresIn: "3d",
     });
 
     res
       .status(200)
-      .json({ message: `Login successful, welcome ${user.email}!`, userWithoutPassword, token });
+      .json({ message: `Login successful, welcome ${vendor.email}!`, vendorWithoutPassword, token });
   } catch (error) {
     console.error("Error during login:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
 
-module.exports = loginUser;
+module.exports = vendorLogin;

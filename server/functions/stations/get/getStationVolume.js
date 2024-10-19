@@ -1,4 +1,3 @@
-const {prisma} = require("../../../lib/prisma");
 const { getStationInventory } = require("./getStationInventory");
 
 async function getStationVolume(stationId) {
