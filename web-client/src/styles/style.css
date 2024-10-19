@@ -1,12 +1,12 @@
 :root {
-  font-size: 12pt;
+  font-size: 10pt;
   --bg-color: #ececec;
   --dark-gray: #242424;
   --card-color: #FFFFFF;
   --active: #000000;
-  --green: #11c700;
-  --yellow: #f8af10;
-  --red: #f03304;
+  --green: #238823;
+  --yellow: #FFBF00;
+  --red: #D2222D;
 }
 
 #stock-summary-section {
@@ -21,6 +21,7 @@
   grid-area: info;
   font-size: 1rem;
   font-weight: bold;
+  border-radius: 0 0 0 15px;
   background-color: var(--active);
   color: var(--card-color);
   outline: none;
@@ -52,7 +53,7 @@
   font-size: 1.5rem;
 }
 .stock-label .count {
-  font-size: 2rem;
+  font-size: 2.5rem;
   font-weight: bold;
 }
 
@@ -156,9 +157,24 @@
 }
 
 #series-card {
+  position: relative;
   grid-area: series;
   width: 100%;
   height: 100%;
+  padding-bottom: 0 !important;
+  overflow: hidden;
+}
+#series-card #selectors {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 10px;
+}
+#series-card #selectors div {
+  border-radius: 10px 10px 0 0;
+  z-index: 99;
+  margin: 0;
 }
 
 * {
@@ -183,7 +199,7 @@ html, body {
   grid-template-rows: 8rem;
   background-color: var(--bg-color);
   gap: 20px;
-  padding: 0;
+  padding: calc(10px + 1vh) calc(10px + 1vw);
 }
 
 #layout-container > div {
