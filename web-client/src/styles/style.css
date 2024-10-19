@@ -212,6 +212,54 @@
   height: 100%;
 }
 
+.station-card {
+  width: 250px;
+  height: 400px;
+  padding: 20px 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 3rem 170px;
+  gap: 5px;
+}
+.station-card header {
+  grid-column: -1/1;
+  display: flex;
+  flex-direction: column;
+}
+.station-card header * {
+  margin: 0;
+  padding: 0;
+}
+.station-card .stat-container {
+  display: grid;
+  grid-template-rows: 1rem 80px;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  border-radius: 10px;
+  gap: 5px;
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-color);
+  text-align: center;
+}
+.station-card .stat-container label {
+  font-size: 1rem;
+}
+.station-card .pie-container {
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.station-card .capacity {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
 * {
   box-sizing: border-box;
   font-family: "Inter", sans-serif;

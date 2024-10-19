@@ -4,7 +4,9 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { State } from "../StateHandler";
 import { Place } from "../DBHandler/interfaces";
+import { PieChart } from '@mui/x-charts/PieChart';
 
+import StationCard from "./StationCard";
 const DARK_MODE = false;
 
 interface MapProps {
@@ -13,17 +15,13 @@ interface MapProps {
 }
 
 function StationMarkers({state, dispatch}:MapProps):JSX.Element {
-    // const popUp = () => {
-
-    // }
-
     return (
         <>
         { state.stations ? 
         state.stations.map(station => 
             <Marker key={station.id} position={[station.lat, station.lng]}>
                 <Popup>
-                {station.real_name}
+                <StationCard {...station} />
                 </Popup>
             </Marker>
         )
@@ -56,10 +54,6 @@ function Map({state, dispatch}:MapProps):JSX.Element {
                     />
                 }
                 <StationMarkers state={state} dispatch={dispatch} />
-                {/* <Marker position={[40.6885, -74.0190]}>
-                <Popup>Some pop
-                </Popup>
-                </Marker> */}
             </MapContainer>
         </div>
     );
