@@ -13,11 +13,9 @@
 **Clone the repo**
 
 ```cmd
-
 git clone https://github.com/sookiemonster/Fitch-Codeathon ecoware
 
 cd ecoware
-
 ```
 
 **Database**
@@ -28,105 +26,159 @@ We used PostgreSQL for our database with Prisma ORM.
 
   1. Install PostgreSQL
     For Linux 
-    ```cmd sudo apt install postgresql```
+    ```cmd
+    sudo apt install postgresql
+    ```
     For macOS (Homebrew) 
-    ```brew install postgresql```
+    ```cmd
+    brew install postgresql
+    ```
     
-  2. Start PostgreSQL
+  3. Start PostgreSQL
     For Linux 
-    ```sudo service postgresql start```
+    ```cmd
+    sudo service postgresql start
+    ```
     For macOS (Homebrew) 
-    ```brew services start postgresql```
+    ```cmd
+    brew services start postgresql
+    ```
     
-  3. Create a User and Database
+  5. Create a User and Database
     Log into the PostgreSQL shel: 
-    ```sudo -u postgres psql```
+    ```cmd
+    sudo -u postgres psql
+    ```
     Create a new user and database: 
-    ```CREATE USER myuser WITH PASSWORD 'mypassword';
-    CREATE DATABASE mydb OWNER myuser;```
+    ```cmd
+    CREATE USER myuser WITH PASSWORD 'mypassword';
+    CREATE DATABASE mydb OWNER myuser;
+    ```
 
-  4. Integrate Prisma
+  7. Integrate Prisma
     Create a new .env file inside the server folder with the connection URL:
-    ```DATABASE_URL="postgresql://myuser:mypassword@localhost:5432/mydb"```
+    ```cmd
+    DATABASE_URL="postgresql://myuser:mypassword@localhost:5432/mydb"
+    ```
 
 **Backend Server**
 
   1. Go to the server folder
-    ```cd server```
+    ```cmd
+    cd server
+    ```
 
-  2. Install all the necessary packages
-    ```npm install```
+  3. Install all the necessary packages
+    ```cmd
+    npm install
+    ```
 
-  3. Generate the Prisma client and seed the database:
-    ```npm run prisma```
+  5. Generate the Prisma client and seed the database:
+    ```cmd
+    npm run prisma
+    ```
 
-  4. Run the server
-    ```npm run server```(runs on port 5000)
+  7. Run the server
+    ```cmd
+    npm run server
+    ```
+    (runs on port 5000)
 
   (Optional)
 
   5. GUI for the database
-    ```npm run studio```(runs on port 5555)
+    ```cmd
+    npm run studio
+    ```
+    (runs on port 5555)
 
 **Washer Dashboard**
 
   1. Go to the web-client folder
-    ```cd web-client```
+    ```cmd
+    cd web-client
+    ```
 
-  2. Install all the necessary packages
-    ```npm install```
+  3. Install all the necessary packages
+    ```cmd
+    npm install
+    ```
 
-  3. Run the web client
-    ```npm run start``` (runs on port 3000)
+  5. Run the web client
+    ```cmd
+    npm run start
+    ```
+    (runs on port 3000)
 
 **Vendor Web Dashboard**
 
   1. Go to the next-web folder
-    ```cd next-web```
+    ```cmd
+    cd next-web
+    ```
 
-  2. Install all the necessary packages
-    ```npm install```
+  3. Install all the necessary packages
+    ```cmd
+    npm install
+    ```
 
-  3. Run the web client
-    ```npm run dev``` (runs on port 3010)
+  5. Run the web client
+    ```cmd
+    npm run dev
+    ```
+    (runs on port 3010)
 
 **User Mobile App**
 
   1. Go to the frontend-mobile-user
-    ```cd frontend-mobile-user```
+    ```cmd
+    cd frontend-mobile-user
+    ```
 
-  2. Install all the necessary packages
-    ```npm install```
+  3. Install all the necessary packages
+    ```cmd
+    npm install
+    ```
 
-  3. Create a new .env file inside the frontend-mobile-user folder with the IP and PORT where the backend server is running:
+  5. Create a new .env file inside the frontend-mobile-user folder with the IP and PORT where the backend server is running:
     ```EXPO_PUBLIC_ADDRESS = "<ip_address>:<port>"```
     ip_address cant be localhost
     port should be 5000 ( unless u changed the server port )
     dont include 'http://' or '/' after the port
 
-  4. Run the mobile client
-    ```npx expo start``` (runs on port 8081)
+  6. Run the mobile client
+    ```cmd
+    npx expo start
+    ```
+    (runs on port 8081)
 
-  5. Follow the instructions on the terminal
+  8. Follow the instructions on the terminal
 
 **Vendor Mobile App**
 
   1. Go to the frontend-mobile-vendor
-    ```cd frontend-mobile-Vendor```
+    ```cmd
+    cd frontend-mobile-Vendor
+    ```
 
-  2. Install all the necessary packages
-    ```npm install```
+  3. Install all the necessary packages
+    ```cmd
+    npm install
+    ```
 
-  3. Create a new .env file inside the frontend-mobile-user folder with the IP and PORT where the backend server is running:
+  5. Create a new .env file inside the frontend-mobile-user folder with the IP and PORT where the backend server is running:
     ```EXPO_PUBLIC_ADDRESS = "<ip_address>:<port>"```
     ip_address cant be localhost
     port should be 5000 ( unless u changed the server port )
     dont include 'http://' or '/' after the port
 
-  4. Run the mobile client
-    ```npx expo start``` (runs on port 8082)
+  6. Run the mobile client
+    ```cmd
+    npx expo start
+    ```
+    (runs on port 8082)
 
-  5. Follow the instructions on the terminal
+  8. Follow the instructions on the terminal
 
 **Test Accounts**
 
