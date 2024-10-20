@@ -322,9 +322,7 @@ h1 {
   background-color: var(--card-color);
   padding: 15px 30px;
   height: 8rem;
-}
-#header button {
-  margin-left: auto;
+  gap: 20px;
 }
 
 #metrics {
