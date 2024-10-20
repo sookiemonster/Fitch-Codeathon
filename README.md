@@ -25,7 +25,8 @@ We used PostgreSQL for our database with Prisma ORM.
 *How to setup*
 
   1. Install PostgreSQL
-    For Linux 
+    For Linux
+
     ```cmd
     sudo apt install postgresql
     ```
