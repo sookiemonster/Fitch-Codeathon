@@ -90,18 +90,18 @@
     width: 200px;
     height: 200px;
     border-radius: 50%;
-    background-color: lightblue; /* Top half circle color */
+    background-color: rgba(0,0,0,0.8);
     overflow: hidden;
 
     span {
         @include center();
-        right: 1ch;
+        color: var(--bg-color);
     }
 
     .fill-line {
-        background-color: red;
+        background-color: none;
         position: absolute;
-        width: 100%;
+        width: 200%;
         height: 100%;
     }
 }

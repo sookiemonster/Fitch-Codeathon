@@ -114,9 +114,14 @@ function ItemizedView({id}:itemizedProps):JSX.Element {
                 }
 
                 const data = await response.json();
-                // console.log("data", data);
-                setStationInventory(countByName(data));
+                if (data.items){
+                    console.log("data", countByName(data.items));
+                    setStationInventory(countByName(data.items));
+                } else {
+                    setStationInventory({});
+                }
             } catch (err:any) {
+                console.log(err);
                 setError(err.message);
             } finally {
                 setLoading(false);
@@ -137,7 +142,7 @@ function ItemizedView({id}:itemizedProps):JSX.Element {
     return (
         <div className="inventory-breakdown">
             <Typography variant="caption">Station Inventory</Typography>
-            {stationInventory.length > 0 ? 
+            {Object.keys(stationInventory).length > 0 ? 
                 <>
                     {Object.entries(stationInventory).map(([name, count]) => (
                         <p key="name">{name} - {count} </p>

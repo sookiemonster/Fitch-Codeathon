@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { State } from "../StateHandler";
-import { sampleDivIcon, sampleIcon } from "./Icons";
+import { StationIcon, sampleIcon } from "./Icons";
 
 import StationCard from "./StationCard";
 import VendorCard from "./VendorCard";
@@ -20,7 +20,7 @@ function StationMarkers({state, dispatch}:MapProps):JSX.Element {
         <>
         { state.stations ? 
         state.stations.map(station => 
-            <Marker icon={sampleDivIcon(station.current_capacity)} key={station.id} position={[station.lat, station.lng]}>
+            <Marker icon={StationIcon(station.current_capacity)} key={station.id} position={[station.lat, station.lng]}>
                 <Popup>
                 <StationCard {...station} />
                 </Popup>
