@@ -55,7 +55,6 @@ async function getSummary(state:State, dispatch:any):Promise<void> {
 
         const data = await res.json();
         
-        console.log(transformData(data.counts));
         dispatch({type: "setSummaries", value: transformData(data.counts) });
         dispatch({type: "completeSummaryLoad" })
     } catch (err:any) {

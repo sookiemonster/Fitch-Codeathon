@@ -7,6 +7,8 @@ import { Place } from "../DBHandler/interfaces";
 import { PieChart } from '@mui/x-charts/PieChart';
 
 import StationCard from "./StationCard";
+import VendorCard from "./VendorCard";
+import getAllVendorLocations from "../StateHandler/vendorHandler";
 const DARK_MODE = false;
 
 interface MapProps {
@@ -30,23 +32,27 @@ function StationMarkers({state, dispatch}:MapProps):JSX.Element {
     )
 }
 
-// function VendorMarkers({state, dispatch}:MapProps):JSX.Element {
-//     return (
-//         <>
-//         { state.vendors ? 
-//         state.vendors.map(vendor => 
-//             <Marker key={vendor.id} position={[vendor.lat, vendor.lng]}>
-//                 <Popup>
-//                 <vendor {...vendor} />
-//                 </Popup>
-//             </Marker>
-//         )
-//         : ""}
-//         </>
-//     )
-// }
+function VendorMarkers({state, dispatch}:MapProps):JSX.Element {
+    return (
+        <>
+        { state.vendors ? 
+        state.vendors.map(vendor => 
+            <Marker key={vendor.id} position={[vendor.lat, vendor.lng]}>
+                <Popup>
+                <VendorCard {...vendor} />
+                </Popup>
+            </Marker>
+        )
+        : ""}
+        </>
+    )
+}
 
 function Map({state, dispatch}:MapProps):JSX.Element {
+
+    useEffect(() => {
+        getAllVendorLocations(state, dispatch);
+    }, [])
 
     return (
         <div id="map-panel">
@@ -70,7 +76,7 @@ function Map({state, dispatch}:MapProps):JSX.Element {
                     />
                 }
                 <StationMarkers state={state} dispatch={dispatch} />
-                {/* <VendorMarkers state={state} dispatch={dispatch} /> */}
+                <VendorMarkers state={state} dispatch={dispatch} />
             </MapContainer>
         </div>
     );

@@ -42,7 +42,6 @@ async function fetchStationByID(id: number): Promise<Station> {
 
 async function getStationOverviews(state:State, dispatch:any):Promise<void> {
     try {
-        // const response = await fetch(`${API_URL}/stations/${id}/inventory`);
         const idsResponse = await fetch(`${API_URL}/stations/`);
         if (!idsResponse.ok) {
             throw new Error(`Error: ${idsResponse.statusText}`);

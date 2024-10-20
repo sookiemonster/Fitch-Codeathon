@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from "react";
 import { Station } from "../StationCapacities";
 import { PieChart } from '@mui/x-charts/PieChart';
-import { Stack, Typography, Divider} from "@mui/material";
+import { Box, Stack, Typography, Divider} from "@mui/material";
 import { Item } from "../DBHandler/interfaces";
+import InventoryIcon from '@mui/icons-material/Inventory';
 import { API_URL } from "../config";
 
 const MAX_TOKENS = 10000;
@@ -119,7 +120,6 @@ function ItemizedView({id}:itemizedProps):JSX.Element {
                 setError(err.message);
             } finally {
                 setLoading(false);
-                console.log(stationInventory);
             }
         };
 
@@ -137,9 +137,23 @@ function ItemizedView({id}:itemizedProps):JSX.Element {
     return (
         <div className="inventory-breakdown">
             <Typography variant="caption">Station Inventory</Typography>
-            {Object.entries(stationInventory).map(([name, count]) => (
-                <p key="name">{name} - {count} </p>
-            ))}
+            {stationInventory.length > 0 ? 
+                <>
+                    {Object.entries(stationInventory).map(([name, count]) => (
+                        <p key="name">{name} - {count} </p>
+                    ))}
+                </>
+                :
+                <Box display="flex"
+                padding="20px"
+                    flexDirection="column"
+                    justifyContent="center"
+                    alignItems="center"
+                    >
+                    <Typography textAlign={"center"} variant="caption">No items stored here!</Typography>
+                    <InventoryIcon fontSize="large" />
+                </Box>
+            }
         </div>
     );
 }
