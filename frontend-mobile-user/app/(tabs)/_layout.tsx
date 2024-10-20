@@ -12,12 +12,13 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
+        headerShown: false, // This hides the header for all screens by default
       }}>
       <Tabs.Screen
         name="index"
         options={{
           title: 'Home',
+          headerShown: false, // This ensures the header is hidden for the index route
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'globe' : 'globe-outline'} color={color} />
           ),

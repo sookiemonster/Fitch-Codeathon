@@ -65,11 +65,6 @@ async function addToInventory(washerId, itemId) {
         where: { id: vendorOwner.id },
         data: { inventory: { set: vendorOwner.inventory.filter((i) => i !== itemId) } },
       });
-    } else if (ownerType === "washer") {
-      await prisma.washer.update({
-        where: { id: washerOwner.id },
-        data: { inventory: { set: washerOwner.inventory.filter((i) => i !== itemId) } },
-      });
     } else if (ownerType === "station") {
       await prisma.station.update({
         where: { id: stationOwner.id },

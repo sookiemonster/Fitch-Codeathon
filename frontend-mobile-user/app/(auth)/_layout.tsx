@@ -6,37 +6,39 @@ import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 
 export default function LoginLayout() {
   const colorScheme = useColorScheme();
-    return (
-      <Tabs
-        screenOptions={{
-          tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
-          headerShown: false,
+
+  return (
+    <Tabs
+      screenOptions={{
+        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+        tabBarLabelStyle: { color: "black" }, // Set tab label text color to black
+        headerShown: false,
+      }}
+    >
+      <Tabs.Screen
+        name="index"
+        options={{
+          title: "Sign In", headerShown: false,
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon
+              name={focused ? "home" : "home-outline"}
+              color={"black"} // Icon color is black
+            />
+          ),
         }}
-      >
-        <Tabs.Screen
-          name="index"
-          options={{
-            title: "Sign In",
-            tabBarIcon: ({ color, focused }) => (
-              <TabBarIcon
-                name={focused ? "home" : "home-outline"}
-                color={color}
-              />
-            ),
-          }}
-        />
-        <Tabs.Screen
-          name="registration"
-          options={{
-            title: "Register",
-            tabBarIcon: ({ color, focused }) => (
-              <TabBarIcon
-                name={focused ? "star" : "star-outline"}
-                color={color}
-              />
-            ),
-          }}
-        />
-      </Tabs>
-    );
+      />
+      <Tabs.Screen
+        name="registration"
+        options={{
+          title: "Register", headerShown: false,
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon
+              name={focused ? "star" : "star-outline"}
+              color={"black"} // Icon color is black
+            />
+          ),
+        }}
+      />
+    </Tabs>
+  );
 }
