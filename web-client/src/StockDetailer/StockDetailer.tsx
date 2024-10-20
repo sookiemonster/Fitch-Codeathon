@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import { State } from "../StateHandler";
 import DietSelector, { Diet } from "../DietSelector";
 import getSummary from "../StateHandler/summaryHandler";
+import { Button, Stack, Modal } from "@mui/material";
+import ItemizedStockViewer from "./ItemizedStockViewer";
+
 interface InventoryCounters {
     washed_count:number,
     unwashed_count:number,
@@ -27,10 +30,6 @@ interface LabelProps {
     color:string
 }
 
-function ItemizedStockViewer():JSX.Element {
-    return <></>
-}
-
 function StockLabel({label, count, color}:LabelProps): JSX.Element {
     return (
         <div className={"stock-label " + color}>
@@ -41,9 +40,11 @@ function StockLabel({label, count, color}:LabelProps): JSX.Element {
 }
 
 function StockDetailer({state, dispatch}:DetailerProps):JSX.Element {
-    const [viewMore, setViewMore] = useState(false);
-    let displayedDiet = state.inventory?.all;
+    const [showMore, setShowMore] = useState(false);
+    const open = () => {setShowMore(true);}
+    const close = () => {setShowMore(false);}
 
+    let displayedDiet = state.inventory?.all;
     switch (state.selected_diet) {
         case Diet.VEGAN:
             displayedDiet = state.inventory?.vegan;
@@ -70,9 +71,17 @@ function StockDetailer({state, dispatch}:DetailerProps):JSX.Element {
             <StockLabel color="red" label="Uncollected" count={displayedDiet?.uncollected_count} />
             </div>
             <DietSelector state={state} dispatch={dispatch} />
-            <button id="view-more" onClick={() => setViewMore(true)}>View More Information</button>
+            <Button id="view-more" onClick={open}>View More Information</Button>
             
-            { (viewMore) ? <ItemizedStockViewer/> : "" }
+            <Modal
+                open={showMore}
+                onClose={close}
+                aria-labelledby="itemized-title"
+                aria-describedby="itemized-stock-viewer">
+                <>
+                <ItemizedStockViewer state={state} dispatch={dispatch} />
+                </>
+            </Modal>    
         </div>
     )
 }

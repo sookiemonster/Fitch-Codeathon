@@ -3,7 +3,7 @@
   font-size: 10pt;
   --bg-fill: #ececec;
   --bg-color: #ececec;
-  --dark-gray: #242424;
+  --dark-gray: #030101;
   --card-color: rgba(255,255,255,1);
   --active: #000000;
   --green: #238823;
@@ -22,13 +22,13 @@
 #stock-summary-section #view-more {
   grid-area: info;
   font-size: 1rem;
-  font-weight: bold;
   border-radius: 0 0 0 15px;
   background-color: var(--active);
+  text-transform: capitalize;
   color: var(--card-color);
   outline: none;
   border: none;
-  padding: 7px;
+  letter-spacing: 0.5px;
 }
 #stock-summary-section .green {
   color: var(--green);
@@ -210,6 +210,10 @@
 
 .leaflet-container {
   height: 100%;
+}
+
+.vendor-card {
+  height: 270px !important;
 }
 
 .station-card {

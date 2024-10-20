@@ -23,7 +23,7 @@ function App() {
   return (
     <div id="layout-container" className="App">
       
-      <Header title={pageTitle} user={state.user} />
+      <Header title={pageTitle} user={state.user} total_reuse={239} />
       <div id="metrics">
         <StockDetailer state={state} dispatch={dispatch} />
         <StationCapacities state={state} dispatch={dispatch} />
