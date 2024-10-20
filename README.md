@@ -69,17 +69,17 @@ We used PostgreSQL for our database with Prisma ORM.
     cd server
     ```
 
-  3. Install all the necessary packages
+2. Install all the necessary packages
     ```
     npm install
     ```
 
-  5. Generate the Prisma client and seed the database:
+3. Generate the Prisma client and seed the database:
     ```
     npm run prisma
     ```
 
-  7. Run the server
+4. Run the server
     ```
     npm run server
     ```
@@ -87,7 +87,7 @@ We used PostgreSQL for our database with Prisma ORM.
 
   (Optional)
 
-  5. GUI for the database
+5. GUI for the database
     ```
     npm run studio
     ```
@@ -95,17 +95,17 @@ We used PostgreSQL for our database with Prisma ORM.
 
 **Washer Dashboard**
 
-  1. Go to the web-client folder
+1. Go to the web-client folder
     ```
     cd web-client
     ```
 
-  3. Install all the necessary packages
+2. Install all the necessary packages
     ```
     npm install
     ```
 
-  5. Run the web client
+3. Run the web client
     ```
     npm run start
     ```
@@ -113,17 +113,17 @@ We used PostgreSQL for our database with Prisma ORM.
 
 **Vendor Web Dashboard**
 
-  1. Go to the next-web folder
+1. Go to the next-web folder
     ```
     cd next-web
     ```
 
-  3. Install all the necessary packages
+2. Install all the necessary packages
     ```
     npm install
     ```
 
-  5. Run the web client
+3. Run the web client
     ```
     npm run dev
     ```
@@ -131,55 +131,55 @@ We used PostgreSQL for our database with Prisma ORM.
 
 **User Mobile App**
 
-  1. Go to the frontend-mobile-user
+1. Go to the frontend-mobile-user
     ```
     cd frontend-mobile-user
     ```
 
-  3. Install all the necessary packages
+2. Install all the necessary packages
     ```
     npm install
     ```
 
-  5. Create a new .env file inside the frontend-mobile-user folder with the IP and PORT where the backend server is running:
+3. Create a new .env file inside the frontend-mobile-user folder with the IP and PORT where the backend server is running:
     ```EXPO_PUBLIC_ADDRESS = "<ip_address>:<port>"```
     ip_address cant be localhost
     port should be 5000 ( unless u changed the server port )
     dont include 'http://' or '/' after the port
 
-  6. Run the mobile client
+4. Run the mobile client
     ```
     npx expo start
     ```
     (runs on port 8081)
 
-  8. Follow the instructions on the terminal
+5. Follow the instructions on the terminal
 
 **Vendor Mobile App**
 
-  1. Go to the frontend-mobile-vendor
+1. Go to the frontend-mobile-vendor
     ```
     cd frontend-mobile-Vendor
     ```
 
-  3. Install all the necessary packages
+2. Install all the necessary packages
     ```
     npm install
     ```
 
-  5. Create a new .env file inside the frontend-mobile-user folder with the IP and PORT where the backend server is running:
+3. Create a new .env file inside the frontend-mobile-user folder with the IP and PORT where the backend server is running:
     ```EXPO_PUBLIC_ADDRESS = "<ip_address>:<port>"```
     ip_address cant be localhost
     port should be 5000 ( unless u changed the server port )
     dont include 'http://' or '/' after the port
 
-  6. Run the mobile client
+4. Run the mobile client
     ```
     npx expo start
     ```
     (runs on port 8082)
 
-  8. Follow the instructions on the terminal
+5. Follow the instructions on the terminal
 
 **Test Accounts**
 
