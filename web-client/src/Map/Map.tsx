@@ -74,8 +74,8 @@ function Map({state, dispatch}:MapProps):JSX.Element {
                     url="https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}"
                     />
                 }
-                <StationMarkers state={state} dispatch={dispatch} />
                 <VendorMarkers state={state} dispatch={dispatch} />
+                <StationMarkers state={state} dispatch={dispatch} />
             </MapContainer>
         </div>
     );
