@@ -2,10 +2,13 @@ import React, { useEffect, useState } from "react"
 import { State } from "../StateHandler";
 import LinearProgress from '@mui/material/LinearProgress';
 import Modal from '@mui/material/Modal';
-import { Box, Button } from "@mui/material";
+import { Container, Stack, Button, Typography } from "@mui/material";
 import SettingsIcon from '@mui/icons-material/Settings';
 import { Place, Item } from "../DBHandler/interfaces";
 import getStationOverviews from "../StateHandler/stationHandler";
+import TextField from '@mui/material/TextField';
+import Divider from '@mui/material/Divider';
+
 
 interface Station extends Place {
     current_capacity:number,
@@ -28,6 +31,22 @@ interface ModalProps {
     close:any
 }
 
+interface AlertConfigProps {
+    id:number
+    real_name?:string
+}
+
+function AlertRow({id, real_name}:AlertConfigProps):JSX.Element {
+    return (
+        <Stack direction="row" spacing={2} sx={{ alignItems:"center", justifyContent:"center"}}>
+            <Typography variant="body1">
+                {(real_name) ? real_name : `Station ${id}`}    
+            </Typography>
+            <TextField id="filled-basic" label="Capacity Threshold" variant="filled" />
+        </Stack>
+    )
+}
+
 function AlertModal({state, dispatch, close}:ModalProps):JSX.Element {
     const saveChanges = () => {
         close();
@@ -36,20 +55,29 @@ function AlertModal({state, dispatch, close}:ModalProps):JSX.Element {
     const discardChanges = () => { close(); }
 
     return (
-        <div id="alert-modal">
+        <Stack id="alert-modal">
             <h2 id="modal-title">Configure Station Alert Thresholds</h2>
-            <form>
-                {/* Dispatch call to update DB. */}
-                
-                {/* <input type="number" /> */}
-                <Box>
-
-                </Box>
-
-                <Button onClick={discardChanges} variant="outlined" disableElevation>Discard</Button>
-                <Button onClick={saveChanges} variant="contained" disableElevation>Save</Button>
-            </form>
-        </div>
+            <Stack marginTop={"60px"} spacing={2} sx={{ alignItems:"center", justifyContent:"center"}}>
+                {(!state.stationsLoading && state.stations) ?
+                    <>
+                    { state.stations.map(station => (
+                        <AlertRow key={station.id} id={station.id} real_name={station.real_name} />
+                    )) }
+                    <Stack direction="row" spacing={2}>
+                        
+                        <Button onClick={discardChanges} variant="outlined" disableElevation>Discard</Button>
+                        <Button onClick={saveChanges} variant="contained" disableElevation>Save</Button>
+                    </Stack>
+                    </>
+                    
+                    : "Loading Stations"
+                }
+                {state.stationsError ? 
+                <Typography>There was an error loading the stations.</Typography>
+                : ""
+                }
+            </Stack>
+        </Stack>
     )
 }
 
