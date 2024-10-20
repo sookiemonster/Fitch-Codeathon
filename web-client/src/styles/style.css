@@ -1,9 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 :root {
   font-size: 10pt;
+  --bg-fill: #ececec;
   --bg-color: #ececec;
   --dark-gray: #242424;
-  --card-color: #FFFFFF;
+  --card-color: rgba(255,255,255,1);
   --active: #000000;
   --green: #238823;
   --yellow: #FFBF00;
@@ -292,6 +293,55 @@
   height: 100%;
 }
 
+.vendor-icon {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+}
+.vendor-icon svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  fill: var(--bg-color);
+}
+
+@-webkit-keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+@-moz-keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
 * {
   box-sizing: border-box;
   font-family: "Inter", sans-serif;
@@ -314,6 +364,11 @@ html, body {
   grid-template-columns: minmax(800px, 1fr) 1fr;
   grid-template-rows: 8rem;
   background-color: var(--bg-color);
+  background: var(--bg-fill);
+  background-size: 400% 400%;
+  -webkit-animation: gradient 10s ease-in-out infinite;
+  -moz-animation: gradient 10s ease-in-out infinite;
+  animation: gradient 10s ease-in-out infinite;
   gap: 20px;
   padding: calc(10px + 1vh) calc(10px + 1vw);
 }

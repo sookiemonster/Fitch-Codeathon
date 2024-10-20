@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { State } from "../StateHandler";
-import { StationIcon, sampleIcon } from "./Icons";
+import { StationIcon, vendorIcon } from "./Icons";
 
 import StationCard from "./StationCard";
 import VendorCard from "./VendorCard";
@@ -36,7 +36,7 @@ function VendorMarkers({state, dispatch}:MapProps):JSX.Element {
         <>
         { state.vendors ? 
         state.vendors.map(vendor => 
-            <Marker  key={vendor.id} position={[vendor.lat, vendor.lng]}>
+            <Marker icon={vendorIcon} key={vendor.id} position={[vendor.lat, vendor.lng]}>
                 <Popup>
                 <VendorCard {...vendor} />
                 </Popup>

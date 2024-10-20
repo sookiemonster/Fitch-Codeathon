@@ -1,12 +1,11 @@
-import {DivIcon, Icon, divIcon} from 'leaflet';
+import {DivIcon, divIcon} from 'leaflet';
 import Color from "colorjs.io"
 
-const sampleIcon = new Icon ({
-    iconUrl : 'https://img.icons8.com/external-icongeek26-linear-colour-icongeek26/64/external-legal-business-and-finance-icongeek26-linear-colour-icongeek26.png',
-    iconSize : [35,35], // size of the icon
-    iconAnchor : [22,94], // point of the icon which will correspond to marker's location
-    popupAnchor : [-3, -76] // point from which the popup should open relative to the iconAnchor
-})
+const vendorIcon = divIcon ({
+    className: "vendor-icon",
+    iconSize: [30,30],
+    html: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cup-fill" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M.11 3.187A.5.5 0 0 1 .5 3h13a.5.5 0 0 1 .488.608l-.22.991a3.001 3.001 0 0 1-1.3 5.854l-.132.59A2.5 2.5 0 0 1 9.896 13H4.104a2.5 2.5 0 0 1-2.44-1.958L.012 3.608a.5.5 0 0 1 .098-.42Zm12.574 6.288a2 2 0 0 0 .866-3.899z"/></svg>`
+});
 
 const getColor = (t:number):Color => {
     let base = new Color("p3", [0, 1, 0]);
@@ -25,4 +24,4 @@ const StationIcon = (capacity:number):DivIcon => {
     });
 }
 
-export { sampleIcon, StationIcon };
+export { vendorIcon, StationIcon };

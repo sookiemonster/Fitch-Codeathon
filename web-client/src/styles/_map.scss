@@ -105,3 +105,17 @@
         height: 100%;
     }
 }
+
+.vendor-icon {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background-color: rgba(0,0,0,0.8);
+    overflow: hidden;
+
+    svg {
+        @include center();
+        fill: var(--bg-color);
+    }
+}
