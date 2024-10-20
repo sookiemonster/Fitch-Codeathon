@@ -8,7 +8,17 @@
 [Team Discovery](https://www.figma.com/board/gGCsLOUfskSWuw0Flmw9gt/Team-4-Discovery?node-id=0-1&node-type=canvas&t=GIlpj3XGpo9iecjX-0) <br>
 [Wireframe](https://www.figma.com/design/vBSkMnoNiU1iBdxIJ5l15O/EcoWare?node-id=17-49&node-type=canvas&t=M0Y08aw3LX3AAdWn-0)
 
-# How to Deploy 
+# How to Deploy
+
+**Clone the repo**
+
+```cmd
+
+git clone https://github.com/sookiemonster/Fitch-Codeathon ecoware
+
+cd ecoware
+
+```
 
 **Database**
 
@@ -18,7 +28,7 @@ We used PostgreSQL for our database with Prisma ORM.
 
   1. Install PostgreSQL
     For Linux 
-    ```sudo apt install postgresql```
+    ```cmd sudo apt install postgresql```
     For macOS (Homebrew) 
     ```brew install postgresql```
     
