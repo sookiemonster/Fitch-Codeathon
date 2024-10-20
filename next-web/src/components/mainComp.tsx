@@ -3,8 +3,14 @@ import React, { useState, useCallback, useMemo } from 'react'
 import { Poppins } from 'next/font/google'
 import { ArrowLeft, Loader2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { jwtDecode } from 'jwt-decode';
 
 const poppins = Poppins({ subsets: ['latin'], weight: ["900"] })
+
+interface MyJwtPayload {
+  id: number,
+  role: string,
+}
 
 interface SignInFormProps {
   user: string;
@@ -95,7 +101,8 @@ export default function Component() {
 
       if (res.ok) {
         localStorage.setItem('token', data.token);
-        router.push('/dashboard');
+        const payload = jwtDecode<MyJwtPayload>(data.token);
+        router.push(`/dashboard/${user.toLowerCase()}/${payload.id}`);
       } else {
         setError(data.error || 'Login failed. Please try again.');
       }
@@ -137,14 +144,14 @@ export default function Component() {
             {memoizedSignInForm}
             <button 
               onClick={handleGoBack}
-              className="mt-4 flex items-center justify-center bg-white text-[#5AA362] px-5 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300"
+              className="mt-4 flex items-center justify-center bg-white text-[#5AA362] px-5 py-3 rounded-lg font-semibold hover:bg-gray-100 hover:scale-105 transition duration-300"
             >
               <ArrowLeft className="mr-2" size={20} />
               Go Back
             </button>
           </>
         ) : (
-          <div className="flex flex-row gap-x-36">
+          <div className="flex flex-row gap-10">
             <button className="bg-[#5AA362] px-5 py-3 rounded-lg font-semibold hover:scale-105 transition duration-300" onClick={() => handleUserSelect("Admin")}>Admin</button>
             <button className="bg-[#5AA362] px-5 py-3 rounded-lg font-semibold hover:scale-105 transition duration-300" onClick={() => handleUserSelect("Vendor")}>Vendor</button>
             <button className="bg-[#5AA362] px-5 py-3 rounded-lg font-semibold hover:scale-105 transition duration-300" onClick={() => handleUserSelect("Washer")}>Washer</button>

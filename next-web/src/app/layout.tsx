@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import EcoBackground from "@/components/ecoBG";
 
 export const metadata: Metadata = {
   title: "EcoWare Dashboard",
@@ -13,7 +14,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body >{children}</body>
+      <body ><EcoBackground />
+        <main className="relative z-10">
+          {children}
+        </main></body>
     </html>
   );
 }
