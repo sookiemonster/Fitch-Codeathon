@@ -26,6 +26,7 @@ const {
 const {
   removeUserPoints,
 } = require("../../functions/users/patch/removeUserPoints.js");
+const { getUserQR } = require("../../functions/users/get/getUserQR.js");
 
 // GET /api/v1/users
 
@@ -49,6 +50,24 @@ router.get("/:id", async (req, res) => {
   }
   try {
     const user = await getUserInfo(parseInt(id));
+    if (!user) {
+      return res.status(404).send({ message: "User not found" });
+    }
+
+    res.status(200).send(user);
+  } catch (error) {
+    res.status(500).send({ message: "Internal server error" });
+  }
+});
+
+router.get("/:id/qr", async (req, res) => {
+  const { id } = req.params;
+
+  if (!id || isNaN(id)) {
+    return res.status(400).send({ message: "Invalid or missing ID" });
+  }
+  try {
+    const user = await getUserQR(parseInt(id));
     if (!user) {
       return res.status(404).send({ message: "User not found" });
     }

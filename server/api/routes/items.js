@@ -12,6 +12,7 @@ const { changeItemOwner } = require('../../functions/items/patch/changeItemOwner
 const { changeItemStatus } = require('../../functions/items/patch/changeItemStatus.js');
 const {createItem} = require('../../functions/items/post/createItem.js');
 const capitalizeFirstLetter = require('../../util/capitalizeFirstLetter.js');
+const { getItemQR } = require('../../functions/items/get/getItemQR.js');
 
 // GET /api/v1/items
 
@@ -29,6 +30,24 @@ router.get('/:id', async (req, res) => {
    } catch (error) {
        res.status(500).send({ message : 'Internal server error' });
    }
+});
+
+router.get('/:id/qr', async (req, res) => {
+
+    const { id } = req.params;
+    
+    if (!id || isNaN(id)) {
+        return res.status(400).send({ message: 'Invalid or missing ID' });
+    }
+    try {
+        const qr = await getItemQR(parseInt(id));
+        if (!qr) {
+            return res.status(404).send({ message : 'Item not found' });
+        }
+        res.status(200).send( qr );
+    } catch (error) {
+        res.status(500).send({ message : 'Internal server error' });
+    }
 });
 
 router.get('/:id/name', async (req, res) => {
