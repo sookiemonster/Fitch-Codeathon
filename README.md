@@ -12,7 +12,7 @@
 
 **Clone the repo**
 
-```cmd
+```
 git clone https://github.com/sookiemonster/Fitch-Codeathon ecoware
 
 cd ecoware
@@ -27,60 +27,60 @@ We used PostgreSQL for our database with Prisma ORM.
   1. Install PostgreSQL
     For Linux
 
-    ```cmd
+    ```
     sudo apt install postgresql
     ```
     For macOS (Homebrew) 
-    ```cmd
+    ```
     brew install postgresql
     ```
     
   3. Start PostgreSQL
     For Linux 
-    ```cmd
+    ```
     sudo service postgresql start
     ```
     For macOS (Homebrew) 
-    ```cmd
+    ```
     brew services start postgresql
     ```
     
   5. Create a User and Database
     Log into the PostgreSQL shel: 
-    ```cmd
+    ```
     sudo -u postgres psql
     ```
     Create a new user and database: 
-    ```cmd
+    ```
     CREATE USER myuser WITH PASSWORD 'mypassword';
     CREATE DATABASE mydb OWNER myuser;
     ```
 
   7. Integrate Prisma
     Create a new .env file inside the server folder with the connection URL:
-    ```cmd
+    ```
     DATABASE_URL="postgresql://myuser:mypassword@localhost:5432/mydb"
     ```
 
 **Backend Server**
 
   1. Go to the server folder
-    ```cmd
+    ```
     cd server
     ```
 
   3. Install all the necessary packages
-    ```cmd
+    ```
     npm install
     ```
 
   5. Generate the Prisma client and seed the database:
-    ```cmd
+    ```
     npm run prisma
     ```
 
   7. Run the server
-    ```cmd
+    ```
     npm run server
     ```
     (runs on port 5000)
@@ -88,7 +88,7 @@ We used PostgreSQL for our database with Prisma ORM.
   (Optional)
 
   5. GUI for the database
-    ```cmd
+    ```
     npm run studio
     ```
     (runs on port 5555)
@@ -96,17 +96,17 @@ We used PostgreSQL for our database with Prisma ORM.
 **Washer Dashboard**
 
   1. Go to the web-client folder
-    ```cmd
+    ```
     cd web-client
     ```
 
   3. Install all the necessary packages
-    ```cmd
+    ```
     npm install
     ```
 
   5. Run the web client
-    ```cmd
+    ```
     npm run start
     ```
     (runs on port 3000)
@@ -114,17 +114,17 @@ We used PostgreSQL for our database with Prisma ORM.
 **Vendor Web Dashboard**
 
   1. Go to the next-web folder
-    ```cmd
+    ```
     cd next-web
     ```
 
   3. Install all the necessary packages
-    ```cmd
+    ```
     npm install
     ```
 
   5. Run the web client
-    ```cmd
+    ```
     npm run dev
     ```
     (runs on port 3010)
@@ -132,12 +132,12 @@ We used PostgreSQL for our database with Prisma ORM.
 **User Mobile App**
 
   1. Go to the frontend-mobile-user
-    ```cmd
+    ```
     cd frontend-mobile-user
     ```
 
   3. Install all the necessary packages
-    ```cmd
+    ```
     npm install
     ```
 
@@ -148,7 +148,7 @@ We used PostgreSQL for our database with Prisma ORM.
     dont include 'http://' or '/' after the port
 
   6. Run the mobile client
-    ```cmd
+    ```
     npx expo start
     ```
     (runs on port 8081)
@@ -158,12 +158,12 @@ We used PostgreSQL for our database with Prisma ORM.
 **Vendor Mobile App**
 
   1. Go to the frontend-mobile-vendor
-    ```cmd
+    ```
     cd frontend-mobile-Vendor
     ```
 
   3. Install all the necessary packages
-    ```cmd
+    ```
     npm install
     ```
 
@@ -174,7 +174,7 @@ We used PostgreSQL for our database with Prisma ORM.
     dont include 'http://' or '/' after the port
 
   6. Run the mobile client
-    ```cmd
+    ```
     npx expo start
     ```
     (runs on port 8082)
