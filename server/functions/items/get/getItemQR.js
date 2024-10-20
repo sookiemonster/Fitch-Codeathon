@@ -5,7 +5,7 @@ async  function getItemQR(id) {
         where: {
             id: id
         },
-        include: {
+        select: {
             qr: true
         }
     });

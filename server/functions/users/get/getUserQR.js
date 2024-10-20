@@ -5,7 +5,7 @@ async  function getUserQR(id) {
         where: {
             id: id
         },
-        include: {
+        select: {
             qr: true
         }
     });

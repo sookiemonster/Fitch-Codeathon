@@ -50,6 +50,7 @@ router.get('/:id/qr', async (req, res) => {
       }
       res.status(200).send( qr );
   } catch (error) {
+    console.log(error);
       res.status(500).send({ message : 'Internal server error' });
   }
 });
