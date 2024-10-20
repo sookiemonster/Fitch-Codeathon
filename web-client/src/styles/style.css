@@ -1,9 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 :root {
   font-size: 10pt;
+  --bg-fill: #ececec;
   --bg-color: #ececec;
   --dark-gray: #242424;
-  --card-color: #FFFFFF;
+  --card-color: rgba(255,255,255,1);
   --active: #000000;
   --green: #238823;
   --yellow: #FFBF00;
@@ -109,15 +110,14 @@
   font-size: 1.05rem;
 }
 .station-container .identifier {
-  font-weight: 500;
+  font-weight: 600;
+  display: inline-block;
+  width: 8ch;
 }
 .station-container .capacity-bar {
   width: 30%;
   border-radius: 10px;
   background-color: var(--bg-color);
-}
-.station-container .capacity-bar span {
-  background-color: var(--active);
 }
 .station-container .capacity-label {
   font-weight: bold;
@@ -150,7 +150,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 50%;
+  width: 450px;
   height: 50%;
   background-color: var(--card-color);
   padding: 50px;
@@ -267,6 +267,81 @@
   grid-column: -1/1;
 }
 
+.inventory-breakdown {
+  padding: 5px 10px;
+}
+
+.icon {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+}
+.icon span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  color: var(--bg-color);
+}
+.icon .fill-line {
+  background-color: none;
+  position: absolute;
+  width: 200%;
+  height: 100%;
+}
+
+.vendor-icon {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+}
+.vendor-icon svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  fill: var(--bg-color);
+}
+
+@-webkit-keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+@-moz-keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
 * {
   box-sizing: border-box;
   font-family: "Inter", sans-serif;
@@ -289,6 +364,11 @@ html, body {
   grid-template-columns: minmax(800px, 1fr) 1fr;
   grid-template-rows: 8rem;
   background-color: var(--bg-color);
+  background: var(--bg-fill);
+  background-size: 400% 400%;
+  -webkit-animation: gradient 10s ease-in-out infinite;
+  -moz-animation: gradient 10s ease-in-out infinite;
+  animation: gradient 10s ease-in-out infinite;
   gap: 20px;
   padding: calc(10px + 1vh) calc(10px + 1vw);
 }
@@ -300,6 +380,8 @@ html, body {
 @media (width <= 1200px) {
   #layout-container {
     grid-template-columns: 1fr;
+    grid-template-rows: 8rem 1fr 70vw;
+    overflow-y: scroll;
   }
 }
 h1 {
@@ -314,9 +396,7 @@ h1 {
   background-color: var(--card-color);
   padding: 15px 30px;
   height: 8rem;
-}
-#header button {
-  margin-left: auto;
+  gap: 20px;
 }
 
 #metrics {

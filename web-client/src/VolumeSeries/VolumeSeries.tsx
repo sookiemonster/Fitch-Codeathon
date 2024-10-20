@@ -101,7 +101,10 @@ function VolumeSeries({state, dispatch}:SeriesProps):JSX.Element {
             <Selectors filters={filters} setFilters={setFilters}/>
             
             <BarChart
-                xAxis={[{ scaleType: 'band', data: demoData.domain, label: "Hours", tickPlacement: "middle" }]}
+                xAxis={[{ scaleType: 'band', 
+                    data: demoData.domain, 
+                    label: "Hours", 
+                    tickPlacement: "middle" }]}
                 series={[
                     { data: demoData.series, color: "#000000" }]}
                 
