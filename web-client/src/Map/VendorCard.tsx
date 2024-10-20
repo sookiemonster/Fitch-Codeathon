@@ -18,8 +18,26 @@ interface itemizedProps {
 
 function VendorCard({id, lat, lng, inventory}:Vendor):JSX.Element {
     const [name, setName] = useState("");
+    
+    const fetchName = async(id:number) => {
+        try {
+            const response = await fetch(`${API_URL}/vendors/${id}`);
+
+            if (!response.ok) {
+                throw new Error(`Error: ${response.statusText}`);
+            }
+
+            const data = await response.json();
+            console.log(data);
+            return data.name;
+        } catch (err:any) {
+            console.log(err);
+        }
+    }
+
     useEffect(() => {
-        // Get Vendor Info Details
+        fetchName(id)
+            .then(result => setName(result))
     });
 
     return (
