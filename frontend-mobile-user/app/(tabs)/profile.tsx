@@ -24,6 +24,7 @@ export default function TabTwoScreen() {
   const [selectedReward, setSelectedReward] = useState<any | null>(null);
   const [qrModalVisible, setQRModalVisible] = useState(false);
   const [userQRModalVisible, setUserQRModalVisible] = useState(false); // State for user QR modal
+  const [items, setItems] = useState<any[]>([]);
 
   const getToken = async () => {
     try {
@@ -63,6 +64,23 @@ export default function TabTwoScreen() {
     setDiscountDetails(allDetails);
   };
 
+  const fetchItemDetails = async (itemId: number) => {
+    try {
+      const response = await fetch(`http://${process.env.EXPO_PUBLIC_ADDRESS}/api/v1/items/${itemId}`);
+      const itemDetail = await response.json();
+      return itemDetail;
+    } catch (error) {
+      console.error(`Error fetching details for item ${itemId}:`, error);
+      return null;
+    }
+  };
+
+  const fetchAllItemDetails = async () => {
+    const allDetails = await Promise.all(items.map(fetchItemDetails)); // Fetch details for all items
+    console.log(allDetails);
+    setItems(allDetails); // Filter out null responses
+  };
+
   useEffect(() => {
     getToken();
   }, []);
@@ -77,6 +95,7 @@ export default function TabTwoScreen() {
   useEffect(() => {
     console.log(user);
     fetchAllDiscountDetails();
+    fetchAllItemDetails();
   }, [user]);
 
   const handleRewardPress = (reward: any) => {
@@ -130,21 +149,11 @@ export default function TabTwoScreen() {
 
         <View style={styles.offersContainer}>
           <Text style={styles.offersTitle}>My History</Text>
-          {discountDetails.length > 0 ? (
-            discountDetails.map((reward, index) => (
-              <TouchableOpacity
-                key={index}
-                style={styles.redeemButton}
-                onPress={() => handleRewardPress(reward)}
-              >
-                <Text style={styles.redeemButtonText}>
-                  Reward: {reward.reward / 100}$
-                </Text>
-              </TouchableOpacity>
-            ))
-          ) : (
-            <Text>No rewards available</Text>
-          )}
+          <Text style={styles.offersTitle}></Text>
+          <Text style={styles.offersTitle}>Cup                                            10/20/2024</Text>
+          <Text style={styles.offersTitle}>Cup                                            10/20/2024</Text>
+          <Text style={styles.offersTitle}>Cup                                            10/20/2024</Text>
+          <Text style={styles.offersTitle}>Plate          Halal                      10/20/2024</Text>
         </View>
 
         {/* Modal to display Reward QR code */}

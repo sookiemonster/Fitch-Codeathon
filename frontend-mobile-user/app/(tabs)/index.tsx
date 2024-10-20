@@ -100,7 +100,7 @@ export default function HomeScreen() {
         </View>
         <View style={styles.mapContainer}>
           <Image
-            source={{ uri: '/placeholder.svg?height=200&width=300' }}
+            source={require('../../assets/images/map.png')}
             style={styles.map}
           />
         </View>
