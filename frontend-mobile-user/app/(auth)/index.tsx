@@ -25,7 +25,7 @@ export default function LoginScreen() {
 
       if (res.ok) {
         await AsyncStorage.setItem('token', data.token);  
-        router.push('/(tabs)'); 
+        router.replace('/(tabs)/'); 
       } else {
         setError(data.error || 'Login failed. Please try again.');
       }

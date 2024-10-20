@@ -1,146 +1,304 @@
-import Ionicons from "@expo/vector-icons/Ionicons";
-import { Image, Pressable, StyleSheet, View} from "react-native";
-import ParallaxScrollView from "@/components/ParallaxScrollView";
-import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
-import { useState } from "react";
-import { RedeemModal } from "@/components/RedeemModal";
-import { QRModal } from "@/components/QRModal";
+import React, { useEffect, useState } from 'react';
+import { Image, SafeAreaView, StyleSheet, View, Text, TouchableOpacity, Modal } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { User } from 'lucide-react-native';
+import { jwtDecode } from 'jwt-decode';
+
+interface MyJwtPayload {
+  id: number;
+  role: string;
+}
+
+interface User {
+  id: number;
+  email: string;
+  points: number;
+  discounts: number[];
+  qr: string; // Assume the user QR code is stored in this property
+}
 
 export default function TabTwoScreen() {
-  const [redeemModalVisible, setRedeemModalVisible] = useState(false);
-  const [QRModalVisible, setQRModalVisible] = useState(false);
-  // TODO: get user points from API
-  const userPoints = 130;
+  const [payload, setPayload] = useState<MyJwtPayload | null>(null);
+  const [user, setUser] = useState<User | null>(null);
+  const [discountDetails, setDiscountDetails] = useState<any[]>([]);
+  const [selectedReward, setSelectedReward] = useState<any | null>(null);
+  const [qrModalVisible, setQRModalVisible] = useState(false);
+  const [userQRModalVisible, setUserQRModalVisible] = useState(false); // State for user QR modal
 
-  // TODO: get user coupons form API
-  const coupons = [
-    { id: 1, reward: 1 },
-    { id: 2, reward: 2 },
-  ];
-  // TODO: get user history from API
-  const history = [
-    { type: "cup", timestamp: "2024-10-05T15:59", machine_name: "South Ferry" },
-    { type: "plate", timestamp: "2024-10-05T16:05", machine_name: "North Ferry" }
-  ]
-  const formatDateTime = (datetime: string) => {
-    const date = new Date(datetime);
-    return date.toLocaleDateString("en-US", {
-      month: "2-digit",
-      day: "2-digit",
-      year: "2-digit",
-    });
+  const getToken = async () => {
+    try {
+      const token = await AsyncStorage.getItem("token");
+      if (token) {
+        const decodedPayload = jwtDecode<MyJwtPayload>(token);
+        setPayload(decodedPayload);
+      }
+    } catch (error) {
+      console.error("Error fetching or decoding token:", error);
+    }
+  };
+
+  const fetchUserInfo = async () => {
+    try {
+      const response = await fetch(`http://${process.env.EXPO_PUBLIC_ADDRESS}/api/v1/users/${payload?.id}`);
+      const userData = await response.json();
+      setUser(userData);
+    } catch (error) {
+      console.error("Error fetching user info:", error);
+    }
+  };
+
+  const fetchDiscountDetails = async (itemId: number) => {
+    try {
+      const response = await fetch(`http://${process.env.EXPO_PUBLIC_ADDRESS}/api/v1/discounts/${itemId}`);
+      const discountDetail = await response.json();
+      return discountDetail;
+    } catch (error) {
+      console.error(`Error fetching details for item ${itemId}:`, error);
+      return null;
+    }
+  };
+
+  const fetchAllDiscountDetails = async () => {
+    const allDetails = await Promise.all(user!.discounts.map(fetchDiscountDetails)); // Fetch details for all items
+    setDiscountDetails(allDetails);
+  };
+
+  useEffect(() => {
+    getToken();
+  }, []);
+
+  useEffect(() => {
+    if (payload) {
+      fetchUserInfo();
+      fetchAllDiscountDetails();
+    }
+  }, [payload]);
+
+  useEffect(() => {
+    console.log(user);
+    fetchAllDiscountDetails();
+  }, [user]);
+
+  const handleRewardPress = (reward: any) => {
+    setSelectedReward(reward);
+    setQRModalVisible(true); // Show modal with QR code for reward
+  };
+
+  const handleAvatarPress = () => {
+    setUserQRModalVisible(true); // Show modal with user's QR code
   };
 
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
-      headerImage={
-        <Ionicons size={310} name="code-slash" style={styles.headerImage} />
-      }
-    >
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Profile</ThemedText>
-      </ThemedView>
-      <Pressable
-        style={styles.QRContainer}
-        onPress={() => setQRModalVisible(true)}
-      >
-        <Image
-          style={{ width: 80, height: 80 }}
-          source={require("./user_testQR.png")}
-        />
-      </Pressable>
-
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Your Points</ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.infoContainer}>
-        <ThemedText type="default">{userPoints}</ThemedText>
-      </ThemedView>
-
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Your Offers</ThemedText>
-      </ThemedView>
-      <Pressable
-        style={styles.redeemButton}
-        onPress={() => setRedeemModalVisible(true)}
-      >
-        <ThemedText type="buttonText">Redeem</ThemedText>
-      </Pressable>
-      {coupons.length > 0 ? (
-        coupons.map((item, index) => (
-          <View key={index} style={styles.infoContainer}>
-            <ThemedText>
-              ${item.reward} Off
-            </ThemedText>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
+        <Text style={styles.title}>Profile</Text>
+        <View style={styles.profileHeader}>
+          <TouchableOpacity style={styles.avatarContainer} onPress={handleAvatarPress}>
+            <User size={60} color="#000" />
+          </TouchableOpacity>
+          <View>
+            <Text style={styles.text}>Id: {user?.id}</Text>
+            <Text style={styles.text}>Email: {user?.email}</Text>
           </View>
-        ))
-      ) : (
-        <ThemedText>No Offers Yet</ThemedText>
-      )}
+        </View>
 
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">History</ThemedText>
-      </ThemedView>
-      {history.length > 0 ? (
-        history.map((item, index) => (
-          <View key={index} style={styles.infoContainer}>
-            <ThemedText>
-              {formatDateTime(item.timestamp)}: {item.type} returned to{" "}
-              {item.machine_name}
-            </ThemedText>
+        <View style={styles.pointsContainer}>
+          <Text style={styles.pointsTitle}>Your Points</Text>
+          <View style={styles.pointsBox}>
+            <Text style={styles.pointsValue}>{user?.points}</Text>
           </View>
-        ))
-      ) : (
-        <ThemedText>No History Yet</ThemedText>
-      )}
+        </View>
 
-      {redeemModalVisible && (
-        <RedeemModal
-          modalVisible={redeemModalVisible}
-          setModalVisible={setRedeemModalVisible}
-        />
-      )}
-      {QRModalVisible && (
-        <QRModal
-          modalVisible={QRModalVisible}
-          setModalVisible={setQRModalVisible}
-        />
-      )}
-    </ParallaxScrollView>
+        <View style={styles.offersContainer}>
+          <Text style={styles.offersTitle}>My Rewards</Text>
+          {discountDetails.length > 0 ? (
+            discountDetails.map((reward, index) => (
+              <TouchableOpacity
+                key={index}
+                style={styles.redeemButton}
+                onPress={() => handleRewardPress(reward)}
+              >
+                <Text style={styles.redeemButtonText}>
+                  Reward: {reward.reward / 100}$
+                </Text>
+              </TouchableOpacity>
+            ))
+          ) : (
+            <Text>No rewards available</Text>
+          )}
+        </View>
+
+        <View style={styles.offersContainer}>
+          <Text style={styles.offersTitle}>My History</Text>
+          {discountDetails.length > 0 ? (
+            discountDetails.map((reward, index) => (
+              <TouchableOpacity
+                key={index}
+                style={styles.redeemButton}
+                onPress={() => handleRewardPress(reward)}
+              >
+                <Text style={styles.redeemButtonText}>
+                  Reward: {reward.reward / 100}$
+                </Text>
+              </TouchableOpacity>
+            ))
+          ) : (
+            <Text>No rewards available</Text>
+          )}
+        </View>
+
+        {/* Modal to display Reward QR code */}
+        {selectedReward && (
+          <Modal
+            transparent={true}
+            visible={qrModalVisible}
+            onRequestClose={() => setQRModalVisible(false)}
+          >
+            <View style={styles.modalContainer}>
+              <View style={styles.modalContent}>
+                <Text style={styles.modalTitle}>Reward QR Code</Text>
+                <Image
+                  source={{ uri: selectedReward.qr }}
+                  style={styles.qrCode}
+                />
+                <TouchableOpacity
+                  style={styles.closeButton}
+                  onPress={() => setQRModalVisible(false)}
+                >
+                  <Text style={styles.closeButtonText}>Close</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Modal>
+        )}
+
+        {/* Modal to display User QR code */}
+        {user && (
+          <Modal
+            transparent={true}
+            visible={userQRModalVisible}
+            onRequestClose={() => setUserQRModalVisible(false)}
+          >
+            <View style={styles.modalContainer}>
+              <View style={styles.modalContent}>
+                <Text style={styles.modalTitle}>User QR Code</Text>
+                <Image
+                  source={{ uri: user.qr }} // Display user's QR code
+                  style={styles.qrCode}
+                />
+                <TouchableOpacity
+                  style={styles.closeButton}
+                  onPress={() => setUserQRModalVisible(false)}
+                >
+                  <Text style={styles.closeButtonText}>Close</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Modal>
+        )}
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: '#fff',
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 16,
+  },
+  pointsContainer: {
+    marginBottom: 16,
+  },
+  pointsTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
+  pointsBox: {
+    backgroundColor: '#e0e0e0',
+    padding: 16,
+    borderRadius: 8,
+  },
+  pointsValue: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  offersContainer: {
+    marginTop: 16,
+  },
+  offersTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
   redeemButton: {
-    width: "100%",
+    backgroundColor: '#1D804B',
+    padding: 16,
+    borderRadius: 8,
+    marginBottom: 10,
+  },
+  redeemButtonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#fff',
+  },
+  profileHeader: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap : 40,
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  avatarContainer: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    backgroundColor: '#e0e0e0',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  qrCode: {
+    width: 200,
+    height: 200,
+    alignSelf: 'center',
+    marginBottom: 20,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    backgroundColor: '#fff',
+    padding: 20,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  closeButton: {
+    backgroundColor: '#1D804B',
     padding: 10,
-    borderRadius: 5,
-    backgroundColor: "#1D804B",
+    borderRadius: 8,
+    marginTop: 20,
   },
-  infoContainer: {
-    gap: 8,
-    backgroundColor: "lightgray",
-    borderRadius: 10,
-    padding: 20,
+  closeButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
   },
-  headerImage: {
-    color: "#808080",
-    bottom: -90,
-    left: -35,
-    position: "absolute",
-  },
-  titleContainer: {
-    flexDirection: "row",
-    gap: 8,
-  },
-  QRContainer: {
-    backgroundColor: "lightgray",
-    width: 120,
-    height: 120,
-    borderRadius: 60,
-    padding: 20,
-    alignSelf: "center",
+  text: {
+    fontSize: 16,
   },
 });

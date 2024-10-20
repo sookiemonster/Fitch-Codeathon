@@ -14,9 +14,50 @@ export default function RegistrationScreen() {
   const [error, setError] = useState("");
 
   const handleLogin = async () => {
-    // Perform login logic, and on success:
-    await AsyncStorage.setItem("userToken", "dummy-token");
-    router.navigate("../(tabs)");
+
+    if (password !== confirmationPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+    try {
+      const res = await fetch(`http://${process.env.EXPO_PUBLIC_ADDRESS}/api/v1/auth/users/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+
+        try {
+          const res = await fetch(`http://${process.env.EXPO_PUBLIC_ADDRESS}/api/v1/auth/users/login`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, password }),
+          });
+
+          const data = await res.json();
+
+          if (res.ok) {
+            await AsyncStorage.setItem('token', data.token);  
+            router.replace('/(tabs)/profile'); 
+          } else {
+            setError(data.error || 'Login failed. Please try again.');
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      } else {
+        setError(data.error || 'Login failed. Please try again.');
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -30,6 +71,7 @@ export default function RegistrationScreen() {
           placeholder="Email"
           value={email}
           onChangeText={setEmail}
+          placeholderTextColor = '#767676'
         />
         <Text style={styles.emailText}>Password</Text>
         <TextInput
@@ -38,13 +80,16 @@ export default function RegistrationScreen() {
           secureTextEntry
           value={password}
           onChangeText={setPassword}
+          placeholderTextColor = '#767676'
         />
         <Text style={styles.emailText}>Confirm Password</Text>
         <TextInput
           style={styles.input2}
           placeholder="Confirm Password"
+          secureTextEntry
           value={confirmationPassword}
           onChangeText={setConfirmationPassword}
+          placeholderTextColor = '#767676'
         />
         {error && <Text style={styles.errorText}>{error}</Text>}
         <Pressable style={styles.button} onPress={handleLogin}>
@@ -102,6 +147,7 @@ const styles = StyleSheet.create({
   },
   emailText: {
     fontWeight: "bold",
+
   },
   errorText: {
     color: "red",

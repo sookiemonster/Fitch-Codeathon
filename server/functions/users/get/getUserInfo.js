@@ -13,6 +13,7 @@ async function getUserInfo(id) {
             discounts: true,
             items: true,
             history: true,
+            qr: true
             
         },
     });

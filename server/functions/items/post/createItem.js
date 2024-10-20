@@ -14,7 +14,7 @@ async function createItem(name, type, status, owner) {
 
     const item = await prisma.item.create({
         data: {
-            qr: 1,
+            qr: "1",
             name: name,
             type: type,
             status: status,

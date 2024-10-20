@@ -12,15 +12,16 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false, // This hides the header for all screens by default
-      }}>
+        headerShown: false, 
+        tabBarLabelStyle: { color: "black" },
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
           title: 'Home',
-          headerShown: false, // This ensures the header is hidden for the index route
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'globe' : 'globe-outline'} color={color} />
+            <TabBarIcon name={focused ? 'globe' : 'globe-outline'} color={"black"}  />
           ),
         }}
       />
@@ -29,7 +30,7 @@ export default function TabLayout() {
         options={{
           title: 'Profile',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'person-circle' : 'person-circle-outline'} color={color} />
+            <TabBarIcon name={focused ? 'person-circle' : 'person-circle-outline'} color={"black"}  />
           ),
         }}
       />

@@ -22,7 +22,7 @@ export default function LoginLayout() {
           tabBarIcon: ({ focused }) => (
             <TabBarIcon
               name={focused ? "home" : "home-outline"}
-              color={"black"} // Icon color is black
+              color={"black"} 
             />
           ),
         }}
@@ -34,7 +34,7 @@ export default function LoginLayout() {
           tabBarIcon: ({ focused }) => (
             <TabBarIcon
               name={focused ? "star" : "star-outline"}
-              color={"black"} // Icon color is black
+              color={"black"}
             />
           ),
         }}

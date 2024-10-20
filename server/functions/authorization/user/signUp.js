@@ -25,7 +25,7 @@ const registerUser = async (req, res) => {
       data: {
         email,
         password: hashedPassword,
-        qr : 1
+        qr : "1"
       },
     });
     await prisma.user.update({

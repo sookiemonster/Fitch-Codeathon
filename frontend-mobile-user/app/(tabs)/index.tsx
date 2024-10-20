@@ -1,46 +1,208 @@
+import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet } from 'react-native';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { View, Text, TouchableOpacity } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {jwtDecode} from 'jwt-decode'; // Import jwt-decode from the package
+
+interface MyJwtPayload {
+  id: number;
+  role: string;
+}
+
+interface User {
+  id: number;
+  email: string;
+}
 
 export default function HomeScreen() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
-      headerImage={
-        <Image
-          source={require("@/assets/images/partial-react-logo.png")}
-          style={styles.reactLogo}
-        />
+  const [payload, setPayload] = useState<MyJwtPayload | null>(null);
+  const [user, setUser] = useState<User | null>(null);
+  const [items, setItems] = useState<any[]>([]);
+  const [itemDetails, setItemDetails] = useState<any[]>([]);
+
+  const getToken = async () => {
+    try {
+      const token = await AsyncStorage.getItem("token");
+      if (token) {
+        const decodedPayload = jwtDecode<MyJwtPayload>(token); 
+        setPayload(decodedPayload); 
       }
-    >
-      <ThemedText type="title">Welcome</ThemedText>
-      <ThemedView style={styles.infoContainer}>
-        <ThemedText type="default">Grab an EcoWare from any vendor</ThemedText>
-      </ThemedView>
-      <ThemedText type="title">Map</ThemedText>
-      
-      <ThemedText type="title">Your Points</ThemedText>
-      <ThemedView style={styles.infoContainer}>
-        <ThemedText>0</ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    } catch (error) {
+      console.error("Error fetching or decoding token:", error);
+    }
+  };
+
+  const fetchUserInfo = async () => {
+    try {
+      const response = await fetch(`http://${process.env.EXPO_PUBLIC_ADDRESS}/api/v1/users/${payload?.id}`);
+      const userData = await response.json();
+      console.log(userData);
+      setUser(userData);
+    } catch (error) {
+      console.error("Error fetching user info:", error);
+    }
+  }
+
+  const fetchItems = async () => {
+    try {
+      const response = await fetch(`http://${process.env.EXPO_PUBLIC_ADDRESS}/api/v1/users/${payload?.id}/items`);
+      const itemsData = await response.json();
+      console.log(itemsData);
+      setItems(itemsData.items);
+    } catch (error) {
+      console.error("Error fetching items:", error);
+    }
+  }
+
+  const fetchItemDetails = async (itemId: number) => {
+    try {
+      const response = await fetch(`http://${process.env.EXPO_PUBLIC_ADDRESS}/api/v1/items/${itemId}`);
+      const itemDetail = await response.json();
+      return itemDetail;
+    } catch (error) {
+      console.error(`Error fetching details for item ${itemId}:`, error);
+      return null;
+    }
+  };
+
+  const fetchAllItemDetails = async () => {
+    const allDetails = await Promise.all(items.map(fetchItemDetails)); // Fetch details for all items
+    console.log(allDetails);
+    setItemDetails(allDetails); // Filter out null responses
+  };
+
+  useEffect(() => {
+    getToken();
+  }, []);
+
+  useEffect(() => {
+    if (payload) {
+      fetchUserInfo();
+      fetchItems(); // Fetch items after the token is set
+    }
+  }, [payload]);
+
+  useEffect(() => {
+    if (items.length > 0) {
+      fetchAllItemDetails(); // Fetch item details once the items array is populated
+    }
+  }, [items]);
+
+
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
+        <Text style={styles.title}>Welcome {user ? user.email : 'Guest'}</Text>
+        <View style={styles.grayBox}>
+          <Text style={styles.grayBoxText}>Grab an EcoWare from any vendor</Text>
+        </View>
+        <View style={styles.mapContainer}>
+          <Image
+            source={{ uri: '/placeholder.svg?height=200&width=300' }}
+            style={styles.map}
+          />
+        </View>
+        <View style={styles.pointsContainer}>
+          <Text style={styles.pointsTitle}>Your Items</Text>
+          <View style={styles.pointsBox}>
+          {itemDetails.length > 0 ? (
+            itemDetails.map((itemDetail, index) => (
+              <View key={index} style={styles.itemContainer}>
+                <Text style={styles.itemText}>ID: {itemDetail.item.id}</Text>
+                <Text style={styles.itemText}>Name: {itemDetail.item.name}</Text>
+                {itemDetail.item.name === "Plate" && (
+                  <Text style={styles.itemText}>Type: {itemDetail.item.type}</Text>
+                )}
+              </View>
+            ))
+          ) : (
+            <Text>No items found</Text>
+          )}
+          </View>
+        </View>
+        <TouchableOpacity style={styles.redeemButton}>
+          <Text style={styles.redeemButtonText}>History</Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  infoContainer: {
-    gap: 8,
-    marginBottom: 8,
-    backgroundColor: "lightgray",
-    borderRadius: 10,
-    padding: 20,
+  container: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: '#fff',
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 16,
+  },
+  grayBox: {
+    backgroundColor: '#e0e0e0',
+    padding: 20,
+    borderRadius: 8,
+    marginBottom: 16,
+  },
+  grayBoxText: {
+    textAlign: 'center',
+    fontSize: 25,
+    fontWeight: 'bold',
+    paddingHorizontal: 12,
+  },
+  mapContainer: {
+    height: 200,
+    marginBottom: 16,
+    borderRadius: 8,
+    overflow: 'hidden',
+  },
+  map: {
+    width: '100%',
+    height: '100%',
+  },
+  pointsContainer: {
+    marginBottom: 16,
+  },
+  pointsTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
+  pointsBox: {
+    backgroundColor: '#e0e0e0',
+    padding: 16,
+    borderRadius: 8,
+  },
+  pointsValue: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  redeemButton: {
+    backgroundColor: '#e0e0e0',
+    padding: 16,
+    marginTop: 40,
+    marginHorizontal: 80,
+    borderRadius: 8,
+  },
+  redeemButtonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  itemContainer: {
+    gap: 40,
+    marginBottom: 12,
+    flexDirection: 'row', // Align children in a row
+    justifyContent: 'flex-start'
+    
+  },
+  itemText: {
+    fontSize: 16,
+    marginTop: 6,
   },
 });
+
