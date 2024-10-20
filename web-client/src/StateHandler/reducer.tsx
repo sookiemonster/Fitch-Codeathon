@@ -12,6 +12,8 @@ interface State {
     stations?:Station[],
     stationsLoading:Boolean,
     stationsError:Boolean,
+    summaryLoading:Boolean,
+    summaryError:Boolean,
     alerts?:Alert[],
     places?:Place[],
     selected_diet:Diet
@@ -29,37 +31,42 @@ type StateAction =
     | { type: "selectDiet" ; value:Diet }
     | { type: "updateAlert" ; value:AlertChange }
     | { type: "setStations" ; value:Station[] }
+    | { type: "setSummaries" ; value:Inventory }
     | { type: "raiseStationsError" }
     | { type: "completeStationsLoad" }
+    | { type: "raiseSummaryError" }
+    | { type: "completeSummaryLoad" }
 
-const initialState:State = { selected_diet:Diet.ALL, stationsLoading:true, stationsError: false }
+const initialState:State = { selected_diet:Diet.ALL, stationsLoading:true, stationsError: false, summaryError:false, summaryLoading:true }
 const debugIntitialState:State = {
     selected_diet: Diet.ALL,
-    inventory: {
-        vegan: {
-            washed_count: 100,
-            unwashed_count: 50,
-            uncollected_count: 32
-        },
-        halal: {
-            washed_count: 200,
-            unwashed_count: 501,
-            uncollected_count: 68
-        },
-        none: {
-            washed_count: 502,
-            unwashed_count: 705,
-            uncollected_count: 1002
-        },
-        all: {
-            washed_count: 20000,
-            unwashed_count: 50000,
-            uncollected_count: 60000
-        }
-    }, 
+    // inventory: {
+    //     vegan: {
+    //         washed_count: 100,
+    //         unwashed_count: 50,
+    //         uncollected_count: 32
+    //     },
+    //     halal: {
+    //         washed_count: 200,
+    //         unwashed_count: 501,
+    //         uncollected_count: 68
+    //     },
+    //     none: {
+    //         washed_count: 502,
+    //         unwashed_count: 705,
+    //         uncollected_count: 1002
+    //     },
+    //     all: {
+    //         washed_count: 20000,
+    //         unwashed_count: 50000,
+    //         uncollected_count: 60000
+    //     }
+    // }, 
     stations: [],
     stationsLoading: true,
     stationsError: false,
+    summaryLoading: true,
+    summaryError: false,
     // stations: [
     //     {
     //         id: 1,
@@ -158,6 +165,15 @@ function stateReducer(state:State, action: StateAction):State {
 
         case "raiseStationsError":
             return {...state, stationsError: false };
+
+        case "setSummaries":
+            return {...state, inventory: action.value};
+
+        case "completeSummaryLoad":
+            return {...state, summaryLoading: false };
+
+        case "raiseSummaryError":
+            return {...state, summaryError: true };
 
         default:
             throw new Error(`Unknown Action: ${action}`);

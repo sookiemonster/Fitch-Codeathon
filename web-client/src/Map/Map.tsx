@@ -30,6 +30,22 @@ function StationMarkers({state, dispatch}:MapProps):JSX.Element {
     )
 }
 
+// function VendorMarkers({state, dispatch}:MapProps):JSX.Element {
+//     return (
+//         <>
+//         { state.vendors ? 
+//         state.vendors.map(vendor => 
+//             <Marker key={vendor.id} position={[vendor.lat, vendor.lng]}>
+//                 <Popup>
+//                 <vendor {...vendor} />
+//                 </Popup>
+//             </Marker>
+//         )
+//         : ""}
+//         </>
+//     )
+// }
+
 function Map({state, dispatch}:MapProps):JSX.Element {
 
     return (
@@ -54,6 +70,7 @@ function Map({state, dispatch}:MapProps):JSX.Element {
                     />
                 }
                 <StationMarkers state={state} dispatch={dispatch} />
+                {/* <VendorMarkers state={state} dispatch={dispatch} /> */}
             </MapContainer>
         </div>
     );

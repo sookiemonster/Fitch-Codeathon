@@ -1,20 +1,6 @@
-// // stations: [
-//     // {
-//     //     id: 1,
-//     //     real_name: "Station 1",
-//     //     current_capacity: 45.0,
-//     //     alert_threshold: 75.0,
-//     //     token_count: 202,
-//     //     lat: 40.688,
-//     //     lng: -74.0180
-//     // },
-
-// import { Station } from "../StationCapacities"
 import { State } from "./reducer"
 import { API_URL } from "../config";
 import { Station } from "../StationCapacities";
-import { Item } from "../DBHandler/interfaces";
-import { Inventory } from "@mui/icons-material";
 
 interface StationSummary {
     id:number,
@@ -80,7 +66,6 @@ async function getStationOverviews(state:State, dispatch:any):Promise<void> {
 
         Promise.all(allStationOverviews)
             .then(stationData => {
-                // console.log(stationData);
                 stationData = stationData.sort((a,b) => {return a.id - b.id})
                 dispatch({type: "setStations", value: stationData });
                 dispatch({type: "completeStationsLoad" })
