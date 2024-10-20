@@ -9,7 +9,7 @@ async function getDiscountQR(discountId) {
             qr: true
         }
     });
-    return makeQR(discount);
+    return (discount);
 }
 
 module.exports = {getDiscountQR};

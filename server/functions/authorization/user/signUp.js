@@ -1,5 +1,6 @@
 const { prisma } = require("../../../lib/prisma.js");
 const bcrypt = require("bcrypt");
+const makeQR = require("../../../util/makeQR.js");
 
 const registerUser = async (req, res) => {
   const { email, password } = req.body;
@@ -24,8 +25,17 @@ const registerUser = async (req, res) => {
       data: {
         email,
         password: hashedPassword,
+        qr : 1
       },
     });
+    await prisma.user.update({
+      where: {
+        id: newUser.id
+      },
+      data: {
+        qr: await makeQR(newUser.id+"")
+      }
+    })
     res
       .status(201)
       .json({ message: "User created successfully: ", user: {password, ...newUser} });
