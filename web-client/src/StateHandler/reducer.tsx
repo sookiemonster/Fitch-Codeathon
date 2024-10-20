@@ -4,14 +4,20 @@ import { Inventory } from "../StockDetailer";
 import { Diet } from "../DietSelector";
 import { Station } from "../StationCapacities";
 import { Alert } from "../StockAlerter";
-import { User, Place } from "../DBHandler/interfaces";
+import { User, Vendor } from "../DBHandler/interfaces";
 
 interface State {
     user?:User 
     inventory?:Inventory,
     stations?:Station[],
+    vendors?:Vendor[],
+    stationsLoading:Boolean,
+    stationsError:Boolean,
+    summaryLoading:Boolean,
+    summaryError:Boolean,
+    vendorsLoading:Boolean,
+    vendorsError:Boolean,
     alerts?:Alert[],
-    places?:Place[],
     selected_diet:Diet
 }
 
@@ -26,70 +32,34 @@ type StateAction =
     { type: "logout" ; value:any}
     | { type: "selectDiet" ; value:Diet }
     | { type: "updateAlert" ; value:AlertChange }
+    | { type: "setStations" ; value:Station[] }
+    | { type: "setSummaries" ; value:Inventory }
+    | { type: "setVendors" ; value:Vendor[] }
+    | { type: "raiseStationsError" }
+    | { type: "completeStationsLoad" }
+    | { type: "raiseSummaryError" }
+    | { type: "completeSummaryLoad" }
+    | { type: "completeVendorsLoad" }
+    | { type: "raiseVendorsError" }
 
-const initialState:State = { selected_diet:Diet.ALL }
+const initialState:State = { 
+    selected_diet:Diet.ALL, 
+    stationsLoading:true, 
+    stationsError: false, 
+    summaryError:false, 
+    summaryLoading:true,
+    vendorsError:false, 
+    vendorsLoading:true,
+}
 const debugIntitialState:State = {
     selected_diet: Diet.ALL,
-    inventory: {
-        vegan: {
-            washed_count: 100,
-            unwashed_count: 50,
-            uncollected_count: 32
-        },
-        halal: {
-            washed_count: 200,
-            unwashed_count: 501,
-            uncollected_count: 68
-        },
-        none: {
-            washed_count: 502,
-            unwashed_count: 705,
-            uncollected_count: 1002
-        },
-        all: {
-            washed_count: 20000,
-            unwashed_count: 50000,
-            uncollected_count: 60000
-        }
-    }, 
-    stations: [
-        {
-            id: 1,
-            real_name: "Station 1",
-            current_capacity: 45.0,
-            alert_threshold: 75.0,
-            token_count: 202,
-            lat: 40.688,
-            lng: -74.0180
-        },
-        {
-            id: 2,
-            real_name: "Station 2",
-            current_capacity: 75.0,
-            alert_threshold: 75.0,
-            token_count: 202,
-            lat: 40.6885,
-            lng: -74.0190
-        },
-        {
-            id: 3,
-            real_name: "Station 3",
-            current_capacity: 25.0,
-            alert_threshold: 75.0,
-            token_count: 202,
-            lat: 40.6888,
-            lng: -74.02
-        },
-        {
-            id: 4,
-            real_name: "Station 4",
-            current_capacity: 5.0,
-            alert_threshold: 75.0,
-            token_count: 202,
-            lat: 40.6888,
-            lng: -74.0217
-        }
-    ],
+    stations: [],
+    stationsLoading: true,
+    stationsError: false,
+    summaryLoading: true,
+    summaryError: false,
+    vendorsError:false, 
+    vendorsLoading:true,
     alerts: [
         {
             id: "awdj3247",
@@ -141,8 +111,36 @@ function stateReducer(state:State, action: StateAction):State {
             })
             
             return {...state, alerts: updatedAlerts};
+
+        case "setStations":
+            return {...state, stations: action.value};
+
+        case "completeStationsLoad":
+            return {...state, stationsLoading: false };
+
+        case "raiseStationsError":
+            return {...state, stationsError: false };
+
+        case "setSummaries":
+            return {...state, inventory: action.value};
+
+        case "completeSummaryLoad":
+            return {...state, summaryLoading: false };
+
+        case "raiseSummaryError":
+            return {...state, summaryError: true };
+
+        case "setVendors":
+            return {...state, vendors: action.value};
+
+        case "completeVendorsLoad":
+            return {...state, vendorsLoading: false };
+
+        case "raiseVendorsError":
+            return {...state, vendorsError: true };
+
         default:
-            throw new Error("Unknown Action");
+            throw new Error(`Unknown Action: ${action}`);
     }
 }
 

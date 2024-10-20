@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { State } from "../StateHandler";
 import DietSelector, { Diet } from "../DietSelector";
+import getSummary from "../StateHandler/summaryHandler";
 interface InventoryCounters {
     washed_count:number,
     unwashed_count:number,
@@ -34,7 +35,7 @@ function StockLabel({label, count, color}:LabelProps): JSX.Element {
     return (
         <div className={"stock-label " + color}>
             <label>{label}</label>
-            <span className="count">{ (count) ? count : "loading"}</span>
+            <span className="count">{ (count === 0 || count) ? count : "loading"}</span>
         </div>
     )
 }
@@ -56,6 +57,10 @@ function StockDetailer({state, dispatch}:DetailerProps):JSX.Element {
         default:
             break;
     }
+
+    useEffect(() => {
+        getSummary(state, dispatch);
+    }, []);
 
     return (
         <div id="stock-summary-section">

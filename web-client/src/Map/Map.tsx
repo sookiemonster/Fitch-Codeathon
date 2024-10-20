@@ -1,12 +1,13 @@
 
-import React, { useMemo } from "react";
+import React, { useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { State } from "../StateHandler";
-import { Place } from "../DBHandler/interfaces";
-import { PieChart } from '@mui/x-charts/PieChart';
+import { StationIcon, vendorIcon } from "./Icons";
 
 import StationCard from "./StationCard";
+import VendorCard from "./VendorCard";
+import getAllVendorLocations from "../StateHandler/vendorHandler";
 const DARK_MODE = false;
 
 interface MapProps {
@@ -19,7 +20,7 @@ function StationMarkers({state, dispatch}:MapProps):JSX.Element {
         <>
         { state.stations ? 
         state.stations.map(station => 
-            <Marker key={station.id} position={[station.lat, station.lng]}>
+            <Marker icon={StationIcon(station.current_capacity)} key={station.id} position={[station.lat, station.lng]}>
                 <Popup>
                 <StationCard {...station} />
                 </Popup>
@@ -30,8 +31,28 @@ function StationMarkers({state, dispatch}:MapProps):JSX.Element {
     )
 }
 
+function VendorMarkers({state, dispatch}:MapProps):JSX.Element {
+    return (
+        <>
+        { state.vendors ? 
+        state.vendors.map(vendor => 
+            <Marker icon={vendorIcon} key={vendor.id} position={[vendor.lat, vendor.lng]}>
+                <Popup>
+                <VendorCard {...vendor} />
+                </Popup>
+            </Marker>
+        )
+        : ""}
+        </>
+    )
+}
+
 function Map({state, dispatch}:MapProps):JSX.Element {
-    
+
+    useEffect(() => {
+        getAllVendorLocations(state, dispatch);
+    }, [])
+
     return (
         <div id="map-panel">
                 <MapContainer center={[40.6885, -74.0190]} zoom={16} 
@@ -54,6 +75,7 @@ function Map({state, dispatch}:MapProps):JSX.Element {
                     />
                 }
                 <StationMarkers state={state} dispatch={dispatch} />
+                <VendorMarkers state={state} dispatch={dispatch} />
             </MapContainer>
         </div>
     );

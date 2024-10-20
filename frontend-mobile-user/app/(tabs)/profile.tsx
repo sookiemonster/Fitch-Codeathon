@@ -1,17 +1,37 @@
-import Ionicons from '@expo/vector-icons/Ionicons';
-import { Image, Pressable, StyleSheet } from 'react-native';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-import { useState } from 'react';
-import { RedeemModal } from '@/components/RedeemModal';
-import { QRModal } from '@/components/QRModal';
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { Image, Pressable, StyleSheet, View} from "react-native";
+import ParallaxScrollView from "@/components/ParallaxScrollView";
+import { ThemedText } from "@/components/ThemedText";
+import { ThemedView } from "@/components/ThemedView";
+import { useState } from "react";
+import { RedeemModal } from "@/components/RedeemModal";
+import { QRModal } from "@/components/QRModal";
 
 export default function TabTwoScreen() {
-  const [redeemModalVisible, setRedeemModalVisible] = useState(false)
+  const [redeemModalVisible, setRedeemModalVisible] = useState(false);
   const [QRModalVisible, setQRModalVisible] = useState(false);
   // TODO: get user points from API
-  const userPoints = 130
+  const userPoints = 130;
+
+  // TODO: get user coupons form API
+  const coupons = [
+    { id: 1, reward: 1 },
+    { id: 2, reward: 2 },
+  ];
+  // TODO: get user history from API
+  const history = [
+    { type: "cup", timestamp: "2024-10-05T15:59", machine_name: "South Ferry" },
+    { type: "plate", timestamp: "2024-10-05T16:05", machine_name: "North Ferry" }
+  ]
+  const formatDateTime = (datetime: string) => {
+    const date = new Date(datetime);
+    return date.toLocaleDateString("en-US", {
+      month: "2-digit",
+      day: "2-digit",
+      year: "2-digit",
+    });
+  };
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
@@ -27,7 +47,7 @@ export default function TabTwoScreen() {
         onPress={() => setQRModalVisible(true)}
       >
         <Image
-          style={{ width: 100, height: 100 }}
+          style={{ width: 80, height: 80 }}
           source={require("./user_testQR.png")}
         />
       </Pressable>
@@ -48,13 +68,33 @@ export default function TabTwoScreen() {
       >
         <ThemedText type="buttonText">Redeem</ThemedText>
       </Pressable>
-      {/* TODO: get coupons for user and display them */}
-      <ThemedText>No Offers So Far</ThemedText>
+      {coupons.length > 0 ? (
+        coupons.map((item, index) => (
+          <View key={index} style={styles.infoContainer}>
+            <ThemedText>
+              ${item.reward} Off
+            </ThemedText>
+          </View>
+        ))
+      ) : (
+        <ThemedText>No Offers Yet</ThemedText>
+      )}
 
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">History</ThemedText>
       </ThemedView>
-      {/* TODO: retreive user history and make history component */}
+      {history.length > 0 ? (
+        history.map((item, index) => (
+          <View key={index} style={styles.infoContainer}>
+            <ThemedText>
+              {formatDateTime(item.timestamp)}: {item.type} returned to{" "}
+              {item.machine_name}
+            </ThemedText>
+          </View>
+        ))
+      ) : (
+        <ThemedText>No History Yet</ThemedText>
+      )}
 
       {redeemModalVisible && (
         <RedeemModal
@@ -81,7 +121,6 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     gap: 8,
-    marginBottom: 8,
     backgroundColor: "lightgray",
     borderRadius: 10,
     padding: 20,
@@ -98,11 +137,10 @@ const styles = StyleSheet.create({
   },
   QRContainer: {
     backgroundColor: "lightgray",
-    width: 150,
-    height: 150,
-    borderRadius: 75,
-    padding: 25,
-
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    padding: 20,
     alignSelf: "center",
   },
 });

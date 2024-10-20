@@ -33,4 +33,12 @@ interface User {
     name:string
 }
 
-export type {User, Place, Item};
+interface Vendor {
+    id:number, 
+    lat:number, 
+    lng:number, 
+    name?:string, 
+    inventory?: Item[]
+}
+
+export type {User, Place, Item, Vendor};

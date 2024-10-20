@@ -4,6 +4,7 @@
 @use "_chart" as * ;
 @use "_alerts" as * ;
 @use "_map" as * ;
+@use "_utils" as * ;
 
 * {
     box-sizing: border-box;
@@ -37,11 +38,15 @@ html, body {
     grid-template-columns: minmax(800px, 1fr) 1fr;
     grid-template-rows: 8rem;
     background-color: var(--bg-color);
+    background: var(--bg-fill);
+    background-size: 400% 400%;
+    -webkit-animation: gradient 10s ease-in-out infinite;
+    -moz-animation: gradient 10s ease-in-out infinite;
+    animation: gradient 10s ease-in-out infinite;
 
     gap: $gap;
     padding: $padding;
 }
-
 #layout-container > div {
     border-radius: 8px;
 }
@@ -49,6 +54,8 @@ html, body {
 @media (width <= 1200px) {
     #layout-container {
         grid-template-columns: 1fr;
+        grid-template-rows: 8rem 1fr 70vw;
+        overflow-y: scroll;
     }
 }
 
@@ -65,10 +72,8 @@ h1 {
     background-color: var(--card-color);
     padding: 15px 30px;
     height: 8rem;
+    gap: 20px;
 
-    button {
-        margin-left: auto;
-    }
 }
 
 #metrics {

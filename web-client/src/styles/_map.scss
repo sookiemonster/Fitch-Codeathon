@@ -80,3 +80,42 @@
         grid-column: -1/1;
     }
 }
+
+.inventory-breakdown {
+    padding: 5px 10px;
+}
+
+.icon {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background-color: rgba(0,0,0,0.8);
+    overflow: hidden;
+
+    span {
+        @include center();
+        color: var(--bg-color);
+    }
+
+    .fill-line {
+        background-color: none;
+        position: absolute;
+        width: 200%;
+        height: 100%;
+    }
+}
+
+.vendor-icon {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background-color: rgba(0,0,0,0.8);
+    overflow: hidden;
+
+    svg {
+        @include center();
+        fill: var(--bg-color);
+    }
+}
