@@ -24,7 +24,7 @@ We used PostgreSQL for our database with Prisma ORM.
 
 *How to setup*
 
-  1. Install PostgreSQL
+1. Install PostgreSQL
     For Linux
 
     ```
@@ -35,7 +35,7 @@ We used PostgreSQL for our database with Prisma ORM.
     brew install postgresql
     ```
     
-  3. Start PostgreSQL
+  2. Start PostgreSQL
     For Linux 
     ```
     sudo service postgresql start
@@ -45,7 +45,7 @@ We used PostgreSQL for our database with Prisma ORM.
     brew services start postgresql
     ```
     
-  5. Create a User and Database
+  3. Create a User and Database
     Log into the PostgreSQL shel: 
     ```
     sudo -u postgres psql
@@ -56,7 +56,7 @@ We used PostgreSQL for our database with Prisma ORM.
     CREATE DATABASE mydb OWNER myuser;
     ```
 
-  7. Integrate Prisma
+  4. Integrate Prisma
     Create a new .env file inside the server folder with the connection URL:
     ```
     DATABASE_URL="postgresql://myuser:mypassword@localhost:5432/mydb"
