@@ -212,6 +212,10 @@
   height: 100%;
 }
 
+.vendor-card {
+  height: 270px !important;
+}
+
 .station-card {
   width: 250px;
   height: 400px;
