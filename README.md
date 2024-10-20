@@ -4,32 +4,154 @@
 [EcoWare API Endpoint Documentation](https://github.com/user-attachments/files/17452292/EcoWare.API.Endpoint.Documentation.pdf) <br>
 [EcoWare Marketing Plan](https://github.com/user-attachments/files/17452301/EcoWare.Marketing.Plan.pdf)
 
-# Running the Applications
-cd into each folder to run application
-1. Server
-```
-cd server
-npm run studio
-npm run server
-```
+# EcoWare 🌎🍽️
+[Team Discovery](https://www.figma.com/board/gGCsLOUfskSWuw0Flmw9gt/Team-4-Discovery?node-id=0-1&node-type=canvas&t=GIlpj3XGpo9iecjX-0) <br>
+[Wireframe](https://www.figma.com/design/vBSkMnoNiU1iBdxIJ5l15O/EcoWare?node-id=17-49&node-type=canvas&t=M0Y08aw3LX3AAdWn-0)
+
+# How to Deploy 
+
+**Database**
+
+We used PostgreSQL for our database with Prisma ORM.
+
+*How to setup*
+
+  1. Install PostgreSQL
+    For Linux 
+    ```bash sudo apt install postgresql```
+    For macOS (Homebrew) 
+    ```bash brew install postgresql```
+    
+  2. Start PostgreSQL
+    For Linux 
+    ```bash sudo service postgresql start```
+    For macOS (Homebrew) 
+    ```bash brew services start postgresql```
+    
+  3. Create a User and Database
+    Log into the PostgreSQL shel: 
+    ```bash sudo -u postgres psql```
+    Create a new user and database: 
+    ```CREATE USER myuser WITH PASSWORD 'mypassword';
+    CREATE DATABASE mydb OWNER myuser;```
+
+  4. Integrate Prisma
+    Create a new .env file inside the server folder with the connection URL:
+    ```DATABASE_URL="postgresql://myuser:mypassword@localhost:5432/mydb"```
+
+**Backend Server**
+
+  1. Go to the server folder
+    ```cd server```
+
+  2. Install all the necessary packages
+    ```npm install```
+
+  3. Generate the Prisma client and seed the database:
+    ```npm run prisma```
+
+  4. Run the server
+    ```npm run server```(runs on port 5000)
+
+  (Optional)
+
+  5. GUI for the database
+    ```npm run studio```(runs on port 5555)
+
+**Washer Dashboard**
+
+  1. Go to the web-client folder
+    ```cd web-client```
+
+  2. Install all the necessary packages
+    ```npm install```
+
+  3. Run the web client
+    ```npm run start``` (runs on port 3000)
+
+**Vendor Web Dashboard**
+
+  1. Go to the next-web folder
+    ```cd next-web```
+
+  2. Install all the necessary packages
+    ```npm install```
+
+  3. Run the web client
+    ```npm run dev``` (runs on port 3010)
+
+**User Mobile App**
+
+  1. Go to the frontend-mobile-user
+    ```cd frontend-mobile-user```
+
+  2. Install all the necessary packages
+    ```npm install```
+
+  3. Create a new .env file inside the frontend-mobile-user folder with the IP and PORT where the backend server is running:
+    ```EXPO_PUBLIC_ADDRESS = "<ip_address>:<port>"```
+    ip_address cant be localhost
+    port should be 5000 ( unless u changed the server port )
+    dont include 'http://' or '/' after the port
+
+  4. Run the mobile client
+    ```npx expo start``` (runs on port 8081)
+
+  5. Follow the instructions on the terminal
+
+**Vendor Mobile App**
+
+  1. Go to the frontend-mobile-vendor
+    ```cd frontend-mobile-Vendor```
+
+  2. Install all the necessary packages
+    ```npm install```
+
+  3. Create a new .env file inside the frontend-mobile-user folder with the IP and PORT where the backend server is running:
+    ```EXPO_PUBLIC_ADDRESS = "<ip_address>:<port>"```
+    ip_address cant be localhost
+    port should be 5000 ( unless u changed the server port )
+    dont include 'http://' or '/' after the port
+
+  4. Run the mobile client
+    ```npx expo start``` (runs on port 8082)
+
+  5. Follow the instructions on the terminal
+
+**Test Accounts**
+
+Vendors : 
+  login : v1@t.com
+  password: test1
+
+  login : v2@t.com
+  password: test2
+
+  login : v3@t.com
+  password: test3
+
+Users : 
+  login : u1@t.com
+  password: test1
+
+  login : u2@t.com
+  password: test2
+
+  login : u3@t.com
+  password: test3
+
+
+
   
-2. User
-```
-cd frontend-mobile-user
-npm install
-npx expo start
-```
 
-3. Vendor
-```
-cd frontend-mobile-vendor
-npm install
-npx expo start
-```
 
-4. Dashboard
-```
-cd web-client
-npm install
-npm start
-```
+ 
+
+
+      
+
+  
+
+
+
+
