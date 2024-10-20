@@ -42,7 +42,7 @@ function AlertRow({id, real_name}:AlertConfigProps):JSX.Element {
             <Typography variant="body1">
                 {(real_name) ? real_name : `Station ${id}`}    
             </Typography>
-            <TextField id="filled-basic" label="Capacity Threshold" variant="filled" />
+            <TextField id="filled-basic" label="Capacity Threshold" variant="filled" defaultValue="75" />
         </Stack>
     )
 }
