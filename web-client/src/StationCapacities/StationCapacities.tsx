@@ -6,7 +6,6 @@ import { Box, Button } from "@mui/material";
 import SettingsIcon from '@mui/icons-material/Settings';
 import { Place, Item } from "../DBHandler/interfaces";
 import getStationOverviews from "../StateHandler/stationHandler";
-import { stat } from "fs";
 
 interface Station extends Place {
     current_capacity:number,
@@ -59,7 +58,7 @@ function StationDetails({id, current_capacity, token_count, real_name}:Station):
     return (
         <div className="station-container">
             <span className="identifier">{real_name || id }</span>
-            <LinearProgress className="capacity-bar" variant="determinate" value={current_capacity} />
+            <LinearProgress color="success" className="capacity-bar" variant="determinate" value={current_capacity} />
             <span className="capacity-label">{ (current_capacity >= MAX_CAPACITY) ? "Full" : current_capacity + "%" }</span>
             <span className="token-stock"><b>{token_count}</b> Tokens Left</span>
         </div>

@@ -118,9 +118,6 @@
   border-radius: 10px;
   background-color: var(--bg-color);
 }
-.station-container .capacity-bar span {
-  background-color: var(--active);
-}
 .station-container .capacity-label {
   font-weight: bold;
   padding-right: 10px;
