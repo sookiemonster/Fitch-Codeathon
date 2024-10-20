@@ -18,19 +18,19 @@ We used PostgreSQL for our database with Prisma ORM.
 
   1. Install PostgreSQL
     For Linux 
-    ```bash sudo apt install postgresql```
+    ```sudo apt install postgresql```
     For macOS (Homebrew) 
-    ```bash brew install postgresql```
+    ```brew install postgresql```
     
   2. Start PostgreSQL
     For Linux 
-    ```bash sudo service postgresql start```
+    ```sudo service postgresql start```
     For macOS (Homebrew) 
-    ```bash brew services start postgresql```
+    ```brew services start postgresql```
     
   3. Create a User and Database
     Log into the PostgreSQL shel: 
-    ```bash sudo -u postgres psql```
+    ```sudo -u postgres psql```
     Create a new user and database: 
     ```CREATE USER myuser WITH PASSWORD 'mypassword';
     CREATE DATABASE mydb OWNER myuser;```
