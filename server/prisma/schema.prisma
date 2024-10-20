@@ -22,7 +22,7 @@ model User {
   points     Int      @default(0)
   discounts  Int[]
   items      Int[]
-  history    Int[]
+  history    Json[]
 }
 
 model Vendor {

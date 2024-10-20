@@ -57,10 +57,13 @@ async function addStationInventory(stationId, itemId) {
         data: { items: { set: userOwner.items.filter((i) => i !== itemId) } },
       });
 
-      // IF ITS USER, ADD THE ITEM INTO USERS HISTORY LIST
+      const historyItem = {
+        id: itemId,
+        timestamp: new Date(),
+      }
       await prisma.user.update({
         where: { id: userOwner.id },
-        data: { history: { push: itemId } },
+        data: { history: { push: historyItem } },
       });
     } else if (ownerType === "vendor") {
       await prisma.vendor.update({

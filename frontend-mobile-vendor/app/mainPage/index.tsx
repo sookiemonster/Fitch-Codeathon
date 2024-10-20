@@ -74,7 +74,7 @@ export default function Home() {
 
         const fetchSummaryData = async () => {
           try {
-            const response = await fetch(`http://192.168.x.x:5000/api/v1/vendors/${payload.id}/inventory/detailed`); // Update with correct IP
+            const response = await fetch(`http://${process.env.EXPO_PUBLIC_ADDRESS}/api/v1/vendors/${payload.id}/inventory/detailed`); // Update with correct IP
             if (!response.ok) {
               throw new Error('Failed to fetch summary data');
             }
@@ -101,7 +101,7 @@ export default function Home() {
       try {
         const payload = await getToken();
 
-        const response = await fetch(`http://192.168.x.x:5000/api/v1/vendors/${payload?.id}`);
+        const response = await fetch(`http://${process.env.EXPO_PUBLIC_ADDRESS}/api/v1/vendors/${payload?.id}`);
 
         const data = await response.json();
 

@@ -14,7 +14,7 @@ export default function Component() {
 
     
     try {
-      const res = await fetch(`http://192.168.x.x:5000/api/v1/auth/vendors/login`, {
+      const res = await fetch(`http://${process.env.EXPO_PUBLIC_ADDRESS}/api/v1/auth/vendors/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

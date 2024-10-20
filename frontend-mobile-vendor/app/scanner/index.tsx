@@ -62,7 +62,7 @@ export default function Home() {
 
     try {
 
-      await fetch(`http://192.168.x.x:5000/api/v1/vendors/${vendorId}/inventory/${itemId}/move/${userId}`, {
+      await fetch(`http://${process.env.EXPO_PUBLIC_ADDRESS}/api/v1/vendors/${vendorId}/inventory/${itemId}/move/${userId}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -129,11 +129,11 @@ export default function Home() {
         
         if (itemId !== null) {
 
-          const item = await fetch(`http://192.168.x.x:5000/api/v1/items/${itemId}`);
-          const user = await fetch(`http://192.168.x.x:5000/api/v1/users/${id}`);
+          const item = await fetch(`http://${process.env.EXPO_PUBLIC_ADDRESS}/api/v1/items/${itemId}`);
+          const user = await fetch(`http://${process.env.EXPO_PUBLIC_ADDRESS}/api/v1/users/${id}`);
           const token = await getToken();
           const vendorId = token.id;
-          const vendor = await fetch(`http://192.168.x.x:5000/api/v1/vendors/${vendorId}/raw`);
+          const vendor = await fetch(`http://${process.env.EXPO_PUBLIC_ADDRESS}/api/v1/vendors/${vendorId}/raw`);
 
           const itemData = await item.json();
           const userData = await user.json();
