@@ -8,7 +8,7 @@ import { BarChart } from '@mui/x-charts/BarChart';
 
 interface itemizedProps {
     id:number;
-    category: "Vendor" | "Station"
+    category: "Vendor" | "Station" | "Washer"
 }
 
 interface InventoryCounts {
@@ -52,15 +52,23 @@ function ItemizedView({id, category}:itemizedProps):JSX.Element {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`${API_URL}/stations/${id}/inventory`);
-
+                const endpoint = (category:string) => {
+                    switch (category) {
+                        case "Vendor": return "vendors";
+                        case "Station": return "stations";
+                        case "Washer": return "washer";
+                    }
+                }
+                const response = await fetch(`${API_URL}/${endpoint(category)}/${id}/inventory`);
                 if (!response.ok) {
                     throw new Error(`Error: ${response.statusText}`);
                 }
-
+                
                 const data = await response.json();
+                console.log(data);
                 if (data.items){
-                    console.log("data", countByName(data.items));
+                    console.log(data.items);
+                    // console.log("data", countByName(data.items));
                     setPlaceInventory(convertDictToSeries(countByName(data.items)));
                 } else {
                     setPlaceInventory(EmptyDataset);
@@ -88,7 +96,6 @@ function ItemizedView({id, category}:itemizedProps):JSX.Element {
         <div className="inventory-breakdown">
             <Typography variant="caption">{category} Inventory</Typography>
             {placeInventory.names.length > 0 ? 
-                // <div className="bar-container">
                 <BarChart
                     height={(category === "Vendor") ? 150 : 110}
                     yAxis={[
@@ -110,7 +117,6 @@ function ItemizedView({id, category}:itemizedProps):JSX.Element {
                             }}
                     barLabel="value"
                     />
-                // </div>
                 :
                 <Box display="flex"
                 padding="20px"
