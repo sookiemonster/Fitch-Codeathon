@@ -10,6 +10,8 @@ interface State {
     user?:User 
     inventory?:Inventory,
     stations?:Station[],
+    stationsLoading:Boolean,
+    stationsError:Boolean,
     alerts?:Alert[],
     places?:Place[],
     selected_diet:Diet
@@ -26,8 +28,11 @@ type StateAction =
     { type: "logout" ; value:any}
     | { type: "selectDiet" ; value:Diet }
     | { type: "updateAlert" ; value:AlertChange }
+    | { type: "setStations" ; value:Station[] }
+    | { type: "raiseStationsError" }
+    | { type: "completeStationsLoad" }
 
-const initialState:State = { selected_diet:Diet.ALL }
+const initialState:State = { selected_diet:Diet.ALL, stationsLoading:true, stationsError: false }
 const debugIntitialState:State = {
     selected_diet: Diet.ALL,
     inventory: {
@@ -52,44 +57,47 @@ const debugIntitialState:State = {
             uncollected_count: 60000
         }
     }, 
-    stations: [
-        {
-            id: 1,
-            real_name: "Station 1",
-            current_capacity: 45.0,
-            alert_threshold: 75.0,
-            token_count: 202,
-            lat: 40.688,
-            lng: -74.0180
-        },
-        {
-            id: 2,
-            real_name: "Station 2",
-            current_capacity: 75.0,
-            alert_threshold: 75.0,
-            token_count: 202,
-            lat: 40.6885,
-            lng: -74.0190
-        },
-        {
-            id: 3,
-            real_name: "Station 3",
-            current_capacity: 25.0,
-            alert_threshold: 75.0,
-            token_count: 202,
-            lat: 40.6888,
-            lng: -74.02
-        },
-        {
-            id: 4,
-            real_name: "Station 4",
-            current_capacity: 5.0,
-            alert_threshold: 75.0,
-            token_count: 202,
-            lat: 40.6888,
-            lng: -74.0217
-        }
-    ],
+    stations: [],
+    stationsLoading: true,
+    stationsError: false,
+    // stations: [
+    //     {
+    //         id: 1,
+    //         real_name: "Station 1",
+    //         current_capacity: 45.0,
+    //         alert_threshold: 75.0,
+    //         token_count: 202,
+    //         lat: 40.688,
+    //         lng: -74.0180
+    //     },
+    //     {
+    //         id: 2,
+    //         real_name: "Station 2",
+    //         current_capacity: 75.0,
+    //         alert_threshold: 75.0,
+    //         token_count: 202,
+    //         lat: 40.6885,
+    //         lng: -74.0190
+    //     },
+    //     {
+    //         id: 3,
+    //         real_name: "Station 3",
+    //         current_capacity: 25.0,
+    //         alert_threshold: 75.0,
+    //         token_count: 202,
+    //         lat: 40.6888,
+    //         lng: -74.02
+    //     },
+    //     {
+    //         id: 4,
+    //         real_name: "Station 4",
+    //         current_capacity: 5.0,
+    //         alert_threshold: 75.0,
+    //         token_count: 202,
+    //         lat: 40.6888,
+    //         lng: -74.0217
+    //     }
+    // ],
     alerts: [
         {
             id: "awdj3247",
@@ -141,8 +149,18 @@ function stateReducer(state:State, action: StateAction):State {
             })
             
             return {...state, alerts: updatedAlerts};
+
+        case "setStations":
+            return {...state, stations: action.value};
+
+        case "completeStationsLoad":
+            return {...state, stationsLoading: false };
+
+        case "raiseStationsError":
+            return {...state, stationsError: false };
+
         default:
-            throw new Error("Unknown Action");
+            throw new Error(`Unknown Action: ${action}`);
     }
 }
 

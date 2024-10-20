@@ -134,9 +134,8 @@ router.get("/:id/volume", async (req, res) => {
     }
     try {
         const volume = await getStationVolume(parseInt(id));
-        const capacity = await getStationCapacity(parseInt(id));
         if (volume === 0) {
-            return res.status(404).send({ volume : `0/${capacity.capacity}` });
+            return res.send({ volume : 0 });
 
         }
         if (!volume) {
