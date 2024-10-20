@@ -84,3 +84,24 @@
 .inventory-breakdown {
     padding: 5px 10px;
 }
+
+.icon {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background-color: lightblue; /* Top half circle color */
+    overflow: hidden;
+
+    span {
+        @include center();
+        right: 1ch;
+    }
+
+    .fill-line {
+        background-color: red;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+}

@@ -3,8 +3,7 @@ import React, { useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { State } from "../StateHandler";
-import { Place } from "../DBHandler/interfaces";
-import { PieChart } from '@mui/x-charts/PieChart';
+import { sampleDivIcon, sampleIcon } from "./Icons";
 
 import StationCard from "./StationCard";
 import VendorCard from "./VendorCard";
@@ -21,7 +20,7 @@ function StationMarkers({state, dispatch}:MapProps):JSX.Element {
         <>
         { state.stations ? 
         state.stations.map(station => 
-            <Marker key={station.id} position={[station.lat, station.lng]}>
+            <Marker icon={sampleDivIcon(station.current_capacity)} key={station.id} position={[station.lat, station.lng]}>
                 <Popup>
                 <StationCard {...station} />
                 </Popup>
@@ -37,7 +36,7 @@ function VendorMarkers({state, dispatch}:MapProps):JSX.Element {
         <>
         { state.vendors ? 
         state.vendors.map(vendor => 
-            <Marker key={vendor.id} position={[vendor.lat, vendor.lng]}>
+            <Marker  key={vendor.id} position={[vendor.lat, vendor.lng]}>
                 <Popup>
                 <VendorCard {...vendor} />
                 </Popup>
