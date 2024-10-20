@@ -1,5 +1,6 @@
 const {prisma} = require("../../../lib/prisma");
 const capitalizeFirstLetter = require("../../../util/capitalizeFirstLetter");
+const makeQR = require("../../../util/makeQR");
 
 async function createItem(name, type, status, owner) {
 
@@ -13,6 +14,7 @@ async function createItem(name, type, status, owner) {
 
     const item = await prisma.item.create({
         data: {
+            qr: 1,
             name: name,
             type: type,
             status: status,
@@ -20,6 +22,11 @@ async function createItem(name, type, status, owner) {
             size : capitalizeFirstLetter(name) === "Plate" ? 5 : 2
         }
     });
+
+    await prisma.item.update({
+        where: {id: item.id},
+        data: {qr: await makeQR(item.id+"")}
+    })
     return `Item (${item.id}) created successfully`;
 }
 

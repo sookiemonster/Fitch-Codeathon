@@ -11,6 +11,7 @@ const { getDetailedInventory} = require('../../functions/stations/get/getDetaile
 
 const { addStationInventory } = require('../../functions/stations/patch/addStationInventory.js');
 const { moveItemToWasher } = require('../../functions/stations/patch/moveItemToWasher.js');
+const { getStationQR } = require('../../functions/stations/get/getStationQR.js');
 
 // GET /api/v1/stations
 
@@ -38,6 +39,25 @@ router.get('/:id', async (req, res) => {
             return res.status(404).send({ message : 'Station not found' });
         }
         return res.send(station);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({ message : 'Internal server error' });
+    }
+});
+
+router.get('/:id/qr', async (req, res) => {
+
+    const { id } = req.params;
+
+    if (!id || isNaN(id)) {
+        return res.status(400).send({ message: 'Invalid or missing ID' });
+    }
+    try {
+        const qr = await getStationQR(parseInt(id));
+        if (!qr) {
+            return res.status(404).send({ message : 'Station not found' });
+        }
+        return res.status(200).send(qr);
     } catch (error) {
         console.log(error);
         res.status(500).send({ message : 'Internal server error' });
