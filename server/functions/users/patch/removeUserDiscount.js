@@ -3,7 +3,13 @@ const { getUserDiscounts } = require("../get/getUserDiscounts");
 
 async function removeUserDiscount(id, discountId) {
 
-    const user = getUserDiscounts(id);
+    const user = await prisma.user.findUnique({
+        where: { id: id },
+        select: {
+            id: true,
+            discounts: true
+        }
+    });
 
     const discount = await prisma.discount.findUnique({
         where: { id: discountId },

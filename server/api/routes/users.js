@@ -27,6 +27,8 @@ const {
   removeUserPoints,
 } = require("../../functions/users/patch/removeUserPoints.js");
 
+const {addUserDiscount} = require("../../functions/users/patch/addUserDiscount.js");
+
 const { getUserQR } = require("../../functions/users/get/getUserQR.js");
 
 // GET /api/v1/users
@@ -246,6 +248,7 @@ router.patch("/:id/discounts/:discount/add", async (req, res) => {
         discountId: discount,
       });
   } catch (error) {
+    console.log(error);
     if (error.message === "Discount not found") {
       return res.status(404).send({ message: "Discount not found" });
     }
@@ -280,6 +283,7 @@ router.patch("/:id/discounts/:discount/remove", async (req, res) => {
         discountId: discount,
       });
   } catch (error) {
+    console.log(error);
     if (error.message === "Discount not found") {
       return res.status(404).send({ message: "Discount not found" });
     }
