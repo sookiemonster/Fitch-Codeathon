@@ -7,7 +7,8 @@ import ItemizedView from "./ItemizedView";
 const MAX_TOKENS = 10000;
 
 const getCapacityCategory = (capacity:number) => {
-    if (capacity < 25) { return "Near Empty"; }
+    if (capacity == 0) { return "Empty"; }
+    else if (capacity < 25) { return "Near Empty"; }
     else if (capacity < 50) { return "Near Half"; }
     else if (capacity < 75) { return "Near Full"; }
     else if (capacity == 100) { return "Full"; }
@@ -16,7 +17,8 @@ const getCapacityCategory = (capacity:number) => {
 const getTokenStockCategory = (token_count:number) => {
     let stock_percentage = (token_count + 0.0) / MAX_TOKENS;
 
-    if (stock_percentage < 25) { return "Near Empty"; }
+    if (stock_percentage == 0) { return "Empty"; }
+    else if (stock_percentage < 25) { return "Near Empty"; }
     else if (stock_percentage < 50) { return "Near Half"; }
     else if (stock_percentage < 75) { return "Near Full"; }
     else if (stock_percentage == 100) { return "Full"; }
