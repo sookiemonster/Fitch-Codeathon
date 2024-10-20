@@ -15,13 +15,13 @@ export default function HomeScreen() {
       }
     >
       <ThemedText type="title">Welcome</ThemedText>
-      <ThemedView style={styles.stepContainer}>
+      <ThemedView style={styles.infoContainer}>
         <ThemedText type="default">Grab an EcoWare from any vendor</ThemedText>
       </ThemedView>
       <ThemedText type="title">Map</ThemedText>
       
       <ThemedText type="title">Your Points</ThemedText>
-      <ThemedView style={styles.stepContainer}>
+      <ThemedView style={styles.infoContainer}>
         <ThemedText>0</ThemedText>
       </ThemedView>
     </ParallaxScrollView>
@@ -29,7 +29,7 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  stepContainer: {
+  infoContainer: {
     gap: 8,
     marginBottom: 8,
     backgroundColor: "lightgray",
