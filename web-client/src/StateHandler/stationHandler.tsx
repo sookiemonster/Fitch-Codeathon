@@ -80,7 +80,8 @@ async function getStationOverviews(state:State, dispatch:any):Promise<void> {
 
         Promise.all(allStationOverviews)
             .then(stationData => {
-                console.log(stationData);
+                // console.log(stationData);
+                stationData = stationData.sort((a,b) => {return a.id - b.id})
                 dispatch({type: "setStations", value: stationData });
                 dispatch({type: "completeStationsLoad" })
             })

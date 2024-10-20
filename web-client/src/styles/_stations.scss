@@ -20,7 +20,9 @@
 
     font-size: 1.05rem;
     .identifier {
-        font-weight: 500;
+        font-weight: 600;
+        display: inline-block;
+        width: 8ch;
     }
 
     .capacity-bar {

@@ -1,5 +1,5 @@
 
-import React, { useMemo } from "react";
+import React, { useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { State } from "../StateHandler";
@@ -31,7 +31,7 @@ function StationMarkers({state, dispatch}:MapProps):JSX.Element {
 }
 
 function Map({state, dispatch}:MapProps):JSX.Element {
-    
+
     return (
         <div id="map-panel">
                 <MapContainer center={[40.6885, -74.0190]} zoom={16} 

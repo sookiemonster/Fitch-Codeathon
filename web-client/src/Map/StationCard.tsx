@@ -62,7 +62,7 @@ function CapacityView({current_capacity}:capacityProps):JSX.Element {
                 series={[
                     {
                         data: [ { value: current_capacity }, 
-                            { value: 100 - current_capacity } ],
+                            { value: 100 - current_capacity, color: "gray" } ],
                             innerRadius: 30,
                             outerRadius: 40,
                             paddingAngle: 2,
