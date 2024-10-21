@@ -5,8 +5,18 @@ const {getDiscountInfo} = require('../../functions/discounts/get/getDiscountInfo
 const {createDiscount} = require('../../functions/discounts/post/createDiscount.js');
 const {deleteDiscount} = require('../../functions/discounts/delete/deleteDiscount.js');
 const { getDiscountQR } = require('../../functions/discounts/get/getDiscountQR.js');
+const { getDiscounts } = require('../../functions/discounts/get/getDiscounts.js');
 
 // GET /api/v1/discounts
+
+router.get('/', async (req, res) => {
+    try {
+        const discounts = await getDiscounts();
+        res.status(200).send(discounts);
+    } catch (error) {
+        res.status(500).send({ message : 'Internal server error' });
+    }
+});
 
 router.get('/:id', async (req, res) => {
     const { id } = req.params;

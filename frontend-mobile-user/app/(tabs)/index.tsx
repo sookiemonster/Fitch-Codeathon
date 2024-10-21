@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Image, StyleSheet } from 'react-native';
+import { Image, ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { View, Text, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {jwtDecode} from 'jwt-decode'; // Import jwt-decode from the package
+import { router } from 'expo-router';
+import MapView, { Marker } from 'react-native-maps';
 
 interface MyJwtPayload {
   id: number;
@@ -106,24 +108,30 @@ export default function HomeScreen() {
         </View>
         <View style={styles.pointsContainer}>
           <Text style={styles.pointsTitle}>Your Items</Text>
-          <View style={styles.pointsBox}>
+          <ScrollView>
+          <View >
           {itemDetails.length > 0 ? (
             itemDetails.map((itemDetail, index) => (
               <View key={index} style={styles.itemContainer}>
                 <Text style={styles.itemText}>ID: {itemDetail.item.id}</Text>
                 <Text style={styles.itemText}>Name: {itemDetail.item.name}</Text>
-                {itemDetail.item.name === "Plate" && (
+                {itemDetail.item.name === "Plate" ? (
                   <Text style={styles.itemText}>Type: {itemDetail.item.type}</Text>
+                ) : (
+                  <Text style={styles.itemText}>Type: Regular</Text>
                 )}
               </View>
+            
             ))
           ) : (
             <Text>No items found</Text>
           )}
           </View>
+          </ScrollView>
         </View>
+        
         <TouchableOpacity style={styles.redeemButton}>
-          <Text style={styles.redeemButtonText}>History</Text>
+          <Text style={styles.redeemButtonText} onPress={() => {router.replace('/(tabs)/profile')}}>History</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -194,10 +202,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   itemContainer: {
-    gap: 40,
-    marginBottom: 12,
-    flexDirection: 'row', // Align children in a row
-    justifyContent: 'flex-start'
+    flexDirection: 'row',
+    gap: 20,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 10,
+    padding: 10,
+    borderRadius: 5,
+    backgroundColor: '#f0f0f0',
     
   },
   itemText: {
