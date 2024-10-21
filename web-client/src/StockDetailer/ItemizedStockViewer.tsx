@@ -10,16 +10,10 @@ interface itemizedProps {
     dispatch:any
 }
 
-const fetchWasherInventory = () => {
-
-}
 
 function ItemizedStockViewer({state, dispatch}:itemizedProps):JSX.Element {
-    const [washerInventory, setWasherInventory] = useState([]);
-
     return (
         <Stack id="itemized-stock-viewer">
-            <DietSelector state={state} dispatch={dispatch} />
             <ItemizedView id={1} category="Washer" />
         </Stack>
     )

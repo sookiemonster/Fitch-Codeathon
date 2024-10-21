@@ -19,7 +19,7 @@ const getColor = (t:number):Color => {
 const StationIcon = (capacity:number):DivIcon => {
     return divIcon ({
         className: "icon",
-        iconSize : [40,40],
+        iconSize : [45,45],
         html: `<div class="fill-line" style="background-color: ${getColor(capacity)}; transform: translateY(${100-capacity}%)"></div><span class="my-div-span">${capacity}<small>%</small></span>`
     });
 }

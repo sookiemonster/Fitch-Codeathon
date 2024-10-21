@@ -65,8 +65,8 @@ const debugIntitialState:State = {
             id: "awdj3247",
             item_type: "Cold Cups",
             location: {
-                id: 2389,
-                real_name:"vendor"
+                id: 21,
+                real_name:"Fauzia's"
             },
             alert_time: new Date(Date.now())
         }

@@ -15,6 +15,21 @@ interface InventoryCounts {
     [item_name: string]: number;
 }
 
+interface StatusContainer {
+    clean:number
+    dirty:number
+}
+
+interface InventoryObj {
+    total:number
+    type?:Object
+    status:StatusContainer
+}
+
+interface InventoryCountsDetailed {
+    [item_name: string]: InventoryObj;
+}
+
 interface Dataset {
     names:string[]
     counts:number[]
@@ -42,6 +57,13 @@ function convertDictToSeries(dictionary:InventoryCounts):Dataset {
     }
 }
 
+const transformWasherData = (dictionary:InventoryCountsDetailed):Dataset => {
+    return { 
+        names: Object.keys(dictionary),
+        counts: Object.keys(dictionary).map(key => dictionary[key].total )
+    }
+}
+
 function ItemizedView({id, category}:itemizedProps):JSX.Element {
     // State to hold the fetched data
     const [placeInventory, setPlaceInventory] = useState<Dataset>(EmptyDataset);
@@ -65,10 +87,11 @@ function ItemizedView({id, category}:itemizedProps):JSX.Element {
                 }
                 
                 const data = await response.json();
-                console.log(data);
-                if (data.items){
-                    console.log(data.items);
-                    // console.log("data", countByName(data.items));
+                if (category === "Washer") {
+                    delete data.name.size;
+                    console.log(transformWasherData(data.name));
+                    setPlaceInventory(transformWasherData(data.name));
+                } else if (data.items) {
                     setPlaceInventory(convertDictToSeries(countByName(data.items)));
                 } else {
                     setPlaceInventory(EmptyDataset);
@@ -92,12 +115,20 @@ function ItemizedView({id, category}:itemizedProps):JSX.Element {
         return <div className="inventory-breakdown">Error. Could not load station inventory</div>;
     }
 
+    const getHeight = (category:string) => {
+        switch (category) {
+            case "Vendor": return 150;
+            case "Station": return 110;
+            case "Washer": return 400;
+        }
+    }
+
     return (
         <div className="inventory-breakdown">
             <Typography variant="caption">{category} Inventory</Typography>
             {placeInventory.names.length > 0 ? 
                 <BarChart
-                    height={(category === "Vendor") ? 150 : 110}
+                    height={getHeight(category)}
                     yAxis={[
                         { scaleType: 'band', 
                             data: placeInventory.names, 
@@ -110,7 +141,7 @@ function ItemizedView({id, category}:itemizedProps):JSX.Element {
                             layout="horizontal"
                             grid={{ vertical: true }}
                             margin={{
-                                left: 40,
+                                left: 45,
                                 right: 10,
                                 top: 0,
                                 bottom: 0,

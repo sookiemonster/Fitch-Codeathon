@@ -99,6 +99,7 @@
 
     span {
         @include center();
+        font-size: 0.9rem;
         color: var(--bg-color);
     }
 
