@@ -4,6 +4,9 @@ Project By: Tiffany Fu, Daniel Sooknanan, Dante Betancourt, Solayjon Ollanazarov
 [Wireframe](https://www.figma.com/design/vBSkMnoNiU1iBdxIJ5l15O/EcoWare?node-id=17-49&node-type=canvas&t=M0Y08aw3LX3AAdWn-0) <br>
 [EcoWare API Endpoint Documentation](https://github.com/user-attachments/files/17452292/EcoWare.API.Endpoint.Documentation.pdf) <br>
 [EcoWare Marketing Plan](https://github.com/user-attachments/files/17452301/EcoWare.Marketing.Plan.pdf)
+
+Note : user_app branch has the fully functioning user app
+
 # How to Deploy
 
 **Clone the repo**
