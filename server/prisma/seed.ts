@@ -22,20 +22,20 @@ async function main() {
   // SEED VENDORS
   await prisma.vendor.createMany({
     data: [
-      { id: 21, email: "v1@t.com", password: await bcrypt.hash("test1", 10), name: null, x: 49.01, y: 67.01, inventory: [] },
-      { id: 22, email: "v2@t.com", password: await bcrypt.hash("test2", 10), name: null, x: 47.01, y: 67.01, inventory: [] },
-      { id: 23, email: "v3@t.com", password: await bcrypt.hash("test3", 10), name: null, x: 51.01, y: 63.01, inventory: [] },
-      { id: 24, email: "v4@t.com", password: await bcrypt.hash("test4", 10), name: null, x: 47.01, y: 69.01, inventory: [] },
-      { id: 25, email: "v5@t.com", password: await bcrypt.hash("test5", 10), name: null, x: 51.01, y: 69.01, inventory: [] }
+      { id: 21, email: "v1@t.com", password: await bcrypt.hash("test1", 10), name: "Little Eva's", x: 40.689178, y: -74.018256, inventory: [] },
+      { id: 22, email: "v2@t.com", password: await bcrypt.hash("test2", 10), name: "Fauzia's", x: 40.690187, y: -74.019051, inventory: [] },
+      { id: 23, email: "v3@t.com", password: await bcrypt.hash("test3", 10), name: "Tokyo Drumstick", x: 40.69055, y: -74.019493, inventory: [] },
+      { id: 24, email: "v4@t.com", password: await bcrypt.hash("test4", 10), name: "Makina Cafe", x: 40.690325, y: -74.019018, inventory: [] },
+      { id: 25, email: "v5@t.com", password: await bcrypt.hash("test5", 10), name: "", x: 51.01, y: 69.01, inventory: [] }
     ]
   })
 
   // SEED STATIONS
   await prisma.station.createMany({
     data: [
-      { id: 1,qr : await makeQR(1+""), x: 49.01, y: 67.01, capacity: 120, tokens: 100, inventory: [] },
-      { id: 2,qr : await makeQR(2+""), x: 47.01, y: 63.01, capacity: 120, tokens: 100, inventory: [] },
-      { id: 3,qr : await makeQR(3+""), x: 51.01, y: 69.01, capacity: 120, tokens: 100, inventory: [] }
+      { id: 1,qr : await makeQR(1+""), x: 40.689275, y: -74.017944, capacity: 120, tokens: 100, inventory: [] },
+      { id: 2,qr : await makeQR(2+""), x: 40.685205, y: -74.026012, capacity: 120, tokens: 100, inventory: [] },
+      { id: 3,qr : await makeQR(3+""), x: 40.689818, y: -74.012993, capacity: 120, tokens: 100, inventory: [] }
     ]
   })
 
